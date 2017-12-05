@@ -1,0 +1,602 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MissYangQADBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_Answer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Contents" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Rank" Type="int" Nullable="false" />
+          <Property Name="IsRight" Type="bit" Nullable="false" />
+          <Property Name="FK_Question" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ClassList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Rank" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Paper">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartTime" Type="date" Nullable="false" />
+          <Property Name="EndTime" Type="date" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FK_Paper" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Contents" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
+          <Property Name="Rank" Type="int" Nullable="false" />
+          <Property Name="Types" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Scantron">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FK_Paper" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FK_ClassList" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
+          <Property Name="StudentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ScantronDetailed">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FK_Score" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FK_Question" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FK_Answer" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AnswerContent" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="T_Token">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“MissYangQADB.dbo.V_User”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_User">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_T_Answer_T_Question">
+          <End Role="T_Question" Type="Self.T_Question" Multiplicity="1" />
+          <End Role="T_Answer" Type="Self.T_Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Answer">
+              <PropertyRef Name="FK_Question" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Question_T_Paper">
+          <End Role="T_Paper" Type="Self.T_Paper" Multiplicity="1" />
+          <End Role="T_Question" Type="Self.T_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Paper">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Question">
+              <PropertyRef Name="FK_Paper" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Score_T_ClassList">
+          <End Role="T_ClassList" Type="Self.T_ClassList" Multiplicity="1" />
+          <End Role="T_Scantron" Type="Self.T_Scantron" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ClassList">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Scantron">
+              <PropertyRef Name="FK_ClassList" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Score_T_Paper">
+          <End Role="T_Paper" Type="Self.T_Paper" Multiplicity="1" />
+          <End Role="T_Scantron" Type="Self.T_Scantron" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Paper">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Scantron">
+              <PropertyRef Name="FK_Paper" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ScoreDetailed_T_Answer">
+          <End Role="T_Answer" Type="Self.T_Answer" Multiplicity="1" />
+          <End Role="T_ScantronDetailed" Type="Self.T_ScantronDetailed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Answer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_ScantronDetailed">
+              <PropertyRef Name="FK_Answer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ScoreDetailed_T_Question">
+          <End Role="T_Question" Type="Self.T_Question" Multiplicity="1" />
+          <End Role="T_ScantronDetailed" Type="Self.T_ScantronDetailed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_ScantronDetailed">
+              <PropertyRef Name="FK_Question" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ScoreDetailed_T_Score">
+          <End Role="T_Scantron" Type="Self.T_Scantron" Multiplicity="1" />
+          <End Role="T_ScantronDetailed" Type="Self.T_ScantronDetailed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Scantron">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_ScantronDetailed">
+              <PropertyRef Name="FK_Score" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Token_T_User">
+          <End Role="T_User" Type="Self.T_User" Multiplicity="1" />
+          <End Role="T_Token" Type="Self.T_Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Token">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MissYangQADBModelStoreContainer">
+          <EntitySet Name="T_Answer" EntityType="Self.T_Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ClassList" EntityType="Self.T_ClassList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Paper" EntityType="Self.T_Paper" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Question" EntityType="Self.T_Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Scantron" EntityType="Self.T_Scantron" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ScantronDetailed" EntityType="Self.T_ScantronDetailed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Token" EntityType="Self.T_Token" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_User" EntityType="Self.T_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="V_User" EntityType="Self.V_User" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_User].[ID] AS [ID], 
+    [V_User].[UserName] AS [UserName]
+    FROM [dbo].[V_User] AS [V_User]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_T_Answer_T_Question" Association="Self.FK_T_Answer_T_Question">
+            <End Role="T_Question" EntitySet="T_Question" />
+            <End Role="T_Answer" EntitySet="T_Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Question_T_Paper" Association="Self.FK_T_Question_T_Paper">
+            <End Role="T_Paper" EntitySet="T_Paper" />
+            <End Role="T_Question" EntitySet="T_Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Score_T_ClassList" Association="Self.FK_T_Score_T_ClassList">
+            <End Role="T_ClassList" EntitySet="T_ClassList" />
+            <End Role="T_Scantron" EntitySet="T_Scantron" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Score_T_Paper" Association="Self.FK_T_Score_T_Paper">
+            <End Role="T_Paper" EntitySet="T_Paper" />
+            <End Role="T_Scantron" EntitySet="T_Scantron" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ScoreDetailed_T_Answer" Association="Self.FK_T_ScoreDetailed_T_Answer">
+            <End Role="T_Answer" EntitySet="T_Answer" />
+            <End Role="T_ScantronDetailed" EntitySet="T_ScantronDetailed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ScoreDetailed_T_Question" Association="Self.FK_T_ScoreDetailed_T_Question">
+            <End Role="T_Question" EntitySet="T_Question" />
+            <End Role="T_ScantronDetailed" EntitySet="T_ScantronDetailed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ScoreDetailed_T_Score" Association="Self.FK_T_ScoreDetailed_T_Score">
+            <End Role="T_Scantron" EntitySet="T_Scantron" />
+            <End Role="T_ScantronDetailed" EntitySet="T_ScantronDetailed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Token_T_User" Association="Self.FK_T_Token_T_User">
+            <End Role="T_User" EntitySet="T_User" />
+            <End Role="T_Token" EntitySet="T_Token" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MissYangQADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MissYangQADBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_Answer" EntityType="MissYangQADBModel.T_Answer" />
+          <EntitySet Name="T_ClassList" EntityType="MissYangQADBModel.T_ClassList" />
+          <EntitySet Name="T_Paper" EntityType="MissYangQADBModel.T_Paper" />
+          <EntitySet Name="T_Question" EntityType="MissYangQADBModel.T_Question" />
+          <EntitySet Name="T_Scantron" EntityType="MissYangQADBModel.T_Scantron" />
+          <EntitySet Name="T_ScantronDetailed" EntityType="MissYangQADBModel.T_ScantronDetailed" />
+          <EntitySet Name="T_Token" EntityType="MissYangQADBModel.T_Token" />
+          <EntitySet Name="T_User" EntityType="MissYangQADBModel.T_User" />
+          <EntitySet Name="V_User" EntityType="MissYangQADBModel.V_User" />
+          <AssociationSet Name="FK_T_Answer_T_Question" Association="MissYangQADBModel.FK_T_Answer_T_Question">
+            <End Role="T_Question" EntitySet="T_Question" />
+            <End Role="T_Answer" EntitySet="T_Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ScoreDetailed_T_Answer" Association="MissYangQADBModel.FK_T_ScoreDetailed_T_Answer">
+            <End Role="T_Answer" EntitySet="T_Answer" />
+            <End Role="T_ScantronDetailed" EntitySet="T_ScantronDetailed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Score_T_ClassList" Association="MissYangQADBModel.FK_T_Score_T_ClassList">
+            <End Role="T_ClassList" EntitySet="T_ClassList" />
+            <End Role="T_Scantron" EntitySet="T_Scantron" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Question_T_Paper" Association="MissYangQADBModel.FK_T_Question_T_Paper">
+            <End Role="T_Paper" EntitySet="T_Paper" />
+            <End Role="T_Question" EntitySet="T_Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Score_T_Paper" Association="MissYangQADBModel.FK_T_Score_T_Paper">
+            <End Role="T_Paper" EntitySet="T_Paper" />
+            <End Role="T_Scantron" EntitySet="T_Scantron" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ScoreDetailed_T_Question" Association="MissYangQADBModel.FK_T_ScoreDetailed_T_Question">
+            <End Role="T_Question" EntitySet="T_Question" />
+            <End Role="T_ScantronDetailed" EntitySet="T_ScantronDetailed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ScoreDetailed_T_Score" Association="MissYangQADBModel.FK_T_ScoreDetailed_T_Score">
+            <End Role="T_Scantron" EntitySet="T_Scantron" />
+            <End Role="T_ScantronDetailed" EntitySet="T_ScantronDetailed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Token_T_User" Association="MissYangQADBModel.FK_T_Token_T_User">
+            <End Role="T_User" EntitySet="T_User" />
+            <End Role="T_Token" EntitySet="T_Token" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="T_Answer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Contents" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Rank" Type="Int32" Nullable="false" />
+          <Property Name="IsRight" Type="Boolean" Nullable="false" />
+          <Property Name="FK_Question" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="T_Question" Relationship="MissYangQADBModel.FK_T_Answer_T_Question" FromRole="T_Answer" ToRole="T_Question" />
+          <NavigationProperty Name="T_ScantronDetailed" Relationship="MissYangQADBModel.FK_T_ScoreDetailed_T_Answer" FromRole="T_Answer" ToRole="T_ScantronDetailed" />
+        </EntityType>
+        <EntityType Name="T_ClassList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Rank" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="T_Scantron" Relationship="MissYangQADBModel.FK_T_Score_T_ClassList" FromRole="T_ClassList" ToRole="T_Scantron" />
+        </EntityType>
+        <EntityType Name="T_Paper">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="T_Question" Relationship="MissYangQADBModel.FK_T_Question_T_Paper" FromRole="T_Paper" ToRole="T_Question" />
+          <NavigationProperty Name="T_Scantron" Relationship="MissYangQADBModel.FK_T_Score_T_Paper" FromRole="T_Paper" ToRole="T_Scantron" />
+        </EntityType>
+        <EntityType Name="T_Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="FK_Paper" Type="Guid" Nullable="false" />
+          <Property Name="Contents" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <Property Name="Rank" Type="Int32" Nullable="false" />
+          <Property Name="Types" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="T_Answer" Relationship="MissYangQADBModel.FK_T_Answer_T_Question" FromRole="T_Question" ToRole="T_Answer" />
+          <NavigationProperty Name="T_Paper" Relationship="MissYangQADBModel.FK_T_Question_T_Paper" FromRole="T_Question" ToRole="T_Paper" />
+          <NavigationProperty Name="T_ScantronDetailed" Relationship="MissYangQADBModel.FK_T_ScoreDetailed_T_Question" FromRole="T_Question" ToRole="T_ScantronDetailed" />
+        </EntityType>
+        <EntityType Name="T_Scantron">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="FK_Paper" Type="Guid" Nullable="false" />
+          <Property Name="FK_ClassList" Type="Guid" Nullable="false" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <Property Name="StudentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="T_ClassList" Relationship="MissYangQADBModel.FK_T_Score_T_ClassList" FromRole="T_Scantron" ToRole="T_ClassList" />
+          <NavigationProperty Name="T_Paper" Relationship="MissYangQADBModel.FK_T_Score_T_Paper" FromRole="T_Scantron" ToRole="T_Paper" />
+          <NavigationProperty Name="T_ScantronDetailed" Relationship="MissYangQADBModel.FK_T_ScoreDetailed_T_Score" FromRole="T_Scantron" ToRole="T_ScantronDetailed" />
+        </EntityType>
+        <EntityType Name="T_ScantronDetailed">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="FK_Score" Type="Guid" Nullable="false" />
+          <Property Name="FK_Question" Type="Guid" Nullable="false" />
+          <Property Name="FK_Answer" Type="Guid" Nullable="false" />
+          <Property Name="AnswerContent" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="T_Answer" Relationship="MissYangQADBModel.FK_T_ScoreDetailed_T_Answer" FromRole="T_ScantronDetailed" ToRole="T_Answer" />
+          <NavigationProperty Name="T_Question" Relationship="MissYangQADBModel.FK_T_ScoreDetailed_T_Question" FromRole="T_ScantronDetailed" ToRole="T_Question" />
+          <NavigationProperty Name="T_Scantron" Relationship="MissYangQADBModel.FK_T_ScoreDetailed_T_Score" FromRole="T_ScantronDetailed" ToRole="T_Scantron" />
+        </EntityType>
+        <EntityType Name="T_Token">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="T_User" Relationship="MissYangQADBModel.FK_T_Token_T_User" FromRole="T_Token" ToRole="T_User" />
+        </EntityType>
+        <EntityType Name="T_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="T_Token" Relationship="MissYangQADBModel.FK_T_Token_T_User" FromRole="T_User" ToRole="T_Token" />
+        </EntityType>
+        <EntityType Name="V_User">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_T_Answer_T_Question">
+          <End Type="MissYangQADBModel.T_Question" Role="T_Question" Multiplicity="1" />
+          <End Type="MissYangQADBModel.T_Answer" Role="T_Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Answer">
+              <PropertyRef Name="FK_Question" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ScoreDetailed_T_Answer">
+          <End Type="MissYangQADBModel.T_Answer" Role="T_Answer" Multiplicity="1" />
+          <End Type="MissYangQADBModel.T_ScantronDetailed" Role="T_ScantronDetailed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Answer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_ScantronDetailed">
+              <PropertyRef Name="FK_Answer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Score_T_ClassList">
+          <End Type="MissYangQADBModel.T_ClassList" Role="T_ClassList" Multiplicity="1" />
+          <End Type="MissYangQADBModel.T_Scantron" Role="T_Scantron" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ClassList">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Scantron">
+              <PropertyRef Name="FK_ClassList" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Question_T_Paper">
+          <End Type="MissYangQADBModel.T_Paper" Role="T_Paper" Multiplicity="1" />
+          <End Type="MissYangQADBModel.T_Question" Role="T_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Paper">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Question">
+              <PropertyRef Name="FK_Paper" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Score_T_Paper">
+          <End Type="MissYangQADBModel.T_Paper" Role="T_Paper" Multiplicity="1" />
+          <End Type="MissYangQADBModel.T_Scantron" Role="T_Scantron" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Paper">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Scantron">
+              <PropertyRef Name="FK_Paper" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ScoreDetailed_T_Question">
+          <End Type="MissYangQADBModel.T_Question" Role="T_Question" Multiplicity="1" />
+          <End Type="MissYangQADBModel.T_ScantronDetailed" Role="T_ScantronDetailed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_ScantronDetailed">
+              <PropertyRef Name="FK_Question" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ScoreDetailed_T_Score">
+          <End Type="MissYangQADBModel.T_Scantron" Role="T_Scantron" Multiplicity="1" />
+          <End Type="MissYangQADBModel.T_ScantronDetailed" Role="T_ScantronDetailed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Scantron">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_ScantronDetailed">
+              <PropertyRef Name="FK_Score" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Token_T_User">
+          <End Type="MissYangQADBModel.T_User" Role="T_User" Multiplicity="1" />
+          <End Type="MissYangQADBModel.T_Token" Role="T_Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Token">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MissYangQADBModelStoreContainer" CdmEntityContainer="MissYangQADBEntities">
+          <EntitySetMapping Name="T_Answer">
+            <EntityTypeMapping TypeName="MissYangQADBModel.T_Answer">
+              <MappingFragment StoreEntitySet="T_Answer">
+                <ScalarProperty Name="FK_Question" ColumnName="FK_Question" />
+                <ScalarProperty Name="IsRight" ColumnName="IsRight" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ClassList">
+            <EntityTypeMapping TypeName="MissYangQADBModel.T_ClassList">
+              <MappingFragment StoreEntitySet="T_ClassList">
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Paper">
+            <EntityTypeMapping TypeName="MissYangQADBModel.T_Paper">
+              <MappingFragment StoreEntitySet="T_Paper">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Question">
+            <EntityTypeMapping TypeName="MissYangQADBModel.T_Question">
+              <MappingFragment StoreEntitySet="T_Question">
+                <ScalarProperty Name="Types" ColumnName="Types" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="FK_Paper" ColumnName="FK_Paper" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Scantron">
+            <EntityTypeMapping TypeName="MissYangQADBModel.T_Scantron">
+              <MappingFragment StoreEntitySet="T_Scantron">
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="FK_ClassList" ColumnName="FK_ClassList" />
+                <ScalarProperty Name="FK_Paper" ColumnName="FK_Paper" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ScantronDetailed">
+            <EntityTypeMapping TypeName="MissYangQADBModel.T_ScantronDetailed">
+              <MappingFragment StoreEntitySet="T_ScantronDetailed">
+                <ScalarProperty Name="AnswerContent" ColumnName="AnswerContent" />
+                <ScalarProperty Name="FK_Answer" ColumnName="FK_Answer" />
+                <ScalarProperty Name="FK_Question" ColumnName="FK_Question" />
+                <ScalarProperty Name="FK_Score" ColumnName="FK_Score" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Token">
+            <EntityTypeMapping TypeName="MissYangQADBModel.T_Token">
+              <MappingFragment StoreEntitySet="T_Token">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_User">
+            <EntityTypeMapping TypeName="MissYangQADBModel.T_User">
+              <MappingFragment StoreEntitySet="T_User">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_User">
+            <EntityTypeMapping TypeName="MissYangQADBModel.V_User">
+              <MappingFragment StoreEntitySet="V_User">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
