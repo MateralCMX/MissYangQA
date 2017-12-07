@@ -14,7 +14,7 @@ namespace MateralTools.MChat.Model
         public SendMessageModel(string message)
         {
             Message = message;
-            CreateTime = DateTime.Now;
+            CreateTime = DateTime.UtcNow;
         }
         /// <summary>
         /// 要发送的的消息

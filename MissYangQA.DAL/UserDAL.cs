@@ -35,7 +35,7 @@ namespace MissYangQA.DAL
         /// <summary>
         /// 根据用户唯一标识获得用户信息
         /// </summary>
-        /// <param name="id">用户唯一标示</param>
+        /// <param name="id">用户唯一标识</param>
         /// <returns>查询结果</returns>
         public T_User GetUserInfoByID(Guid id)
         {
@@ -47,7 +47,7 @@ namespace MissYangQA.DAL
         /// <summary>
         /// 根据用户唯一标识获得用户视图信息
         /// </summary>
-        /// <param name="id">用户唯一标示</param>
+        /// <param name="id">用户唯一标识</param>
         /// <returns>查询结果</returns>
         public V_User GetUserViewInfoByID(Guid id)
         {
@@ -59,6 +59,7 @@ namespace MissYangQA.DAL
         /// <summary>
         /// 获得所有用户的视图信息
         /// </summary>
+        /// <param name="pageM">分页模型</param>
         /// <returns>查询结果</returns>
         public List<V_User> GetAllUserViewInfo(MPagingModel pageM)
         {
@@ -76,6 +77,31 @@ namespace MissYangQA.DAL
         {
             T_User model = (from m in _DB.T_User
                             where m.UserName == userName
+                            select m).FirstOrDefault();
+            return model;
+        }
+        /// <summary>
+        /// 根据Token获得用户信息
+        /// </summary>
+        /// <param name="token">Token</param>
+        /// <returns>用户信息</returns>
+        public T_User GetUserInfoByToken(string token)
+        {
+            T_User model = (from m in _DB.T_User
+                            where m.Token == token
+                            select m).FirstOrDefault();
+            return model;
+        }
+        /// <summary>
+        /// 根据用户唯一标识和Token获得用户信息
+        /// </summary>
+        /// <param name="id">用户唯一标识</param>
+        /// <param name="token">Token</param>
+        /// <returns>用户信息</returns>
+        public T_User GetUserInfoByIDAndToken(Guid id, string token)
+        {
+            T_User model = (from m in _DB.T_User
+                            where m.ID == id && m.Token == token
                             select m).FirstOrDefault();
             return model;
         }

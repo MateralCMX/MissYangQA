@@ -15,6 +15,16 @@
           <Property Name="IsRight" Type="bit" Nullable="false" />
           <Property Name="FK_Question" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="T_ApplicationLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Types" Type="tinyint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contents" Type="nvarchar" MaxLength="800" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="T_ClassList">
           <Key>
             <PropertyRef Name="ID" />
@@ -64,15 +74,6 @@
           <Property Name="FK_Answer" Type="uniqueidentifier" Nullable="false" />
           <Property Name="AnswerContent" Type="nvarchar" MaxLength="500" />
         </EntityType>
-        <EntityType Name="T_Token">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Token" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="CreateTime" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="T_User">
           <Key>
             <PropertyRef Name="ID" />
@@ -80,6 +81,8 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="TokenCreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“MissYangQADB.dbo.V_User”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -90,6 +93,8 @@
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="32" />
+          <Property Name="TokenCreateTime" Type="datetime" />
         </EntityType>
         <Association Name="FK_T_Answer_T_Question">
           <End Role="T_Question" Type="Self.T_Question" Multiplicity="1" />
@@ -175,31 +180,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_T_Token_T_User">
-          <End Role="T_User" Type="Self.T_User" Multiplicity="1" />
-          <End Role="T_Token" Type="Self.T_Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="T_User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="T_Token">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="MissYangQADBModelStoreContainer">
           <EntitySet Name="T_Answer" EntityType="Self.T_Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ApplicationLog" EntityType="Self.T_ApplicationLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_ClassList" EntityType="Self.T_ClassList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Paper" EntityType="Self.T_Paper" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Question" EntityType="Self.T_Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Scantron" EntityType="Self.T_Scantron" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_ScantronDetailed" EntityType="Self.T_ScantronDetailed" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_Token" EntityType="Self.T_Token" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_User" EntityType="Self.T_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="V_User" EntityType="Self.V_User" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [V_User].[ID] AS [ID], 
-    [V_User].[UserName] AS [UserName]
+    [V_User].[UserName] AS [UserName], 
+    [V_User].[Token] AS [Token], 
+    [V_User].[TokenCreateTime] AS [TokenCreateTime]
     FROM [dbo].[V_User] AS [V_User]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_T_Answer_T_Question" Association="Self.FK_T_Answer_T_Question">
@@ -230,10 +225,6 @@
             <End Role="T_Scantron" EntitySet="T_Scantron" />
             <End Role="T_ScantronDetailed" EntitySet="T_ScantronDetailed" />
           </AssociationSet>
-          <AssociationSet Name="FK_T_Token_T_User" Association="Self.FK_T_Token_T_User">
-            <End Role="T_User" EntitySet="T_User" />
-            <End Role="T_Token" EntitySet="T_Token" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -241,12 +232,12 @@
       <Schema Namespace="MissYangQADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="MissYangQADBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="T_Answer" EntityType="MissYangQADBModel.T_Answer" />
+          <EntitySet Name="T_ApplicationLog" EntityType="MissYangQADBModel.T_ApplicationLog" />
           <EntitySet Name="T_ClassList" EntityType="MissYangQADBModel.T_ClassList" />
           <EntitySet Name="T_Paper" EntityType="MissYangQADBModel.T_Paper" />
           <EntitySet Name="T_Question" EntityType="MissYangQADBModel.T_Question" />
           <EntitySet Name="T_Scantron" EntityType="MissYangQADBModel.T_Scantron" />
           <EntitySet Name="T_ScantronDetailed" EntityType="MissYangQADBModel.T_ScantronDetailed" />
-          <EntitySet Name="T_Token" EntityType="MissYangQADBModel.T_Token" />
           <EntitySet Name="T_User" EntityType="MissYangQADBModel.T_User" />
           <EntitySet Name="V_User" EntityType="MissYangQADBModel.V_User" />
           <AssociationSet Name="FK_T_Answer_T_Question" Association="MissYangQADBModel.FK_T_Answer_T_Question">
@@ -277,10 +268,6 @@
             <End Role="T_Scantron" EntitySet="T_Scantron" />
             <End Role="T_ScantronDetailed" EntitySet="T_ScantronDetailed" />
           </AssociationSet>
-          <AssociationSet Name="FK_T_Token_T_User" Association="MissYangQADBModel.FK_T_Token_T_User">
-            <End Role="T_User" EntitySet="T_User" />
-            <End Role="T_Token" EntitySet="T_Token" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="T_Answer">
           <Key>
@@ -293,6 +280,16 @@
           <Property Name="FK_Question" Type="Guid" Nullable="false" />
           <NavigationProperty Name="T_Question" Relationship="MissYangQADBModel.FK_T_Answer_T_Question" FromRole="T_Answer" ToRole="T_Question" />
           <NavigationProperty Name="T_ScantronDetailed" Relationship="MissYangQADBModel.FK_T_ScoreDetailed_T_Answer" FromRole="T_Answer" ToRole="T_ScantronDetailed" />
+        </EntityType>
+        <EntityType Name="T_ApplicationLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Types" Type="Byte" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contents" Type="String" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="T_ClassList">
           <Key>
@@ -355,16 +352,6 @@
           <NavigationProperty Name="T_Question" Relationship="MissYangQADBModel.FK_T_ScoreDetailed_T_Question" FromRole="T_ScantronDetailed" ToRole="T_Question" />
           <NavigationProperty Name="T_Scantron" Relationship="MissYangQADBModel.FK_T_ScoreDetailed_T_Score" FromRole="T_ScantronDetailed" ToRole="T_Scantron" />
         </EntityType>
-        <EntityType Name="T_Token">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Guid" Nullable="false" />
-          <Property Name="Token" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="T_User" Relationship="MissYangQADBModel.FK_T_Token_T_User" FromRole="T_Token" ToRole="T_User" />
-        </EntityType>
         <EntityType Name="T_User">
           <Key>
             <PropertyRef Name="ID" />
@@ -372,7 +359,8 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="T_Token" Relationship="MissYangQADBModel.FK_T_Token_T_User" FromRole="T_User" ToRole="T_Token" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="TokenCreateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="V_User">
           <Key>
@@ -381,6 +369,8 @@
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Token" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="TokenCreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_T_Answer_T_Question">
           <End Type="MissYangQADBModel.T_Question" Role="T_Question" Multiplicity="1" />
@@ -466,19 +456,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_T_Token_T_User">
-          <End Type="MissYangQADBModel.T_User" Role="T_User" Multiplicity="1" />
-          <End Type="MissYangQADBModel.T_Token" Role="T_Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="T_User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="T_Token">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -491,6 +469,17 @@
                 <ScalarProperty Name="IsRight" ColumnName="IsRight" />
                 <ScalarProperty Name="Rank" ColumnName="Rank" />
                 <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ApplicationLog">
+            <EntityTypeMapping TypeName="MissYangQADBModel.T_ApplicationLog">
+              <MappingFragment StoreEntitySet="T_ApplicationLog">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Types" ColumnName="Types" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -549,19 +538,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="T_Token">
-            <EntityTypeMapping TypeName="MissYangQADBModel.T_Token">
-              <MappingFragment StoreEntitySet="T_Token">
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="Token" ColumnName="Token" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="T_User">
             <EntityTypeMapping TypeName="MissYangQADBModel.T_User">
               <MappingFragment StoreEntitySet="T_User">
+                <ScalarProperty Name="TokenCreateTime" ColumnName="TokenCreateTime" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -571,6 +552,8 @@
           <EntitySetMapping Name="V_User">
             <EntityTypeMapping TypeName="MissYangQADBModel.V_User">
               <MappingFragment StoreEntitySet="V_User">
+                <ScalarProperty Name="TokenCreateTime" ColumnName="TokenCreateTime" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

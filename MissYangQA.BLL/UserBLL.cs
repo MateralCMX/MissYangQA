@@ -1,9 +1,11 @@
 ﻿using MateralTools.MEncryption;
 using MateralTools.MResult;
+using MateralTools.MVerify;
 using MissYangQA.DAL;
 using MissYangQA.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +19,23 @@ namespace MissYangQA.BLL
     {
         #region 成员
         /// <summary>
+        /// Token有效时间[分钟]
+        /// </summary>
+        private static double TokenOverdue = 1440;
+        /// <summary>
         /// 用户数据访问对象
         /// </summary>
         private readonly UserDAL _userDAL = new UserDAL();
+        #endregion
+        #region 构造方法
+        public UserBLL()
+        {
+            string tokenOverdue = ConfigurationManager.AppSettings["TokenOverdue"];
+            if (!string.IsNullOrEmpty(tokenOverdue) && VerifyManager.IsInteger(tokenOverdue))
+            {
+                TokenOverdue = Convert.ToDouble(tokenOverdue);
+            }
+        }
         #endregion
         #region 公共方法
         /// <summary>
@@ -34,7 +50,7 @@ namespace MissYangQA.BLL
             return resM;
         }
         /// <summary>
-        /// 获得所有用户的视图信息
+        /// 根据用户唯一标识获得用户视图信息
         /// </summary>
         /// <returns>查询结果</returns>
         public V_User GetUserViewInfoByID(Guid id)
@@ -44,9 +60,35 @@ namespace MissYangQA.BLL
             return resM;
         }
         /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        /// <param name="password">密码</param>
+        /// <param name="isEncrypted">是否已加密</param>
+        /// <returns>登录用户信息</returns>
+        public V_User Login(string userName,string password,bool isEncrypted)
+        {
+            if (!isEncrypted)
+            {
+                password = EncryptionManager.MD5Encode_32(password);
+            }
+            return Login(userName, password);
+        }
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="loginM">登录对象</param>
+        /// <returns>登录用户信息</returns>
+        public V_User Login(LoginModel loginM)
+        {
+            return Login(loginM.UserName, loginM.Password, loginM.IsEncrypted);
+        }
+        /// <summary>
         /// 添加用户信息
         /// </summary>
         /// <param name="model">要添加的对象</param>
+        /// <exception cref="ArgumentException">参数错误</exception>
+        /// <exception cref="ArgumentNullException">参数错误</exception>
         public void AddUserInfo(T_User model)
         {
             if (model != null)
@@ -54,6 +96,8 @@ namespace MissYangQA.BLL
                 string msg = string.Empty;
                 if (VerificationAdd(model, ref msg))
                 {
+                    model.Token = GetNewToken();
+                    model.TokenCreateTime = DateTime.Now;
                     _userDAL.Insert(model);
                 }
                 else
@@ -67,9 +111,28 @@ namespace MissYangQA.BLL
             }
         }
         /// <summary>
+        /// 删除用户信息
+        /// </summary>
+        /// <param name="id">用户唯一标识</param>
+        /// <exception cref="ArgumentNullException">参数错误异常</exception>
+        public void DeleteUserInfo(Guid id)
+        {
+            T_User model = _userDAL.GetUserInfoByID(id);
+            if (model == null)
+            {
+                _userDAL.Remove(model);
+            }
+            else
+            {
+                throw new ArgumentNullException($"参数{nameof(id)}错误。");
+            }
+        }
+        /// <summary>
         /// 修改用户信息
         /// </summary>
         /// <param name="model">要修改的对象</param>
+        /// <exception cref="ArgumentException">验证不通过异常</exception>
+        /// <exception cref="ArgumentNullException">参数错误异常</exception>
         public void EditUserInfo(T_User model)
         {
             if (model != null)
@@ -95,8 +158,41 @@ namespace MissYangQA.BLL
                 throw new ArgumentNullException($"参数{nameof(model)}不可以为空。");
             }
         }
+        /// <summary>
+        /// Token是否有效
+        /// </summary>
+        /// <param name="id">用户唯一标识</param>
+        /// <param name="token">Token</param>
+        /// <returns>是否有效</returns>
+        public bool TokenValid(Guid id, string token)
+        {
+            T_User model = _userDAL.GetUserInfoByIDAndToken(id, token);
+            return model != null && model.TokenCreateTime.AddMinutes(TokenOverdue) >= DateTime.Now;
+        }
         #endregion
         #region 私有方法
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        /// <param name="password">密码</param>
+        /// <returns>登录用户信息</returns>
+        private V_User Login(string userName, string password)
+        {
+            V_User resM = null;
+            T_User model = _userDAL.GetUserInfoByUserName(userName);
+            if (model != null)
+            {
+                if (model.Password.ToUpper() == password.ToUpper())
+                {
+                    model.Token = GetNewToken();
+                    model.TokenCreateTime = DateTime.Now;
+                    _userDAL.SaveChange();
+                    resM = _userDAL.GetUserViewInfoByID(model.ID);
+                }
+            }
+            return resM;
+        }
         /// <summary>
         /// 验证模型
         /// </summary>
@@ -146,6 +242,30 @@ namespace MissYangQA.BLL
                 msg += "该用户名已被使用，";
             }
             return Verification(model, ref msg);
+        }
+        /// <summary>
+        /// 获得新的Token
+        /// </summary>
+        /// <returns>新的Token</returns>
+        private string GetNewToken()
+        {
+            string lib = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            Random rd = new Random();
+            int Count;
+            string token;
+            T_User model;
+            do
+            {
+                Count = rd.Next(15, 32);
+                token = string.Empty;
+                for (int i = 0; i < Count; i++)
+                {
+                    token += lib[rd.Next(0, lib.Length)];
+                }
+                token = EncryptionManager.MD5Encode_32(token);
+                model = _userDAL.GetUserInfoByToken(token);
+            } while (model != null);
+            return token;
         }
         #endregion
     }

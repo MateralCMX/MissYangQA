@@ -14,17 +14,10 @@ namespace MissYangQA.Model
     
     public partial class T_User
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public T_User()
-        {
-            this.T_Token = new HashSet<T_Token>();
-        }
-    
         public System.Guid ID { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<T_Token> T_Token { get; set; }
+        public string Token { get; set; }
+        public System.DateTime TokenCreateTime { get; set; }
     }
 }

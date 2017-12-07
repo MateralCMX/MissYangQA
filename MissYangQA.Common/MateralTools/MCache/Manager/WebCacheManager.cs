@@ -69,21 +69,8 @@ namespace MateralTools.MCache
                 Remove(key);
             }
             _cacheKeys.Add(key);
-            _cacheM.Insert(key, value, null, cacheOffset.DateTime, TimeSpan.Zero);
+            _cacheM.Insert(key, value, null, cacheOffset.UtcDateTime, TimeSpan.Zero);
         }
-
-        /// <summary>
-        /// 添加缓存
-        /// </summary>
-        /// <param name="key">键</param>
-        /// <param name="value">值</param>
-        /// <param name="timeExpiredByMinutes">过期时间，以分钟为单位</param>
-        public static void Set(string key, object value, int timeExpiredByMinutes)
-        {
-            _cacheM.Insert(key, value, null, DateTime.Now.AddMinutes(timeExpiredByMinutes), Cache.NoSlidingExpiration);
-        }
-
-
         /// <summary>
         /// 添加缓存
         /// </summary>
@@ -133,7 +120,11 @@ namespace MateralTools.MCache
         /// <returns></returns>
         public static object Get(string key)
         {
-            return _cacheM.Get(key);
+            if (_cacheKeys.Contains(key))
+            {
+                return _cacheM.Get(key);
+            }
+            return null;
         }
         /// <summary>
         /// 读取所有缓存

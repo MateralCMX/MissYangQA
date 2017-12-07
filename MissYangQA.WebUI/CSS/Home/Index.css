@@ -1,0 +1,26 @@
+﻿
+.MainNav {
+    font-size: 0;
+}
+
+    .MainNav > a {
+        display: inline-block;
+        vertical-align: top;
+        width: 46%;
+        height: 200px;
+        margin: 10px 2%;
+        border-radius: 10px;
+        position:relative;
+    }
+
+        .MainNav > a > i {
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+            font-size: 100px;
+            display: block;
+            text-align: center;
+            line-height: 100%;
+            color:#fff;
+        }

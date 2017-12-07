@@ -1,0 +1,8 @@
+﻿.list-group-item > span {
+    display: block;
+    line-height:20px;
+}
+    .list-group-item > span.Title {
+        font-weight:bold;
+        font-size:16px;
+    }

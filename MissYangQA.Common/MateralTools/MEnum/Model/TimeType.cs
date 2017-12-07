@@ -1,7 +1,7 @@
 ﻿namespace MateralTools.MEnum
 {
     /// <summary>
-    /// 缓存保存时间类型
+    /// 时间类型
     /// </summary>
     public enum TimeType
     {

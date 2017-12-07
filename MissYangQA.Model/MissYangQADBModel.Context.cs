@@ -26,12 +26,12 @@ namespace MissYangQA.Model
         }
     
         public virtual DbSet<T_Answer> T_Answer { get; set; }
+        public virtual DbSet<T_ApplicationLog> T_ApplicationLog { get; set; }
         public virtual DbSet<T_ClassList> T_ClassList { get; set; }
         public virtual DbSet<T_Paper> T_Paper { get; set; }
         public virtual DbSet<T_Question> T_Question { get; set; }
         public virtual DbSet<T_Scantron> T_Scantron { get; set; }
         public virtual DbSet<T_ScantronDetailed> T_ScantronDetailed { get; set; }
-        public virtual DbSet<T_Token> T_Token { get; set; }
         public virtual DbSet<T_User> T_User { get; set; }
         public virtual DbSet<V_User> V_User { get; set; }
     }

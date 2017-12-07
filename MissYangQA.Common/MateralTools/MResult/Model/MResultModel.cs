@@ -78,16 +78,6 @@ namespace MateralTools.MResult
             _resultType = resultType;
             _message = message;
         }
-
-        /// <summary>
-        /// 构造器
-        /// </summary>
-        /// <param name="message"></param>
-        public MResultModel(string message)
-        {
-            _message = message;
-        }
-
         /// <summary>
         /// 获得一个成功返回对象
         /// </summary>

@@ -16,5 +16,7 @@ namespace MissYangQA.Model
     {
         public System.Guid ID { get; set; }
         public string UserName { get; set; }
+        public string Token { get; set; }
+        public Nullable<System.DateTime> TokenCreateTime { get; set; }
     }
 }

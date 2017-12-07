@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" charset="utf-8" http-equiv="Content-Type" />
+    <title id="PageTitle">登录</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Lib/m-Reset/m-Reset.css" rel="stylesheet" />
+    <link href="~/CSS/Base.css" rel="stylesheet" />
+    <link href="~/CSS/Home/Login.css" rel="stylesheet" />
+</head>
+<body>
+    <main>
+        <form id="InputForm" autocomplete="off">
+            <div class="form-group">
+                <h2>Miss Yang Q&A System</h2>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon glyphicon glyphicon-user"></span>
+                    <input id="InputUserName" type="text" class="form-control" placeholder="请输入用户名" autocomplete="off" required>
+                </div>
+                <span class="help-block"></span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon glyphicon glyphicon-lock"></span>
+                    <input id="InputPassword" type="password" class="form-control" placeholder="请输入登录密码" autocomplete="off" required>
+                    <span class="input-group-btn">
+                        <button id="BtnShowPassword" type="button" data-target="InputPassword" class="btn btn-default glyphicon glyphicon-eye-open"></button>
+                    </span>
+                </div>
+                <span class="help-block"></span>
+            </div>
+            <button id="BtnLogin" type="button" class="btn btn-primary btn-block">登录</button>
+        </form>
+    </main>
+    <footer class="DefultFooter"></footer>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Lib/m-Tools/m-Tools.js"></script>
+    <script src="~/Lib/m-Reset/m-Reset.js"></script>
+    <script src="~/Scripts/Base.js"></script>
+    <script src="~/Scripts/Home/Login.js"></script>
+</body>
+</html>

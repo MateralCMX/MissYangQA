@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationLogModel.cs" />
+    <Compile Include="BaseModel.cs" />
     <Compile Include="MissYangQADBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -68,6 +70,9 @@
     <Compile Include="T_Answer.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="T_ApplicationLog.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="T_ClassList.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
@@ -83,12 +88,10 @@
     <Compile Include="T_ScantronDetailed.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="T_Token.cs">
-      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="T_User.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserModel.cs" />
     <Compile Include="V_User.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>

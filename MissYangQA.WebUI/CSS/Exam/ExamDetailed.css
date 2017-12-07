@@ -1,0 +1,30 @@
+body{
+    font-family: "Micsoft YaHei";
+}
+.panel-heading{
+    line-height: 20px;
+    font-size: 14px;
+    position: relative;
+    padding: 10px 35px 10px 30px;
+}
+.Score{
+    font-weight: bold;
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    line-height: 20px;
+    font-size: 14px;
+}
+.list-group-item{
+    position: relative;
+    padding: 10px 10px 10px 30px;
+}
+.number{
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    margin: 0;
+    display: block;
+    transform: translateY(-50%);
+}

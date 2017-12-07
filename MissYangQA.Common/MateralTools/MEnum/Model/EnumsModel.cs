@@ -86,5 +86,13 @@ namespace MateralTools.MEnum
                 throw new ApplicationException("该类型不是枚举类型。");
             }
         }
+        /// <summary>
+        /// 获得列表
+        /// </summary>
+        /// <returns>列表信息</returns>
+        public IList GetList()
+        {
+            return List;
+        }
     }
 }

@@ -1,0 +1,64 @@
+﻿body {
+    padding: 0 5px 60px;
+}
+main {
+    padding: 0 10px
+}
+.DefultFooter {
+    padding:10px 0;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #adadad;
+    background-color:#fff;
+}
+
+    .DefultFooter > a {
+        display: block;
+    }
+
+    .DefultFooter > p {
+        display: block;
+        height:20px;
+        line-height:20px;
+    }
+
+header > h2 {
+    font-size: 20px;
+    line-height: 50px;
+    padding: 0 10px;
+    margin-bottom: 10px;
+    font-family: "Microsoft YaHei";
+}
+
+    header > h2::after {
+        content: " ";
+        width: 100%;
+        height: 1px;
+        background-color: #e6e6e6;
+        display: block;
+    }
+
+.TopTools {
+    margin: 0 10px 10px 10px;
+}
+
+    /*.TopTools > button:before,
+    .TopTools > a:before {
+        margin-right: 5px;
+    }*/
+.glyphicon {
+    top: 0;
+}
+.list-group-item {
+    position: relative;
+}
+
+    .list-group-item > .list-right {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px;
+    }

@@ -70,10 +70,10 @@ namespace MateralTools.MWeChat
         {
             WeChatWorkAccessTokenModel tokenM = WebCacheManager.Get<WeChatWorkAccessTokenModel>(AccessTokenKey);
 
-            //tokenM = new WeChatWorkAccessTokenModel();
-            //tokenM.access_token = "9-B9hxkFc3j8L_fFo7wYoxGX6RcOyQ0G8XZwrz1zrTo4-UKJVHJW66LXnVxKiwCCShgPhLWYa4SCgu1g6SCs1c9rnS2uRIGeHETP1rvgE9mYa6G5ZGCS4p8nIEyvtAbfyrzM1iG5nyrHFGFU-OSflxfH5s7b-GvEjcTPim4O-pCslYZzDbeMu-9yQukIwCOD7G_9ngSbGyIArc8eZoKqqg";
-            //tokenM.expires_in = 7200;
-            //WebCacheManager.Set(AccessTokenKey, tokenM, DateTimeOffset.Now.AddSeconds(tokenM.expires_in - 60));
+            tokenM = new WeChatWorkAccessTokenModel();
+            tokenM.access_token = "9-B9hxkFc3j8L_fFo7wYoxGX6RcOyQ0G8XZwrz1zrTo4-UKJVHJW66LXnVxKiwCCShgPhLWYa4SCgu1g6SCs1c9rnS2uRIGeHETP1rvgE9mYa6G5ZGCS4p8nIEyvtAbfyrzM1iG5nyrHFGFU-OSflxfH5s7b-GvEjcTPim4O-pCslYZzDbeMu-9yQukIwCOD7G_9ngSbGyIArc8eZoKqqg";
+            tokenM.expires_in = 7200;
+            WebCacheManager.Set(AccessTokenKey, tokenM, DateTimeOffset.Now.AddSeconds(tokenM.expires_in - 60));
 
             if (tokenM == null)
             {
@@ -159,13 +159,11 @@ namespace MateralTools.MWeChat
         /// <returns>签名字符串</returns>
         public string GetSignature(long timestamp, string url, string noceStr, string jsapiTicket)
         {
-            Hashtable hs = new Hashtable
-            {
-                { "noncestr", noceStr },
-                { "jsapi_ticket", jsapiTicket },
-                { "timestamp", timestamp },
-                { "url", url }
-            };
+            Hashtable hs = new Hashtable();
+            hs.Add("noncestr", noceStr);
+            hs.Add("jsapi_ticket", jsapiTicket);
+            hs.Add("timestamp", timestamp);
+            hs.Add("url", url);
             ArrayList keys = new ArrayList(hs.Keys); keys.Sort();
             string string1 = string.Empty;
             foreach (string key in keys)

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MissYangQA.Model", "MissYan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MissYangQA.DALTests", "MissYangQA.DALTests\MissYangQA.DALTests.csproj", "{1E773153-60AE-4D33-BCF1-8E5A1539B515}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MissYangQA.BLLTests", "MissYangQA.BLLTests\MissYangQA.BLLTests.csproj", "{E79B3DF5-790C-4627-BC1B-64B6D50C7EC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{1E773153-60AE-4D33-BCF1-8E5A1539B515}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E773153-60AE-4D33-BCF1-8E5A1539B515}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E773153-60AE-4D33-BCF1-8E5A1539B515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E79B3DF5-790C-4627-BC1B-64B6D50C7EC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E79B3DF5-790C-4627-BC1B-64B6D50C7EC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E79B3DF5-790C-4627-BC1B-64B6D50C7EC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E79B3DF5-790C-4627-BC1B-64B6D50C7EC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
