@@ -11,6 +11,8 @@ namespace MissYangQA {
         constructor() {
             ApplicationSettingModel.IsDebug = true;
             this.AddMessageBoxArticle();
+            this.BindFooterInfo();
+            this.BindBackBtn();
         }
         /*应用程序配置对象*/
         public ApplicationSettingM: ApplicationSettingModel = new ApplicationSettingModel();
@@ -276,6 +278,98 @@ namespace MissYangQA {
             btnOK.innerHTML = "确定";
             modalFooter.appendChild(btnOK);
             
+        }
+        /**
+         * 绑定标准页面脚部
+         */
+        private BindFooterInfo() {
+            let footers = document.getElementsByClassName("DefultFooter");
+            for (var i = 0; i < footers.length; i++) {
+                let ContentP = document.createElement("p");
+                ContentP.textContent = "欢迎使用：Miss Yang Q&A System";
+                let KeepA = document.createElement("a");
+                KeepA.href = "";
+                KeepA.target = "_blank";
+                KeepA.textContent = "";
+                let CopyrightP = document.createElement("p");
+                CopyrightP.textContent = "技术支持：小杨老师家的猴子 ©2017 Materal";
+                footers[i].appendChild(ContentP);
+                footers[i].appendChild(CopyrightP);
+            }
+        }
+        /**
+         * 绑定后退按钮
+         */
+        private BindBackBtn() {
+            let BtnBacks = document.getElementsByClassName("btn-back");
+            for (var i = 0; i < BtnBacks.length; i++) {
+                MDMa.AddEvent(BtnBacks[i], "click", function (e: MouseEvent) {
+                    window.history.back();
+                });
+            }
+        }
+        /**
+         * 检测登录
+         * @param gotoLogin 没登录是否跳转登录
+         */
+        public IsLogin(gotoLogin: boolean = false) {
+            let userInfo = common.GetLoginUserInfo();
+            if (MTMa.IsNullOrUndefined(userInfo)) {
+                if (gotoLogin) {
+                    common.GoToPage("Login", ["from=" + encodeURIComponent(window.location.pathname + window.location.search)], true);
+                    return false;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return true;
+            }
+        }
+        /**
+         * 设置标题
+         * @param headerTitle 头部标题
+         * @param pageTitle 页面标题
+         */
+        public SetTitle(headerTitle: string, pageTitle: string = null) {
+            if (MTMa.IsNullOrUndefinedOrEmpty(pageTitle)) {
+                pageTitle = headerTitle;
+            }
+            let HeaderTitle = MDMa.$("HeaderTitle") as HTMLElement;
+            if (!MTMa.IsNullOrUndefined(HeaderTitle)) {
+                HeaderTitle.textContent = headerTitle;
+            }
+            let PageTitle = MDMa.$("PageTitle") as HTMLElement;
+            if (!MTMa.IsNullOrUndefined(PageTitle)) {
+                PageTitle.textContent = pageTitle;
+            }
+        }
+        /**
+         * 获取滚动条位置
+         */
+        public GetScrollTop() {
+            var scrollTop = 0;
+            if (document.documentElement && document.documentElement.scrollTop) {
+                scrollTop = document.documentElement.scrollTop;
+            }
+            else if (document.body) {
+                scrollTop = document.body.scrollTop;
+            }
+            return scrollTop;
+        }
+        /**
+         * 获取可见高度
+         */
+        public GetClientHeight() {
+            var clientHeight = 0;
+            if (document.body.clientHeight && document.documentElement.clientHeight) {
+                var clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;
+            }
+            else {
+                var clientHeight = (document.body.clientHeight > document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;
+            }
+            return clientHeight;
         }
     }
     /**
