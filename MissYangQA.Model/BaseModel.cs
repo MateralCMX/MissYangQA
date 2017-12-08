@@ -3,6 +3,24 @@
 namespace MissYangQA.Model
 {
     /// <summary>
+    /// 删除模型
+    /// </summary>
+    public class DeleteModel : IVerificationLoginModel
+    {
+        /// <summary>
+        /// 唯一标识
+        /// </summary>
+        public Guid ID { get; set; }
+        /// <summary>
+        /// 登录用户唯一标识
+        /// </summary>
+        public Guid LoginUserID { get; set; }
+        /// <summary>
+        /// 登录用户Token
+        /// </summary>
+        public string LoginUserToken { get; set; }
+    }
+    /// <summary>
     /// 查询模型
     /// </summary>
     public class QueryBaseModel : IVerificationLoginModel
@@ -11,7 +29,7 @@ namespace MissYangQA.Model
         /// <summary>
         /// 登录用户ID
         /// </summary>
-        public Guid? LoginUserID { get; set; }
+        public Guid LoginUserID { get; set; }
         /// <summary>
         /// 登录用户令牌
         /// </summary>
@@ -42,6 +60,11 @@ namespace MissYangQA.Model
             PageIndex = 1;
             PageSize = 10;
         }
+
+        public static implicit operator int(QueryPagingBaseModel v)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
     /// <summary>
@@ -52,7 +75,7 @@ namespace MissYangQA.Model
         /// <summary>
         /// 登录用户ID
         /// </summary>
-        Guid? LoginUserID { get; set; }
+        Guid LoginUserID { get; set; }
         /// <summary>
         /// 登录用户令牌
         /// </summary>

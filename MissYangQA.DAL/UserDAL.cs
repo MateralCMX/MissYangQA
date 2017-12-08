@@ -63,9 +63,12 @@ namespace MissYangQA.DAL
         /// <returns>查询结果</returns>
         public List<V_User> GetAllUserViewInfo(MPagingModel pageM)
         {
-            int count = _DB.V_User.Count();
-            List<V_User> listM = _DB.V_User.OrderBy(m => m.UserName).Skip(pageM.PagingIndex * pageM.PagingSize).Take(pageM.PagingSize).ToList();
-            pageM.DataCount = count;
+            List<V_User> listM = new List<V_User>();
+            pageM.DataCount = _DB.V_User.Count();
+            if (pageM.DataCount > 0)
+            {
+                listM.AddRange(_DB.V_User.OrderBy(m => m.UserName).Skip((pageM.PagingIndex - 1) * pageM.PagingSize).Take(pageM.PagingSize).ToList());
+            }
             return listM;
         }
         /// <summary>

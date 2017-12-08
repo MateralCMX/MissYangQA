@@ -332,11 +332,13 @@ namespace MateralTools {
             if (ToolManager.GetType(element) === "string" || ToolManager.GetType(element) === "HTMLElement") {
                 element = this.$(element as string | HTMLElement);
             }
-            if (!ToolManager.IsNullOrUndefined(element["addEventListener"])) {
-                element["addEventListener"](type, fun);
-            }
-            else {
-                element["attachEvent"]("on" + type, fun);
+            if (!ToolManager.IsNullOrUndefined(element)) {
+                if (!ToolManager.IsNullOrUndefined(element["addEventListener"])) {
+                    element["addEventListener"](type, fun);
+                }
+                else {
+                    element["attachEvent"]("on" + type, fun);
+                }
             }
         }
         /**

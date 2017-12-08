@@ -52,6 +52,7 @@ namespace MissYangQA.BLL
         /// <summary>
         /// 根据用户唯一标识获得用户视图信息
         /// </summary>
+        /// <param name="id">用户唯一标识</param>
         /// <returns>查询结果</returns>
         public V_User GetUserViewInfoByID(Guid id)
         {

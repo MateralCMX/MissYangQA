@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title id="PageTitle">账户列表</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Lib/m-Reset/m-Reset.css" rel="stylesheet" />
+    <link href="~/Css/Base.css" rel="stylesheet" />
+    <link href="~/Css/User/UserList.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <h2 id="HeaderTitle">账户列表</h2>
+    </header>
+    <div class="TopTools btn-group" role="group" aria-label="...">
+        <button class="btn btn-default btn-back glyphicon glyphicon-chevron-left"></button>
+        <a href="/User/UserDetailed" class="btn btn-primary glyphicon glyphicon-plus"></a>
+    </div>
+    <main id="MainList" class="list-group"></main>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Lib/m-Tools/m-Tools.js"></script>
+    <script src="~/Scripts/Base.js"></script>
+    <script src="~/Scripts/User/UserList.js"></script>
+</body>
+</html>

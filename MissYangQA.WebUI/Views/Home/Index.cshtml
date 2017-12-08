@@ -1,24 +1,47 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title id="PageTitle">Miss Yang Q&A System</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Lib/m-Reset/m-Reset.css" rel="stylesheet" />
+    <link href="~/Css/Base.css" rel="stylesheet" />
+    <link href="~/Css/Home/Index.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <h2 id="HeaderTitle">Miss Yang Q&A System</h2>
+    </header>
+    <nav class="MainNav">
+        <a href="/User/UserList" style="background-color:#fc9413">
+            <i class="glyphicon glyphicon-user"></i>
+        </a>
+        <a href="/ClassList/ClassListList" style="background-color:#13b67b">
+            <i class="glyphicon glyphicon-education"></i>
+        </a>
+        <a href="/Paper/PaperList" style="background-color:#808080">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a style="background-color:#31bee5">
+            <i class="glyphicon glyphicon-list-alt"></i>
+        </a>
+        <a style="background-color:#66CCCC">
+            <i class="glyphicon glyphicon-qrcode"></i>
+        </a>
+        <a id="BtnLogOut" style="background-color:#FF6666">
+            <i class="glyphicon glyphicon-off"></i>
+        </a>
+    </nav>
+    <footer class="DefultFooter"></footer>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Lib/m-Tools/m-Tools.js"></script>
+    <script src="~/Scripts/Base.js"></script>
+    <script src="~/Scripts/Home/Index.js"></script>
+</body>
+</html>

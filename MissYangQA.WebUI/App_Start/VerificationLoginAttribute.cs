@@ -40,9 +40,9 @@ namespace MissYangQA.WebUI
                     if (iVerificationLoginType != null)
                     {
                         IVerificationLoginModel queryM = (IVerificationLoginModel)obj;
-                        if (queryM.LoginUserID != null && queryM.LoginUserToken != null)
+                        if (queryM.LoginUserID != Guid.Empty && queryM.LoginUserToken != null)
                         {
-                            if (new UserBLL().TokenValid(queryM.LoginUserID.Value, queryM.LoginUserToken))
+                            if (new UserBLL().TokenValid(queryM.LoginUserID, queryM.LoginUserToken))
                             {
                                 base.OnActionExecuting(actionContext);
                             }

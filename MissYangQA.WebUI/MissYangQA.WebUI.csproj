@@ -199,6 +199,7 @@
     <Compile Include="Controllers\API\ApiBaseController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -285,6 +286,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\User\UserList.cshtml" />
+    <Content Include="Views\User\UserDetailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -313,8 +316,11 @@
     <TypeScriptCompile Include="Lib\m-Reset\m-Reset.ts" />
     <TypeScriptCompile Include="Lib\m-Tools\m-Tools.ts" />
     <TypeScriptCompile Include="Scripts\Base.ts" />
+    <TypeScriptCompile Include="Scripts\Home\Index.ts" />
     <TypeScriptCompile Include="Scripts\Home\Login.ts" />
     <TypeScriptCompile Include="Scripts\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\User\UserDetailed.ts" />
+    <TypeScriptCompile Include="Scripts\User\UserList.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

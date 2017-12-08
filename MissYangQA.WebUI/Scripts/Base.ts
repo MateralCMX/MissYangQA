@@ -174,10 +174,10 @@ namespace MissYangQA {
          */
         public SendAjax(url: string, data: Object, SFun: Function, FFun: Function, CFun: Function, EFun: Function = null, type: string = "post", dataType: string = "json") {
             url = this.ApplicationSettingM.DomainName + url;
-            let LoginUserM = this.GetLoginUserInfo();
+            let LoginUserM: LoginUserModel = this.GetLoginUserInfo();
             if (LoginUserM != null) {
-                data["LoginUserID"] = LoginUserM["UserID"];
-                data["LoginUserToken"] = LoginUserM["LoginToken"];
+                data["LoginUserID"] = LoginUserM.ID;
+                data["LoginUserToken"] = LoginUserM.Token;
             }
             if (EFun == null) {
                 EFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
