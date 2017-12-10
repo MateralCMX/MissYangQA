@@ -26,7 +26,7 @@ namespace MissYangQA.WebUI.Controllers.API
         /// <summary>
         /// 用户登录
         /// </summary>
-        /// <param name="model">登录模型</param>
+        /// <param name="inputM">登录模型</param>
         /// <returns>登录结果</returns>
         [HttpPost]
         [Route("Login")]
@@ -55,7 +55,7 @@ namespace MissYangQA.WebUI.Controllers.API
         /// <summary>
         /// 修改用户信息
         /// </summary>
-        /// <param name="model">要修改的对象</param>
+        /// <param name="inputM">要修改的对象</param>
         [HttpPost]
         [Route("EditUserInfo")]
         public MResultModel EditUserInfo(EditUserModel inputM)
@@ -83,7 +83,7 @@ namespace MissYangQA.WebUI.Controllers.API
         /// <summary>
         /// 添加用户信息
         /// </summary>
-        /// <param name="model">要添加的对象</param>
+        /// <param name="inputM">要添加的对象</param>
         [HttpPost]
         [Route("AddUserInfo")]
         public MResultModel AddUserInfo(EditUserModel inputM)
@@ -92,7 +92,7 @@ namespace MissYangQA.WebUI.Controllers.API
             try
             {
                 _userBLL.AddUserInfo(inputM);
-                resM = MResultModel.GetSuccessResultM("修改成功");
+                resM = MResultModel.GetSuccessResultM("添加成功");
             }
             catch (ArgumentNullException ex)
             {
@@ -111,7 +111,7 @@ namespace MissYangQA.WebUI.Controllers.API
         /// <summary>
         /// 删除用户信息
         /// </summary>
-        /// <param name="id">用户唯一标识</param>
+        /// <param name="inputM">删除对象</param>
         [HttpPost]
         [Route("DeleteUserInfo")]
         public MResultModel DeleteUserInfo(DeleteModel inputM)
@@ -120,9 +120,37 @@ namespace MissYangQA.WebUI.Controllers.API
             try
             {
                 _userBLL.DeleteUserInfo(inputM.ID);
+                resM = MResultModel.GetSuccessResultM("删除成功");
+            }
+            catch (ArgumentNullException ex)
+            {
+                resM = MResultModel.GetFailResultM(ex.Message);
+            }
+            catch (Exception)
+            {
+                resM = MResultModel.GetErrorResultM("应用程序出错了！");
+            }
+            return resM;
+        }
+        /// <summary>
+        /// 修改用户密码
+        /// </summary>
+        /// <param name="inputM">修改密码对象</param>
+        [HttpPost]
+        [Route("EditPassword")]
+        public MResultModel EditPassword(EditPasswordModel inputM)
+        {
+            MResultModel resM;
+            try
+            {
+                _userBLL.EditPassword(inputM.ID, inputM.OldPassword, inputM.NewPassword);
                 resM = MResultModel.GetSuccessResultM("修改成功");
             }
             catch (ArgumentNullException ex)
+            {
+                resM = MResultModel.GetFailResultM(ex.Message);
+            }
+            catch (ArgumentException ex)
             {
                 resM = MResultModel.GetFailResultM(ex.Message);
             }
@@ -177,7 +205,7 @@ namespace MissYangQA.WebUI.Controllers.API
         /// <summary>
         /// 根据用户唯一标识获得用户视图信息
         /// </summary>
-        /// <param name="id">用户唯一标识</param>
+        /// <param name="ID">用户唯一标识</param>
         /// <returns>查询结果</returns>
         [HttpGet]
         [Route("GetUserViewInfoByID")]

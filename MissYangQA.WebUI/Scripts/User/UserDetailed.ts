@@ -69,14 +69,14 @@ namespace MissYangQA {
             let data = {
                 ID: UserDetailedModel.PageData.params["ID"]
             }
-            let SFun = function (resM: Object) {
+            let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 let InputUserName = MDMa.$("InputUserName") as HTMLInputElement;
                 InputUserName.value = resM["Data"]["UserName"];
             };
-            let FFun = function (xhr: XMLHttpRequest, resM: Object) {
+            let FFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 common.ShowMessageBox(resM["Message"])
             };
-            let CFun = function (resM: Object) {
+            let CFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
             };
             common.SendGetAjax(url, data, SFun, FFun, CFun);
         }
@@ -90,13 +90,13 @@ namespace MissYangQA {
             if (!MTMa.IsNullOrUndefined(data)) {
                 let BtnElement = e.target as HTMLButtonElement;
                 BtnElement.disabled = true;
-                let SFun = function (resM: Object) {
+                let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                     window.history.back();
                 };
-                let FFun = function (xhr: XMLHttpRequest, resM: Object) {
+                let FFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                     common.ShowMessageBox(resM["Message"])
                 };
-                let CFun = function (resM: Object) {
+                let CFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                     BtnElement.disabled = false
                 };
                 common.SendPostAjax(UserDetailedModel.PageData.url, data, SFun, FFun, CFun);
@@ -126,13 +126,13 @@ namespace MissYangQA {
             }
             let BtnElement = e.target as HTMLButtonElement;
             BtnElement.disabled = true;
-            let SFun = function (resM: Object) {
+            let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 window.history.back();
             };
-            let FFun = function (xhr: XMLHttpRequest, resM: Object) {
+            let FFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 common.ShowMessageBox(resM["Message"])
             };
-            let CFun = function (resM: Object) {
+            let CFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 BtnElement.disabled = false
             };
             common.SendPostAjax(url, data, SFun, FFun, CFun);

@@ -30,7 +30,7 @@ namespace MissYangQA.BLL
         /// <returns>验证结果</returns>
         protected virtual bool Verification(T model, ref string msg)
         {
-            if (string.IsNullOrEmpty(msg))
+            if (!string.IsNullOrEmpty(msg))
             {
                 msg = "验证失败：" + msg.Substring(0, msg.Length - 1) + "。";
                 return false;

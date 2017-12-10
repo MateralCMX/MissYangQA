@@ -46,7 +46,7 @@ namespace MissYangQA {
                     PageIndex: UserListModel.PageSetting.PageIndex,
                     PageSize: UserListModel.PageSetting.PageSize,
                 };
-                let SFun = function (resM: Object) {
+                let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                     let MainList = MDMa.$("MainList");
                     if (!MTMa.IsNullOrUndefined(MainList)) {
                         MainList.innerHTML = "";
@@ -63,10 +63,10 @@ namespace MissYangQA {
                         }
                     }
                 };
-                let FFun = function (xhr: XMLHttpRequest, resM: Object) {
+                let FFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                     common.ShowMessageBox(resM["Message"])
                 };
-                let CFun = function (resM: Object) {
+                let CFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 };
                 common.SendGetAjax(url, data, SFun, FFun, CFun);
             }

@@ -26,6 +26,10 @@ namespace MissYangQA.BLL
         /// 用户数据访问对象
         /// </summary>
         private readonly UserDAL _userDAL = new UserDAL();
+        /// <summary>
+        /// 默认密码
+        /// </summary>
+        private const string DEFULTPASSWORD = "123456";
         #endregion
         #region 构造方法
         public UserBLL()
@@ -94,6 +98,7 @@ namespace MissYangQA.BLL
         {
             if (model != null)
             {
+                model.Password = EncryptionManager.MD5Encode_32(DEFULTPASSWORD);
                 string msg = string.Empty;
                 if (VerificationAdd(model, ref msg))
                 {
@@ -119,7 +124,7 @@ namespace MissYangQA.BLL
         public void DeleteUserInfo(Guid id)
         {
             T_User model = _userDAL.GetUserInfoByID(id);
-            if (model == null)
+            if (model != null)
             {
                 _userDAL.Remove(model);
             }
@@ -143,10 +148,6 @@ namespace MissYangQA.BLL
                 {
                     T_User dbModel = _userDAL.GetUserInfoByID(model.ID);
                     dbModel.UserName = model.UserName;
-                    if (!string.IsNullOrEmpty(model.Password))
-                    {
-                        dbModel.Password = EncryptionManager.MD5Encode_32(model.Password);
-                    }
                     _userDAL.SaveChange();
                 }
                 else
@@ -157,6 +158,53 @@ namespace MissYangQA.BLL
             else
             {
                 throw new ArgumentNullException($"参数{nameof(model)}不可以为空。");
+            }
+        }
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="id">用户唯一标识</param>
+        /// <param name="oldPassword">旧密码</param>
+        /// <param name="newPassword">新密码</param>
+        /// <exception cref="ArgumentException">验证不通过异常</exception>
+        /// <exception cref="ArgumentNullException">参数错误异常</exception>
+        /// <exception cref="ApplicationException">逻辑错误</exception>
+        public void EditPassword(Guid id, string oldPassword,string newPassword)
+        {
+            if (id != Guid.Empty && !string.IsNullOrEmpty(oldPassword) && !string.IsNullOrEmpty(newPassword))
+            {
+                T_User dbModel = _userDAL.GetUserInfoByID(id);
+                if (dbModel != null)
+                {
+                    if (dbModel.Password == EncryptionManager.MD5Encode_32(oldPassword))
+                    {
+                        dbModel.Password = EncryptionManager.MD5Encode_32(newPassword);
+                        _userDAL.SaveChange();
+                    }
+                    else
+                    {
+                        throw new ApplicationException("旧密码错误!");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException($"参数{nameof(id)}错误。");
+                }
+            }
+            else
+            {
+                if (id == Guid.Empty)
+                {
+                    throw new ArgumentNullException($"参数{nameof(id)}不可以为空。");
+                }
+                else if (string.IsNullOrEmpty(oldPassword))
+                {
+                    throw new ArgumentNullException($"参数{nameof(oldPassword)}不可以为空。");
+                }
+                else if (string.IsNullOrEmpty(newPassword))
+                {
+                    throw new ArgumentNullException($"参数{nameof(newPassword)}不可以为空。");
+                }
             }
         }
         /// <summary>
