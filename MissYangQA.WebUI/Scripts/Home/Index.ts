@@ -2,7 +2,7 @@
 /// <reference path="../base.ts" />
 'use strict';
 namespace MissYangQA {
-    class IndexModel {
+    class IndexPage {
         /**
          * 构造方法
          */
@@ -28,6 +28,6 @@ namespace MissYangQA {
     }
     /*页面加载完毕事件*/
     MDMa.AddEvent(window, "load", function (e: Event) {
-        let pageM: IndexModel = new IndexModel();
+        let pageM: IndexPage = new IndexPage();
     });
 }

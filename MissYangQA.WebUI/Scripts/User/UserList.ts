@@ -2,7 +2,7 @@
 /// <reference path="../base.ts" />
 'use strict';
 namespace MissYangQA {
-    class UserListModel {
+    class UserListPage {
         /*页面设置*/
         private static PageSetting = {
             IsLoading: false,
@@ -17,7 +17,7 @@ namespace MissYangQA {
         constructor() {
             if (common.IsLogin(true)) {
                 this.BindEvent();
-                UserListModel.GetList();
+                UserListPage.GetList();
             }
         }
         /**
@@ -29,22 +29,22 @@ namespace MissYangQA {
                 let viewH = common.GetClientHeight();//可见高度
                 let contentH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);//内容高度
                 let scrollTop = common.GetScrollTop();//滚动条位置
-                if (contentH - viewH - scrollTop <= 100 && !UserListModel.PageSetting.IsLoading && UserListModel.PageSetting.OldScrollTop < scrollTop) {
-                    UserListModel.GetList();
+                if (contentH - viewH - scrollTop <= 100 && !UserListPage.PageSetting.IsLoading && UserListPage.PageSetting.OldScrollTop < scrollTop) {
+                    UserListPage.GetList();
                 }
-                UserListModel.PageSetting.OldScrollTop = scrollTop;
+                UserListPage.PageSetting.OldScrollTop = scrollTop;
             });
         }
         /**
          * 获得列表信息
          */
         private static GetList() {
-            if (UserListModel.PageSetting.PageCount >= UserListModel.PageSetting.PageIndex) {
-                UserListModel.PageSetting.IsLoading = true;
+            if (UserListPage.PageSetting.PageCount >= UserListPage.PageSetting.PageIndex) {
+                UserListPage.PageSetting.IsLoading = true;
                 let url: string = "api/User/GetAllUserInfo";
                 let data = {
-                    PageIndex: UserListModel.PageSetting.PageIndex,
-                    PageSize: UserListModel.PageSetting.PageSize,
+                    PageIndex: UserListPage.PageSetting.PageIndex,
+                    PageSize: UserListPage.PageSetting.PageSize,
                 };
                 let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                     let MainList = MDMa.$("MainList");
@@ -74,6 +74,6 @@ namespace MissYangQA {
     }
     /*页面加载完毕事件*/
     MDMa.AddEvent(window, "load", function (e: Event) {
-        let pageM: UserListModel = new UserListModel();
+        let pageM: UserListPage = new UserListPage();
     });
 }

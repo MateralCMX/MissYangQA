@@ -37,6 +37,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -197,7 +199,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\API\ApiBaseController.cs" />
+    <Compile Include="Controllers\API\ClassListController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
+    <Compile Include="Controllers\ClassListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -213,7 +217,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="CSS\Base.css" />
     <Content Include="CSS\ClassList\ClassListDetailed.css" />
-    <Content Include="CSS\ClassList\ClassListList.css" />
+    <Content Include="CSS\ClassList\ClassList.css" />
     <Content Include="CSS\Exam\ExamDetailed.css" />
     <Content Include="CSS\Exam\ExamList.css" />
     <Content Include="CSS\Exam\ExamLogin.css" />
@@ -289,6 +293,7 @@
     <Content Include="Views\User\UserList.cshtml" />
     <Content Include="Views\User\UserDetailed.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\ClassList\ClassList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -318,7 +323,7 @@
     <TypeScriptCompile Include="Lib\m-Tools\m-Tools.ts" />
     <TypeScriptCompile Include="Scripts\Base.ts" />
     <TypeScriptCompile Include="Scripts\ClassList\ClassListDetailed.ts" />
-    <TypeScriptCompile Include="Scripts\ClassList\ClassListList.ts" />
+    <TypeScriptCompile Include="Scripts\ClassList\ClassList.ts" />
     <TypeScriptCompile Include="Scripts\Home\Index.ts" />
     <TypeScriptCompile Include="Scripts\Home\Login.ts" />
     <TypeScriptCompile Include="Scripts\jquery.d.ts" />

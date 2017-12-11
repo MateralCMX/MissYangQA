@@ -2,7 +2,7 @@
 /// <reference path="../base.ts" />
 'use strict';
 namespace MissYangQA {
-    class UserDetailedModel {
+    class UserDetailedPage {
         /*页面数据*/
         private static PageData = {
             params: MTMa.GetURLParams(),
@@ -38,14 +38,14 @@ namespace MissYangQA {
          */
         private BindMode() {
             let BtnSave = MDMa.$("BtnSave") as HTMLButtonElement;
-            if (!MTMa.IsNullOrUndefinedOrEmpty(UserDetailedModel.PageData.params["ID"])) {
+            if (!MTMa.IsNullOrUndefinedOrEmpty(UserDetailedPage.PageData.params["ID"])) {
                 this.GetUserViewInfoByID();
-                UserDetailedModel.PageData.url = "api/User/EditUserInfo";
+                UserDetailedPage.PageData.url = "api/User/EditUserInfo";
                 BtnSave.classList.add("glyphicon-floppy-disk");
                 let TopTools = BtnSave.parentElement;
                 let changePasswordA = document.createElement("a");
                 MDMa.AddClass(changePasswordA, "btn btn-warning glyphicon glyphicon-pencil");
-                changePasswordA.href = "/User/ChangePassword?ID=" + UserDetailedModel.PageData.params["ID"];
+                changePasswordA.href = "/User/ChangePassword?ID=" + UserDetailedPage.PageData.params["ID"];
                 TopTools.appendChild(changePasswordA);
                 let deleteUserBtn = document.createElement("button");
                 MDMa.AddClass(deleteUserBtn, "btn btn-danger glyphicon glyphicon-remove");
@@ -56,7 +56,7 @@ namespace MissYangQA {
                 common.SetTitle("修改用户");
             }
             else {
-                UserDetailedModel.PageData.url = "api/User/AddUserInfo";
+                UserDetailedPage.PageData.url = "api/User/AddUserInfo";
                 BtnSave.classList.add("glyphicon-plus");
                 common.SetTitle("添加用户");
             }
@@ -67,7 +67,7 @@ namespace MissYangQA {
         private GetUserViewInfoByID() {
             let url: string = "api/User/GetUserViewInfoByID";
             let data = {
-                ID: UserDetailedModel.PageData.params["ID"]
+                ID: UserDetailedPage.PageData.params["ID"]
             }
             let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 let InputUserName = MDMa.$("InputUserName") as HTMLInputElement;
@@ -86,7 +86,7 @@ namespace MissYangQA {
          */
         private BtnSaveEvent_Click(e: MouseEvent) {
             common.ClearErrorMessage();
-            let data = UserDetailedModel.GetInputData();
+            let data = UserDetailedPage.GetInputData();
             if (!MTMa.IsNullOrUndefined(data)) {
                 let BtnElement = e.target as HTMLButtonElement;
                 BtnElement.disabled = true;
@@ -99,7 +99,7 @@ namespace MissYangQA {
                 let CFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                     BtnElement.disabled = false
                 };
-                common.SendPostAjax(UserDetailedModel.PageData.url, data, SFun, FFun, CFun);
+                common.SendPostAjax(UserDetailedPage.PageData.url, data, SFun, FFun, CFun);
             }
         }
         /**
@@ -109,7 +109,7 @@ namespace MissYangQA {
             let data = null;
             if (document.forms["InputForm"].checkValidity()) {
                 data = {
-                    ID: UserDetailedModel.PageData.params["ID"],
+                    ID: UserDetailedPage.PageData.params["ID"],
                     UserName: (MDMa.$("InputUserName") as HTMLInputElement).value,
                 }
             }
@@ -122,7 +122,7 @@ namespace MissYangQA {
         private BtnDeleteEvent_Click(e: MouseEvent) {
             let url = "api/User/DeleteUserInfo";
             let data = {
-                ID: UserDetailedModel.PageData.params["ID"]
+                ID: UserDetailedPage.PageData.params["ID"]
             }
             let BtnElement = e.target as HTMLButtonElement;
             BtnElement.disabled = true;
@@ -140,6 +140,6 @@ namespace MissYangQA {
     }
     /*页面加载完毕事件*/
     MDMa.AddEvent(window, "load", function (e: Event) {
-        let pageM: UserDetailedModel = new UserDetailedModel();
+        let pageM: UserDetailedPage = new UserDetailedPage();
     });
 }

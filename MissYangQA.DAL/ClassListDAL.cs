@@ -45,12 +45,12 @@ namespace MissYangQA.DAL
             return model;
         }
         /// <summary>
-        /// 获得所有班级的视图信息
+        /// 获得所有班级信息
         /// </summary>
         /// <returns>查询结果</returns>
         public List<T_ClassList> GetAllClassListInfo()
         {
-            List<T_ClassList> listM = _DB.T_ClassList.OrderByDescending(m => m.Rank).ToList();
+            List<T_ClassList> listM = _DB.T_ClassList.OrderBy(m => m.Rank).ToList();
             return listM;
         }
         /// <summary>
