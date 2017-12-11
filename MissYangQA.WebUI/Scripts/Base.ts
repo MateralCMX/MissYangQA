@@ -10,7 +10,7 @@ namespace MissYangQA {
          */
         constructor() {
             if (performance.navigation.type != 2) {
-                ApplicationSettingModel.IsDebug = true;
+                ApplicationSettingModel.IsDebug = false;
                 this.AddMessageBoxArticle();
                 this.BindFooterInfo();
                 this.BindBackBtn();
@@ -384,7 +384,7 @@ namespace MissYangQA {
         /*调试模型*/
         public static IsDebug: boolean = false;
         /*域名*/
-        private _domainName: string = "http://localhost:49420/";
+        private _domainName: string = "http://119.23.71.44:8900/";
         /*调试域名*/
         private _deBugDomainName: string = "http://localhost:49420/";
         /*保存用户的值*/
