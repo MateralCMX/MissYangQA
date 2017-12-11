@@ -9,10 +9,15 @@ namespace MissYangQA {
          * 构造方法
          */
         constructor() {
-            ApplicationSettingModel.IsDebug = true;
-            this.AddMessageBoxArticle();
-            this.BindFooterInfo();
-            this.BindBackBtn();
+            if (performance.navigation.type != 2) {
+                ApplicationSettingModel.IsDebug = true;
+                this.AddMessageBoxArticle();
+                this.BindFooterInfo();
+                this.BindBackBtn();
+            }
+            else {
+                window.location.reload();
+            }
         }
         /*应用程序配置对象*/
         public ApplicationSettingM: ApplicationSettingModel = new ApplicationSettingModel();

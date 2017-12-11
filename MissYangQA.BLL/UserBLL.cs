@@ -169,7 +169,7 @@ namespace MissYangQA.BLL
         /// <exception cref="ArgumentException">验证不通过异常</exception>
         /// <exception cref="ArgumentNullException">参数错误异常</exception>
         /// <exception cref="ApplicationException">逻辑错误</exception>
-        public void EditPassword(Guid id, string oldPassword,string newPassword)
+        public void ChangePassword(Guid id, string oldPassword,string newPassword)
         {
             if (id != Guid.Empty && !string.IsNullOrEmpty(oldPassword) && !string.IsNullOrEmpty(newPassword))
             {
@@ -178,8 +178,15 @@ namespace MissYangQA.BLL
                 {
                     if (dbModel.Password == EncryptionManager.MD5Encode_32(oldPassword))
                     {
-                        dbModel.Password = EncryptionManager.MD5Encode_32(newPassword);
-                        _userDAL.SaveChange();
+                        if (oldPassword != newPassword)
+                        {
+                            dbModel.Password = EncryptionManager.MD5Encode_32(newPassword);
+                            _userDAL.SaveChange();
+                        }
+                        else
+                        {
+                            throw new ApplicationException("新密码不能与旧密码相同!");
+                        }
                     }
                     else
                     {

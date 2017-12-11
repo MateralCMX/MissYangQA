@@ -288,6 +288,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\User\UserList.cshtml" />
     <Content Include="Views\User\UserDetailed.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -316,9 +317,16 @@
     <TypeScriptCompile Include="Lib\m-Reset\m-Reset.ts" />
     <TypeScriptCompile Include="Lib\m-Tools\m-Tools.ts" />
     <TypeScriptCompile Include="Scripts\Base.ts" />
+    <TypeScriptCompile Include="Scripts\ClassList\ClassListDetailed.ts" />
+    <TypeScriptCompile Include="Scripts\ClassList\ClassListList.ts" />
     <TypeScriptCompile Include="Scripts\Home\Index.ts" />
     <TypeScriptCompile Include="Scripts\Home\Login.ts" />
     <TypeScriptCompile Include="Scripts\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\Paper\PaperDetailed.ts" />
+    <TypeScriptCompile Include="Scripts\Paper\PaperList.ts" />
+    <TypeScriptCompile Include="Scripts\Question\QuestionDetailed.ts" />
+    <TypeScriptCompile Include="Scripts\Question\QuestionList.ts" />
+    <TypeScriptCompile Include="Scripts\User\ChangePassword.ts" />
     <TypeScriptCompile Include="Scripts\User\UserDetailed.ts" />
     <TypeScriptCompile Include="Scripts\User\UserList.ts" />
   </ItemGroup>

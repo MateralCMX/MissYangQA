@@ -24,5 +24,13 @@ namespace MissYangQA.WebUI.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 更改密码
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
     }
 }

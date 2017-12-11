@@ -137,14 +137,18 @@ namespace MissYangQA.WebUI.Controllers.API
         /// </summary>
         /// <param name="inputM">修改密码对象</param>
         [HttpPost]
-        [Route("EditPassword")]
-        public MResultModel EditPassword(EditPasswordModel inputM)
+        [Route("ChangePassword")]
+        public MResultModel ChangePassword(EditPasswordModel inputM)
         {
             MResultModel resM;
             try
             {
-                _userBLL.EditPassword(inputM.ID, inputM.OldPassword, inputM.NewPassword);
+                _userBLL.ChangePassword(inputM.ID, inputM.OldPassword, inputM.NewPassword);
                 resM = MResultModel.GetSuccessResultM("修改成功");
+            }
+            catch (ApplicationException ex)
+            {
+                resM = MResultModel.GetFailResultM(ex.Message);
             }
             catch (ArgumentNullException ex)
             {
