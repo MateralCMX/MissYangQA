@@ -21,8 +21,8 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Types" Type="tinyint" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Contents" Type="nvarchar" MaxLength="800" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Contents" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="T_ClassList">
@@ -32,6 +32,7 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="Rank" Type="int" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Paper">
           <Key>
@@ -83,6 +84,18 @@
           <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="Token" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="TokenCreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“MissYangQADB.dbo.V_ClassList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_ClassList">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Rank" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Rank" Type="int" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“MissYangQADB.dbo.V_User”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -189,6 +202,13 @@
           <EntitySet Name="T_Scantron" EntityType="Self.T_Scantron" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_ScantronDetailed" EntityType="Self.T_ScantronDetailed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_User" EntityType="Self.T_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="V_ClassList" EntityType="Self.V_ClassList" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_ClassList].[ID] AS [ID], 
+    [V_ClassList].[Name] AS [Name], 
+    [V_ClassList].[Rank] AS [Rank]
+    FROM [dbo].[V_ClassList] AS [V_ClassList]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="V_User" EntityType="Self.V_User" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [V_User].[ID] AS [ID], 
@@ -268,6 +288,7 @@
             <End Role="T_Scantron" EntitySet="T_Scantron" />
             <End Role="T_ScantronDetailed" EntitySet="T_ScantronDetailed" />
           </AssociationSet>
+          <EntitySet Name="V_ClassList" EntityType="MissYangQADBModel.V_ClassList" />
         </EntityContainer>
         <EntityType Name="T_Answer">
           <Key>
@@ -287,8 +308,8 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Types" Type="Byte" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Contents" Type="String" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Contents" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="T_ClassList">
@@ -299,6 +320,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="Rank" Type="Int32" Nullable="false" />
           <NavigationProperty Name="T_Scantron" Relationship="MissYangQADBModel.FK_T_Score_T_ClassList" FromRole="T_ClassList" ToRole="T_Scantron" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Paper">
           <Key>
@@ -456,6 +478,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="V_ClassList">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Rank" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Rank" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -487,6 +519,7 @@
           <EntitySetMapping Name="T_ClassList">
             <EntityTypeMapping TypeName="MissYangQADBModel.T_ClassList">
               <MappingFragment StoreEntitySet="T_ClassList">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Rank" ColumnName="Rank" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -555,6 +588,15 @@
                 <ScalarProperty Name="TokenCreateTime" ColumnName="TokenCreateTime" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_ClassList">
+            <EntityTypeMapping TypeName="MissYangQADBModel.V_ClassList">
+              <MappingFragment StoreEntitySet="V_ClassList">
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -28,4 +28,18 @@ namespace MissYangQA.Model
         /// </summary>
         public string LoginUserToken { get; set; }
     }
+    /// <summary>
+    /// 修改班级模型
+    /// </summary>
+    public class EditClassListModel : T_ClassList, IVerificationLoginModel
+    {
+        /// <summary>
+        /// 登录用户唯一标识
+        /// </summary>
+        public Guid LoginUserID { get; set; }
+        /// <summary>
+        /// 登录用户Token
+        /// </summary>
+        public string LoginUserToken { get; set; }
+    }
 }

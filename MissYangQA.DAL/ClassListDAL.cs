@@ -24,15 +24,6 @@ namespace MissYangQA.DAL
             _DB.SaveChanges();
         }
         /// <summary>
-        /// 移除
-        /// </summary>
-        /// <param name="model">要移除的对象</param>
-        public void Remove(T_ClassList model)
-        {
-            _DB.T_ClassList.Remove(model);
-            _DB.SaveChanges();
-        }
-        /// <summary>
         /// 根据班级唯一标识获得班级信息
         /// </summary>
         /// <param name="id">班级唯一标识</param>
@@ -45,12 +36,24 @@ namespace MissYangQA.DAL
             return model;
         }
         /// <summary>
-        /// 获得所有班级信息
+        /// 根据班级唯一标识获得班级视图信息
+        /// </summary>
+        /// <param name="id">班级唯一标识</param>
+        /// <returns>查询结果</returns>
+        public V_ClassList GetClassListViewInfoByID(Guid id)
+        {
+            V_ClassList model = (from m in _DB.V_ClassList
+                                 where m.ID == id
+                                 select m).FirstOrDefault();
+            return model;
+        }
+        /// <summary>
+        /// 获得所有班级视图信息
         /// </summary>
         /// <returns>查询结果</returns>
-        public List<T_ClassList> GetAllClassListInfo()
+        public List<V_ClassList> GetAllClassListViewInfo()
         {
-            List<T_ClassList> listM = _DB.T_ClassList.OrderBy(m => m.Rank).ToList();
+            List<V_ClassList> listM = _DB.V_ClassList.OrderBy(m => m.Rank).ToList();
             return listM;
         }
         /// <summary>

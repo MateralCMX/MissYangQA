@@ -93,6 +93,9 @@
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserModel.cs" />
+    <Compile Include="V_ClassList.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="V_User.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>

@@ -34,21 +34,14 @@ namespace MissYangQA.WebUI.Controllers.API
         public MResultModel Login(LoginModel inputM)
         {
             MResultModel resM;
-            try
+            V_User model = _userBLL.Login(inputM);
+            if (model != null)
             {
-                V_User model = _userBLL.Login(inputM);
-                if (model != null)
-                {
-                    resM = MResultModel<V_User>.GetSuccessResultM(model, "登录成功");
-                }
-                else
-                {
-                    resM = MResultModel.GetFailResultM("登录失败，用户名或者密码错误");
-                }
+                resM = MResultModel<V_User>.GetSuccessResultM(model, "登录成功");
             }
-            catch (Exception)
+            else
             {
-                resM = MResultModel.GetErrorResultM("应用程序出错了！");
+                resM = MResultModel.GetFailResultM("登录失败，用户名或者密码错误");
             }
             return resM;
         }
@@ -74,10 +67,6 @@ namespace MissYangQA.WebUI.Controllers.API
             {
                 resM = MResultModel.GetFailResultM(ex.Message);
             }
-            catch (Exception)
-            {
-                resM = MResultModel.GetErrorResultM("应用程序出错了！");
-            }
             return resM;
         }
         /// <summary>
@@ -102,10 +91,6 @@ namespace MissYangQA.WebUI.Controllers.API
             {
                 resM = MResultModel.GetFailResultM(ex.Message);
             }
-            catch (Exception)
-            {
-                resM = MResultModel.GetErrorResultM("应用程序出错了！");
-            }
             return resM;
         }
         /// <summary>
@@ -125,10 +110,6 @@ namespace MissYangQA.WebUI.Controllers.API
             catch (ArgumentNullException ex)
             {
                 resM = MResultModel.GetFailResultM(ex.Message);
-            }
-            catch (Exception)
-            {
-                resM = MResultModel.GetErrorResultM("应用程序出错了！");
             }
             return resM;
         }
@@ -158,10 +139,6 @@ namespace MissYangQA.WebUI.Controllers.API
             {
                 resM = MResultModel.GetFailResultM(ex.Message);
             }
-            catch (Exception)
-            {
-                resM = MResultModel.GetErrorResultM("应用程序出错了！");
-            }
             return resM;
         }
         /// <summary>
@@ -176,33 +153,26 @@ namespace MissYangQA.WebUI.Controllers.API
         public MResultModel GetAllUserInfo(int PageIndex, int PageSize)
         {
             MResultModel resM;
-            try
+            if (PageIndex > 0)
             {
-                if (PageIndex > 0)
+                if (PageSize > 0)
                 {
-                    if (PageSize > 0)
+                    MPagingModel pageM = new MPagingModel
                     {
-                        MPagingModel pageM = new MPagingModel
-                        {
-                            PagingIndex = PageIndex,
-                            PagingSize = PageSize
-                        };
-                        List<V_User> listM = _userBLL.GetAllUserViewInfo(pageM);
-                        resM = MResultPagingModel<List<V_User>>.GetSuccessResultM(listM, pageM, "查询成功");
-                    }
-                    else
-                    {
-                        resM = MResultModel.GetFailResultM($"参数${nameof(PageSize)}必须大于0");
-                    }
+                        PagingIndex = PageIndex,
+                        PagingSize = PageSize
+                    };
+                    List<V_User> listM = _userBLL.GetAllUserViewInfo(pageM);
+                    resM = MResultPagingModel<List<V_User>>.GetSuccessResultM(listM, pageM, "查询成功");
                 }
                 else
                 {
-                    resM = MResultModel.GetFailResultM($"参数${nameof(PageIndex)}必须大于0");
+                    resM = MResultModel.GetFailResultM($"参数${nameof(PageSize)}必须大于0");
                 }
             }
-            catch (Exception)
+            else
             {
-                resM = MResultModel.GetErrorResultM("应用程序出错了！");
+                resM = MResultModel.GetFailResultM($"参数${nameof(PageIndex)}必须大于0");
             }
             return resM;
         }
@@ -217,15 +187,8 @@ namespace MissYangQA.WebUI.Controllers.API
         public MResultModel GetUserViewInfoByID(Guid ID)
         {
             MResultModel resM;
-            try
-            {
-                V_User listM = _userBLL.GetUserViewInfoByID(ID);
-                resM = MResultModel<V_User>.GetSuccessResultM(listM, "查询成功");
-            }
-            catch (Exception)
-            {
-                resM = MResultModel.GetErrorResultM("应用程序出错了！");
-            }
+            V_User listM = _userBLL.GetUserViewInfoByID(ID);
+            resM = MResultModel<V_User>.GetSuccessResultM(listM, "查询成功");
             return resM;
         }
         #endregion

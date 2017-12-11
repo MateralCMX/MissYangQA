@@ -24,7 +24,7 @@ namespace MissYangQA.BLL.Tests
         {
             try
             {
-                List<T_ClassList> listM = _classListBLL.GetAllClassListInfo();
+                List<V_ClassList> listM = _classListBLL.GetAllClassListViewInfo();
             }
             catch(Exception ex)
             {

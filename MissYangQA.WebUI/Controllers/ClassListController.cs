@@ -16,5 +16,13 @@ namespace MissYangQA.WebUI.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 班级明细
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ClassListDetailed()
+        {
+            return View();
+        }
     }
 }

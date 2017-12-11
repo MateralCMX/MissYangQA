@@ -28,20 +28,20 @@ namespace MissYangQA.BLL
         /// 获得所有的班级信息
         /// </summary>
         /// <returns>所有班级的信息</returns>
-        public List<T_ClassList> GetAllClassListInfo()
+        public List<V_ClassList> GetAllClassListViewInfo()
         {
-            List<T_ClassList> resM;
-            resM = _classListDAL.GetAllClassListInfo();
+            List<V_ClassList> resM;
+            resM = _classListDAL.GetAllClassListViewInfo();
             return resM;
         }
         /// <summary>
         /// 根据班级唯一标识获得班级视图信息
         /// </summary>
         /// <returns>查询结果</returns>
-        public T_ClassList GetClassListInfoByID(Guid id)
+        public V_ClassList GetClassListViewInfoByID(Guid id)
         {
-            T_ClassList resM;
-            resM = _classListDAL.GetClassListInfoByID(id);
+            V_ClassList resM;
+            resM = _classListDAL.GetClassListViewInfoByID(id);
             return resM;
         }
         /// <summary>
@@ -55,7 +55,7 @@ namespace MissYangQA.BLL
                 string msg = string.Empty;
                 if (Verification(model, ref msg))
                 {
-                    model.Rank = _classListDAL.GetClassListMaxRank();
+                    model.Rank = _classListDAL.GetClassListMaxRank() + 1;
                     _classListDAL.Insert(model);
                 }
                 else
@@ -76,9 +76,10 @@ namespace MissYangQA.BLL
         public void DeleteClassListInfo(Guid id)
         {
             T_ClassList model = _classListDAL.GetClassListInfoByID(id);
-            if (model == null)
+            if (model != null)
             {
-                _classListDAL.Remove(model);
+                model.IsDelete = true;
+                _classListDAL.SaveChange();
             }
             else
             {

@@ -39,7 +39,7 @@ namespace MissYangQA {
                         listItem.dataset.id = resM["Data"][i]["ID"];
                         listItem.classList.add("list-group-item");
                         MDMa.AddEvent(listItem, "click", ClassListPage.ClassItemEvent_Click);
-                        let textContent = document.createTextNode(resM["Data"][i]["Rank"] + "：" + resM["Data"][i]["Name"]);
+                        let textContent = document.createTextNode(resM["Data"][i]["Name"]);
                         let btnGroup = document.createElement("div");
                         MDMa.AddClass(btnGroup, "upDownBtnGroup btn-group btn-group-xs");
                         btnGroup.setAttribute("role", "group");

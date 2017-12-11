@@ -12,20 +12,10 @@ namespace MissYangQA.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class T_ClassList
+    public partial class V_ClassList
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public T_ClassList()
-        {
-            this.T_Scantron = new HashSet<T_Scantron>();
-        }
-    
         public System.Guid ID { get; set; }
         public string Name { get; set; }
         public int Rank { get; set; }
-        public bool IsDelete { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<T_Scantron> T_Scantron { get; set; }
     }
 }
