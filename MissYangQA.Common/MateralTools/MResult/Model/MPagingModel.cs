@@ -1,4 +1,6 @@
-﻿namespace MateralTools.MResult
+﻿using System;
+
+namespace MateralTools.MResult
 {
     /// <summary>
     /// 分页模型
@@ -34,6 +36,31 @@
         /// 数据总数
         /// </summary>
         public long DataCount { get; set; }
+        public MPagingModel() { }
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="pagingIndex">当前页数</param>
+        /// <param name="pagingSize">每页显示数量</param>
+        public MPagingModel(int pagingIndex,int pagingSize)
+        {
+            if (pagingIndex > 0)
+            {
+                if (pagingSize > 0)
+                {
+                    PagingIndex = pagingIndex;
+                    PagingSize = pagingSize;
+                }
+                else
+                {
+                    throw new ArgumentException($"参数{nameof(pagingSize)}必须大于0");
+                }
+            }
+            else
+            {
+                throw new ArgumentException($"参数{nameof(pagingIndex)}必须大于0");
+            }
+        }
     }
     /// <summary>
     /// 分页数据模型

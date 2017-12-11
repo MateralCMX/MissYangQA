@@ -153,27 +153,9 @@ namespace MissYangQA.WebUI.Controllers.API
         public MResultModel GetAllUserInfo(int PageIndex, int PageSize)
         {
             MResultModel resM;
-            if (PageIndex > 0)
-            {
-                if (PageSize > 0)
-                {
-                    MPagingModel pageM = new MPagingModel
-                    {
-                        PagingIndex = PageIndex,
-                        PagingSize = PageSize
-                    };
-                    List<V_User> listM = _userBLL.GetAllUserViewInfo(pageM);
-                    resM = MResultPagingModel<List<V_User>>.GetSuccessResultM(listM, pageM, "查询成功");
-                }
-                else
-                {
-                    resM = MResultModel.GetFailResultM($"参数${nameof(PageSize)}必须大于0");
-                }
-            }
-            else
-            {
-                resM = MResultModel.GetFailResultM($"参数${nameof(PageIndex)}必须大于0");
-            }
+            MPagingModel pageM = new MPagingModel(PageIndex, PageSize);
+            List<V_User> listM = _userBLL.GetAllUserViewInfo(pageM);
+            resM = MResultPagingModel<List<V_User>>.GetSuccessResultM(listM, pageM, "查询成功");
             return resM;
         }
         /// <summary>

@@ -49,9 +49,16 @@ namespace MissYangQA.BLL
         /// <returns>所有用户的信息</returns>
         public List<V_User> GetAllUserViewInfo(MPagingModel pageM)
         {
-            List<V_User> resM;
-            resM = _userDAL.GetAllUserViewInfo(pageM);
-            return resM;
+            if (pageM != null)
+            {
+                List<V_User> resM;
+                resM = _userDAL.GetAllUserViewInfo(pageM);
+                return resM;
+            }
+            else
+            {
+                throw new ArgumentNullException($"参数{nameof(pageM)}不可以为空。");
+            }
         }
         /// <summary>
         /// 根据用户唯一标识获得用户视图信息

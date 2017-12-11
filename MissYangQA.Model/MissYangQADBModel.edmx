@@ -43,6 +43,7 @@
           <Property Name="StartTime" Type="date" Nullable="false" />
           <Property Name="EndTime" Type="date" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Question">
           <Key>
@@ -96,6 +97,25 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="Rank" Type="int" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“MissYangQADB.dbo.V_Paper”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_Paper">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="CreateTime" />
+            <PropertyRef Name="SumScore" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartTime" Type="date" Nullable="false" />
+          <Property Name="EndTime" Type="date" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="QuestionCount" Type="int" />
+          <Property Name="SumScore" Type="int" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“MissYangQADB.dbo.V_User”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -209,6 +229,17 @@
     [V_ClassList].[Rank] AS [Rank]
     FROM [dbo].[V_ClassList] AS [V_ClassList]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="V_Paper" EntityType="Self.V_Paper" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_Paper].[ID] AS [ID], 
+    [V_Paper].[Title] AS [Title], 
+    [V_Paper].[StartTime] AS [StartTime], 
+    [V_Paper].[EndTime] AS [EndTime], 
+    [V_Paper].[CreateTime] AS [CreateTime], 
+    [V_Paper].[QuestionCount] AS [QuestionCount], 
+    [V_Paper].[SumScore] AS [SumScore]
+    FROM [dbo].[V_Paper] AS [V_Paper]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="V_User" EntityType="Self.V_User" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [V_User].[ID] AS [ID], 
@@ -289,6 +320,7 @@
             <End Role="T_ScantronDetailed" EntitySet="T_ScantronDetailed" />
           </AssociationSet>
           <EntitySet Name="V_ClassList" EntityType="MissYangQADBModel.V_ClassList" />
+          <EntitySet Name="V_Paper" EntityType="MissYangQADBModel.V_Paper" />
         </EntityContainer>
         <EntityType Name="T_Answer">
           <Key>
@@ -333,6 +365,7 @@
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="T_Question" Relationship="MissYangQADBModel.FK_T_Question_T_Paper" FromRole="T_Paper" ToRole="T_Question" />
           <NavigationProperty Name="T_Scantron" Relationship="MissYangQADBModel.FK_T_Score_T_Paper" FromRole="T_Paper" ToRole="T_Scantron" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Question">
           <Key>
@@ -488,6 +521,23 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="Rank" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="V_Paper">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="CreateTime" />
+            <PropertyRef Name="SumScore" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="QuestionCount" Type="Int32" />
+          <Property Name="SumScore" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -529,6 +579,7 @@
           <EntitySetMapping Name="T_Paper">
             <EntityTypeMapping TypeName="MissYangQADBModel.T_Paper">
               <MappingFragment StoreEntitySet="T_Paper">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
@@ -597,6 +648,19 @@
               <MappingFragment StoreEntitySet="V_ClassList">
                 <ScalarProperty Name="Rank" ColumnName="Rank" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_Paper">
+            <EntityTypeMapping TypeName="MissYangQADBModel.V_Paper">
+              <MappingFragment StoreEntitySet="V_Paper">
+                <ScalarProperty Name="SumScore" ColumnName="SumScore" />
+                <ScalarProperty Name="QuestionCount" ColumnName="QuestionCount" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

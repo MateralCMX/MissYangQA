@@ -9,7 +9,7 @@ namespace MissYangQA.Model
     /// <summary>
     /// 更改班级排序输入模型
     /// </summary>
-    public class ChangeClassListRankModel:IVerificationLoginModel
+    public class ChangeClassListRankModel : IVerificationLoginModel
     {
         /// <summary>
         /// 班级列表ID

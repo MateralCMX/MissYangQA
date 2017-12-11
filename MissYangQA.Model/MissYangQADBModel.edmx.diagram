@@ -21,7 +21,8 @@
         <AssociationConnector Association="MissYangQADBModel.FK_T_Score_T_Paper" />
         <AssociationConnector Association="MissYangQADBModel.FK_T_ScoreDetailed_T_Question" />
         <AssociationConnector Association="MissYangQADBModel.FK_T_ScoreDetailed_T_Score" />
-        <EntityTypeShape EntityType="MissYangQADBModel.V_ClassList" Width="1.5" PointX="6.375" PointY="4.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MissYangQADBModel.V_ClassList" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MissYangQADBModel.V_Paper" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

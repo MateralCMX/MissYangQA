@@ -34,7 +34,7 @@ namespace MissYangQA {
                 let MainList = MDMa.$("MainList");
                 if (!MTMa.IsNullOrUndefined(MainList)) {
                     MainList.innerHTML = "";
-                    for (var i = 0; i < resM["Data"].length; i++) {
+                    for (let i = 0; i < resM["Data"].length; i++) {
                         let listItem = document.createElement("li");
                         listItem.dataset.id = resM["Data"][i]["ID"];
                         listItem.classList.add("list-group-item");

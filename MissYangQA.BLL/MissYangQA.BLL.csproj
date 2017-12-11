@@ -45,6 +45,7 @@
     <Compile Include="BaseBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClassListBLL.cs" />
+    <Compile Include="PaperBLL.cs" />
     <Compile Include="UserBLL.cs" />
   </ItemGroup>
   <ItemGroup>

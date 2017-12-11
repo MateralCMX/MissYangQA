@@ -31,7 +31,7 @@ namespace MissYangQA {
                 common.InputInvalidEvent_Invalid(e, setting);
             });
             MDMa.AddEvent("BtnSave", "click", this.BtnSaveEvent_Click);
-            MDMa.AddEvent("BtnDelete", "click", this.BtnDeleteEvent_Click)
+            MDMa.AddEvent("BtnDelete", "click", this.BtnDeleteEvent_Click);
         }
         /**
          * 绑定模式

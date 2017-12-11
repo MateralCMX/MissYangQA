@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="ApplicationLogDAL.cs" />
     <Compile Include="BaseDAL.cs" />
+    <Compile Include="PaperDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClassListDAL.cs" />
     <Compile Include="UserDAL.cs" />

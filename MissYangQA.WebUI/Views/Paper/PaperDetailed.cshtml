@@ -1,0 +1,80 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title id="PageTitle"></title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Lib/m-Reset/m-Reset.css" rel="stylesheet" />
+    <link href="~/Css/Base.css" rel="stylesheet" />
+    <link href="~/Css/Paper/PaperDetailed.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <h2 id="HeaderTitle"></h2>
+    </header>
+    <div class="TopTools btn-group" role="group" aria-label="...">
+        <button class="btn btn-default btn-back glyphicon glyphicon-chevron-left"></button>
+        <button id="BtnSave" class="btn btn-primary glyphicon"></button>
+    </div>
+    <main>
+        <form id="InputForm" autocomplete="off">
+            <div class="form-group">
+                <label for="InputTitle">标题</label>
+                <input id="InputTitle" type="text" class="form-control" placeholder="请输入标题" autocomplete="off" required>
+                <span class="help-block"></span>
+            </div>
+            <div class="form-group">
+                <label for="InputStartDate">开始时间</label>
+                <input id="InputStartDate" type="date" class="form-control" required>
+                <span class="help-block"></span>
+            </div>
+            <div class="form-group">
+                <label for="InputEndDate">结束时间</label>
+                <input id="InputEndDate" type="date" class="form-control" required>
+                <span class="help-block"></span>
+            </div>
+            <div id="QuestionCountGroup" class="form-group">
+                <label for="InputQuestionCount">问题总数</label>
+                <input id="InputQuestionCount" type="number" class="form-control" readonly>
+                <span class="help-block"></span>
+            </div>
+            <div id="SumScoreGroup" class="form-group">
+                <label for="InputSumScore">试题总分</label>
+                <input id="InputSumScore" type="number" class="form-control" readonly>
+                <span class="help-block"></span>
+            </div>
+            <a id="LinkQuestion" class="btn btn-success btn-block">编辑问题</a>
+        </form>
+    </main>
+    <!-- 删除窗体 -->
+    <article class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="DeleteModalTitle">提示</h4>
+                </div>
+                <div id="DeleteModalBody" class="modal-body">
+                    确定要删除该试题吗？
+                </div>
+                <div class="modal-footer">
+                    <button id="BtnDelete" type="button" class="btn btn-danger">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </article>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Lib/m-Tools/m-Tools.js"></script>
+    <script src="~/Scripts/Base.js"></script>
+    <script src="~/Scripts/Paper/PaperDetailed.js"></script>
+</body>
+</html>

@@ -35,5 +35,6 @@ namespace MissYangQA.Model
         public virtual DbSet<T_User> T_User { get; set; }
         public virtual DbSet<V_User> V_User { get; set; }
         public virtual DbSet<V_ClassList> V_ClassList { get; set; }
+        public virtual DbSet<V_Paper> V_Paper { get; set; }
     }
 }

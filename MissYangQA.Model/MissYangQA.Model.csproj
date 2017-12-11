@@ -67,6 +67,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MissYangQADBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="PaperModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="T_Answer.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
@@ -94,6 +95,9 @@
     </Compile>
     <Compile Include="UserModel.cs" />
     <Compile Include="V_ClassList.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="V_Paper.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="V_User.cs">

@@ -199,10 +199,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\API\ApiBaseController.cs" />
+    <Compile Include="Controllers\API\PaperController.cs" />
     <Compile Include="Controllers\API\ClassListController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\ClassListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaperController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -295,6 +297,8 @@
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\ClassList\ClassList.cshtml" />
     <Content Include="Views\ClassList\ClassListDetailed.cshtml" />
+    <Content Include="Views\Paper\PaperList.cshtml" />
+    <Content Include="Views\Paper\PaperDetailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

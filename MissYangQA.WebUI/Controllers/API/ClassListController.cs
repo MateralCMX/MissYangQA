@@ -26,8 +26,6 @@ namespace MissYangQA.WebUI.Controllers.API
         /// <summary>
         /// 获得所有的班级信息
         /// </summary>
-        /// <param name="PageIndex">页数</param>
-        /// <param name="PageSize">每页显示数量</param>
         /// <returns>所有班级信息</returns>
         [HttpGet]
         [Route("GetAllClassListInfo")]
