@@ -24,5 +24,21 @@ namespace MissYangQA.WebUI.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 考试主页
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ExamIndex()
+        {
+            return View();
+        }
+        /// <summary>
+        /// 考试明细
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ExamDetails()
+        {
+            return View();
+        }
     }
 }

@@ -177,6 +177,9 @@ namespace MissYangQA {
                 case "Index":
                     url += "Home/Index";
                     break;
+                case "ExamDetails":
+                    url += "Paper/ExamDetails";
+                    break;
                 default:
                     url += "Home/Login";
                     break;

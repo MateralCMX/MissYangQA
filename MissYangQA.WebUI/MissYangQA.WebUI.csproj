@@ -229,6 +229,7 @@
     <Content Include="CSS\Exam\ExamLogin.css" />
     <Content Include="CSS\Home\Index.css" />
     <Content Include="CSS\Home\Login.css" />
+    <Content Include="CSS\Paper\ExamIndex.css" />
     <Content Include="CSS\Paper\PaperDetails.css" />
     <Content Include="CSS\Paper\PaperList.css" />
     <Content Include="CSS\Problem\ProblemDetails.css" />
@@ -309,6 +310,8 @@
     <Content Include="Views\Problem\ProblemList.cshtml" />
     <Content Include="Views\Problem\ProblemDetails.cshtml" />
     <Content Include="Views\QRCode\CreateQRCode.cshtml" />
+    <Content Include="Views\Paper\ExamIndex.cshtml" />
+    <Content Include="Views\Paper\ExamDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -342,6 +345,7 @@
     <TypeScriptCompile Include="Scripts\Home\Index.ts" />
     <TypeScriptCompile Include="Scripts\Home\Login.ts" />
     <TypeScriptCompile Include="Scripts\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\Paper\ExamIndex.ts" />
     <TypeScriptCompile Include="Scripts\Paper\PaperDetails.ts" />
     <TypeScriptCompile Include="Scripts\Paper\PaperList.ts" />
     <TypeScriptCompile Include="Scripts\Problem\ProblemDetails.ts" />

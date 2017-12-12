@@ -2,44 +2,57 @@
 /// <reference path="../base.ts" />
 'use strict';
 namespace MissYangQA {
-    class ClassListPage {
+    class ExamIndexPage {
+        /*页面数据*/
         private static PageData = {
-            Data: []
-        };
-        private static PageSetting = {
-            ChangeRanking: false
-        };
+            params: MTMa.GetURLParams(),
+        }
         /**
          * 构造方法
          */
         constructor() {
-            if (common.IsLogin(true)) {
-                this.BindEvent();
-                this.GetAllClassInfo();
-                this.GetAllEnablePaperInfo();
-            }
+            this.BindEvent();
+            this.GetAllClassInfo();
         }
         /**
          * 绑定事件
          */
         private BindEvent() {
-            MDMa.AddEvent("BtnCreateQRCode", "click", this.BtnCreateQRCodeEvent_Click);
+            MDMa.AddEvent("InputStudentName", "invalid", function (e: Event) {
+                let setting: InvalidOptionsModel = new InvalidOptionsModel();
+                setting.Required = "姓名不能为空";
+                common.InputInvalidEvent_Invalid(e, setting);
+            });
+            MDMa.AddEvent("BtnSubmit", "click", this.BtnSubmitEvent_Click);
         }
         /**
-         * 创建二维码
+         * 提交按钮事件
          * @param e
          */
-        private BtnCreateQRCodeEvent_Click(e: MouseEvent) {
-            let QRCode = MDMa.$("QRCode") as HTMLDivElement;
-            QRCode.innerHTML = "";
-            let data = {
-                ClassID: (MDMa.$("SelectClass") as HTMLSelectElement).value,
-                PaperID: (MDMa.$("SelectPaper") as HTMLSelectElement).value
+        private BtnSubmitEvent_Click(e: MouseEvent) {
+            common.ClearErrorMessage();
+            let data = ExamIndexPage.GetInputData();
+            if (!MTMa.IsNullOrUndefined(data)) {
+                common.GoToPage("ExamDetails", [
+                    "ClassID=" + data["ClassID"],
+                    "PaperID=" + data["PaperID"],
+                    "StudentName=" + encodeURIComponent(data["StudentName"])
+                ]);
             }
-            let src = common.ApplicationSettingM.DomainName + "api/ValidateCode/GetQRImage?ClassID=" + data.ClassID + "&PaperID=" + data.PaperID;
-            let img = document.createElement("img");
-            img.src = src;
-            QRCode.appendChild(img);
+        }
+        /**
+         * 获得输入数据
+         */
+        private static GetInputData(): Object {
+            let data = null;
+            if (document.forms["InputForm"].checkValidity()) {
+                data = {
+                    StudentName: (MDMa.$("InputStudentName") as HTMLInputElement).value,
+                    ClassID: (MDMa.$("SelectClass") as HTMLSelectElement).value,
+                    PaperID: (MDMa.$("SelectPaper") as HTMLSelectElement).value,
+                }
+            }
+            return data;
         }
         /**
          * 获得所有班级信息
@@ -56,6 +69,7 @@ namespace MissYangQA {
                         SelectClass.options.add(option);
                     }
                 }
+                ExamIndexPage.GetAllEnablePaperInfo();
             };
             let FFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 common.ShowMessageBox(resM["Message"])
@@ -67,7 +81,7 @@ namespace MissYangQA {
         /**
          * 获得所有启用的试题信息
          */
-        private GetAllEnablePaperInfo() {
+        private static GetAllEnablePaperInfo() {
             let url: string = "api/Paper/GetAllEnablePaperInfo";
             let data = {}
             let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
@@ -79,6 +93,7 @@ namespace MissYangQA {
                         SelectPaper.options.add(option);
                     }
                 }
+                ExamIndexPage.BindParams();
             };
             let FFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 common.ShowMessageBox(resM["Message"])
@@ -87,9 +102,26 @@ namespace MissYangQA {
             };
             common.SendGetAjax(url, data, SFun, FFun, CFun);
         }
+        /**
+         * 绑定参数
+         */
+        private static BindParams() {
+            if (!MTMa.IsNullOrUndefinedOrEmpty(ExamIndexPage.PageData.params["ClassID"])) {
+                let SelectClass = MDMa.$("SelectClass") as HTMLSelectElement;
+                if (!MTMa.IsNullOrUndefined(SelectClass)) {
+                    SelectClass.value = ExamIndexPage.PageData.params["ClassID"];
+                }
+            }
+            if (!MTMa.IsNullOrUndefinedOrEmpty(ExamIndexPage.PageData.params["PaperID"])) {
+                let SelectPaper = MDMa.$("SelectPaper") as HTMLSelectElement;
+                if (!MTMa.IsNullOrUndefined(SelectPaper)) {
+                    SelectPaper.value = ExamIndexPage.PageData.params["PaperID"];
+                }
+            }
+        }
     }
     /*页面加载完毕事件*/
     MDMa.AddEvent(window, "load", function (e: Event) {
-        let pageM: ClassListPage = new ClassListPage();
+        let pageM: ExamIndexPage = new ExamIndexPage();
     });
 }
