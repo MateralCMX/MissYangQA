@@ -13,39 +13,23 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Lib/m-Reset/m-Reset.css" rel="stylesheet" />
     <link href="~/Css/Base.css" rel="stylesheet" />
-    <link href="~/Css/Paper/PaperDetailed.css" rel="stylesheet" />
+    <link href="~/Css/User/UserDetails.css" rel="stylesheet" />
 </head>
 <body>
     <header>
         <h2 id="HeaderTitle"></h2>
     </header>
-    <div class="TopTools btn-group" role="group" aria-label="...">
+    <div class="TopTools btn-group" role="group">
         <button class="btn btn-default btn-back glyphicon glyphicon-chevron-left"></button>
         <button id="BtnSave" class="btn btn-primary glyphicon"></button>
     </div>
     <main>
         <form id="InputForm" autocomplete="off">
             <div class="form-group">
-                <label for="InputTitle">标题</label>
-                <input id="InputTitle" type="text" class="form-control" placeholder="请输入标题" autocomplete="off" required>
+                <label for="InputUserName">用户名</label>
+                <input id="InputUserName" type="text" class="form-control" placeholder="请输入用户名" autocomplete="off" required>
                 <span class="help-block"></span>
             </div>
-            <div class="checkbox">
-                <label>
-                    <input id="InputIsEnable" type="checkbox"> 启用
-                </label>
-            </div>
-            <div id="ProblemCountGroup" class="form-group">
-                <label for="InputProblemCount">问题总数</label>
-                <input id="InputProblemCount" type="number" class="form-control" readonly>
-                <span class="help-block"></span>
-            </div>
-            <div id="SumScoreGroup" class="form-group">
-                <label for="InputSumScore">试题总分</label>
-                <input id="InputSumScore" type="number" class="form-control" readonly>
-                <span class="help-block"></span>
-            </div>
-            <a id="LinkQuestion" class="btn btn-success btn-block">编辑问题</a>
         </form>
     </main>
     <!-- 删除窗体 -->
@@ -57,7 +41,7 @@
                     <h4 class="modal-title" id="DeleteModalTitle">提示</h4>
                 </div>
                 <div id="DeleteModalBody" class="modal-body">
-                    确定要删除该试题吗？
+                    确定要删除该账户吗？
                 </div>
                 <div class="modal-footer">
                     <button id="BtnDelete" type="button" class="btn btn-danger">确定</button>
@@ -70,6 +54,6 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Lib/m-Tools/m-Tools.js"></script>
     <script src="~/Scripts/Base.js"></script>
-    <script src="~/Scripts/Paper/PaperDetailed.js"></script>
+    <script src="~/Scripts/User/UserDetails.js"></script>
 </body>
 </html>

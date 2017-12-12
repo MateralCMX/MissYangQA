@@ -2,7 +2,7 @@
 /// <reference path="../base.ts" />
 'use strict';
 namespace MissYangQA {
-    class UserDetailedPage {
+    class UserDetailsPage {
         /*页面数据*/
         private static PageData = {
             params: MTMa.GetURLParams(),
@@ -46,7 +46,7 @@ namespace MissYangQA {
          */
         private BindMode() {
             let BtnSave = MDMa.$("BtnSave") as HTMLButtonElement;
-            if (MTMa.IsNullOrUndefinedOrEmpty(UserDetailedPage.PageData.params["ID"])) {
+            if (MTMa.IsNullOrUndefinedOrEmpty(UserDetailsPage.PageData.params["ID"])) {
                 window.history.back();
             }
         }
@@ -56,7 +56,7 @@ namespace MissYangQA {
          */
         private BtnSaveEvent_Click(e: MouseEvent) {
             common.ClearErrorMessage();
-            let data = UserDetailedPage.GetInputData();
+            let data = UserDetailsPage.GetInputData();
             if (!MTMa.IsNullOrUndefined(data)) {
                 let url = "api/User/ChangePassword"
                 let BtnElement = e.target as HTMLButtonElement;
@@ -82,7 +82,7 @@ namespace MissYangQA {
                 let InputNewPassword = (MDMa.$("InputNewPassword") as HTMLInputElement);
                 let InputNewPassword2 = (MDMa.$("InputNewPassword2") as HTMLInputElement);
                 data = {
-                    ID: UserDetailedPage.PageData.params["ID"],
+                    ID: UserDetailsPage.PageData.params["ID"],
                     OldPassword: (MDMa.$("InputOldPassword") as HTMLInputElement).value,
                     NewPassword: InputNewPassword.value,
                     NewPassword2: InputNewPassword2.value,
@@ -98,6 +98,6 @@ namespace MissYangQA {
     }
     /*页面加载完毕事件*/
     MDMa.AddEvent(window, "load", function (e: Event) {
-        let pageM: UserDetailedPage = new UserDetailedPage();
+        let pageM: UserDetailsPage = new UserDetailsPage();
     });
 }

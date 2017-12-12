@@ -52,7 +52,7 @@ namespace MissYangQA {
                         MainList.innerHTML = "";
                         for (var i = 0; i < resM["Data"].length; i++) {
                             let ListItem = document.createElement("a");
-                            ListItem.href = "/User/UserDetailed?ID=" + resM["Data"][i]["ID"];
+                            ListItem.href = "/User/UserDetails?ID=" + resM["Data"][i]["ID"];
                             ListItem.classList.add("list-group-item");
                             let TextContent = document.createTextNode(resM["Data"][i]["UserName"]);
                             let RightIco = document.createElement("i");

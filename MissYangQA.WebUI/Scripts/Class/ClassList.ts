@@ -79,7 +79,7 @@ namespace MissYangQA {
             while (classItem.tagName != "LI") {
                 classItem = classItem.parentElement;
             }
-            window.location.href = "/Class/ClassDetailed?ID=" + classItem.dataset.id;
+            window.location.href = "/Class/ClassDetails?ID=" + classItem.dataset.id;
         }
         /**
          * 调换班级位序单击事件

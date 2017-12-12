@@ -2,7 +2,7 @@
 /// <reference path="../base.ts" />
 'use strict';
 namespace MissYangQA {
-    class PaperDetailedPage {
+    class PaperDetailsPage {
         /*页面数据*/
         private static PageData = {
             params: MTMa.GetURLParams(),
@@ -14,7 +14,7 @@ namespace MissYangQA {
         constructor() {
             if (common.IsLogin(true)) {
                 this.BindEvent();
-                PaperDetailedPage.BindMode();
+                PaperDetailsPage.BindMode();
             }
         }
         /**
@@ -44,10 +44,10 @@ namespace MissYangQA {
          */
         private static BindMode() {
             let BtnSave = MDMa.$("BtnSave") as HTMLButtonElement;
-            let LinkQuestion = MDMa.$("LinkQuestion") as HTMLAnchorElement;
-            if (!MTMa.IsNullOrUndefinedOrEmpty(PaperDetailedPage.PageData.params["ID"])) {
-                PaperDetailedPage.GetPaperViewInfoByID();
-                PaperDetailedPage.PageData.url = "api/Paper/EditPaperInfo";
+            let LinkProblem = MDMa.$("LinkProblem") as HTMLAnchorElement;
+            if (!MTMa.IsNullOrUndefinedOrEmpty(PaperDetailsPage.PageData.params["ID"])) {
+                PaperDetailsPage.GetPaperViewInfoByID();
+                PaperDetailsPage.PageData.url = "api/Paper/EditPaperInfo";
                 BtnSave.classList.add("glyphicon-floppy-disk");
                 let TopTools = BtnSave.parentElement;
                 let deleteClassListBtn = document.createElement("button");
@@ -57,13 +57,13 @@ namespace MissYangQA {
                 deleteClassListBtn.dataset.target = "#DeleteModal";
                 TopTools.appendChild(deleteClassListBtn);
                 common.SetTitle("修改试题");
-                LinkQuestion.href = "/Question/QuestionList?ID=" + PaperDetailedPage.PageData.params["ID"];
+                LinkProblem.href = "/Problem/ProblemList?ID=" + PaperDetailsPage.PageData.params["ID"];
             }
             else {
-                PaperDetailedPage.PageData.url = "api/Paper/AddPaperInfo";
+                PaperDetailsPage.PageData.url = "api/Paper/AddPaperInfo";
                 BtnSave.classList.add("glyphicon-plus");
                 common.SetTitle("添加试题");
-                LinkQuestion.setAttribute("style", "display:none;");
+                LinkProblem.setAttribute("style", "display:none;");
                 let ProblemCountGroup = MDMa.$("ProblemCountGroup") as HTMLDivElement;
                 ProblemCountGroup.setAttribute("style", "display:none;");
                 let SumScoreGroup = MDMa.$("SumScoreGroup") as HTMLDivElement;
@@ -76,7 +76,7 @@ namespace MissYangQA {
         private static GetPaperViewInfoByID() {
             let url: string = "api/Paper/GetPaperInfoByID";
             let data = {
-                ID: PaperDetailedPage.PageData.params["ID"]
+                ID: PaperDetailsPage.PageData.params["ID"]
             }
             let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 let InputTitle = MDMa.$("InputTitle") as HTMLInputElement;
@@ -101,7 +101,7 @@ namespace MissYangQA {
          */
         private BtnSaveEvent_Click(e: MouseEvent) {
             common.ClearErrorMessage();
-            let data = PaperDetailedPage.GetInputData();
+            let data = PaperDetailsPage.GetInputData();
             if (!MTMa.IsNullOrUndefined(data)) {
                 let BtnElement = e.target as HTMLButtonElement;
                 BtnElement.disabled = true;
@@ -114,7 +114,7 @@ namespace MissYangQA {
                 let CFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                     BtnElement.disabled = false
                 };
-                common.SendPostAjax(PaperDetailedPage.PageData.url, data, SFun, FFun, CFun);
+                common.SendPostAjax(PaperDetailsPage.PageData.url, data, SFun, FFun, CFun);
             }
         }
         /**
@@ -124,7 +124,7 @@ namespace MissYangQA {
             let data = null;
             if (document.forms["InputForm"].checkValidity()) {
                 data = {
-                    ID: PaperDetailedPage.PageData.params["ID"],
+                    ID: PaperDetailsPage.PageData.params["ID"],
                     Title: (MDMa.$("InputTitle") as HTMLInputElement).value,
                     IsEnable: (MDMa.$("InputIsEnable") as HTMLInputElement).checked,
                 }
@@ -138,7 +138,7 @@ namespace MissYangQA {
         private BtnDeleteEvent_Click(e: MouseEvent) {
             let url = "api/Paper/DeletePaperInfo";
             let data = {
-                ID: PaperDetailedPage.PageData.params["ID"]
+                ID: PaperDetailsPage.PageData.params["ID"]
             }
             let BtnElement = e.target as HTMLButtonElement;
             BtnElement.disabled = true;
@@ -156,6 +156,6 @@ namespace MissYangQA {
     }
     /*页面加载完毕事件*/
     MDMa.AddEvent(window, "load", function (e: Event) {
-        let pageM: PaperDetailedPage = new PaperDetailedPage();
+        let pageM: PaperDetailsPage = new PaperDetailsPage();
     });
 }

@@ -137,7 +137,7 @@
 //                            let listM = resM["Data"];
 //                            for (var i = 0; i < listM.length; i++) {
 //                                let ListItem = document.createElement("a");
-//                                ListItem.href = "/Paper/PaperDetailed?ID=" + listM[i]["ID"];
+//                                ListItem.href = "/Paper/PaperDetails?ID=" + listM[i]["ID"];
 //                                ListItem.classList.add("list-group-item");
 //                                let titleSpan = document.createElement("span");
 //                                titleSpan.classList.add("Title");

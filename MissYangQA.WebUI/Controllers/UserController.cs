@@ -20,7 +20,7 @@ namespace MissYangQA.WebUI.Controllers
         /// 用户明细
         /// </summary>
         /// <returns></returns>
-        public ActionResult UserDetailed()
+        public ActionResult UserDetails()
         {
             return View();
         }

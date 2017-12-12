@@ -20,7 +20,7 @@ namespace MissYangQA.WebUI.Controllers
         /// 试题详情
         /// </summary>
         /// <returns></returns>
-        public ActionResult PaperDetailed()
+        public ActionResult PaperDetails()
         {
             return View();
         }

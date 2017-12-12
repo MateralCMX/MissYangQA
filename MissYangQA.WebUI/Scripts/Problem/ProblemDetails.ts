@@ -5,7 +5,7 @@
 //    import MDMa = Materal.DOMManager;
 //    import MTMa = Materal.ToolManager;
 //    import Common = BackManage.Common;
-//    class QuestionDetailedModel {
+//    class QuestionDetailsModel {
 //        /*页面数据*/
 //        private static PageData = {
 //            params: MTMa.GetURLParams(),
@@ -19,7 +19,7 @@
 //            if (Common.IsLogin(true)) {
 //                Common.Init();
 //                this.BindEvent();
-//                QuestionDetailedModel.BindMode();
+//                QuestionDetailsModel.BindMode();
 //            }
 //        }
 //        /**
@@ -46,14 +46,14 @@
 //         */
 //        private static BindMode() {
 //            let BtnSave = MDMa.$("BtnSave") as HTMLButtonElement;
-//            if (!MTMa.IsNullOrUndefinedOrEmpty(QuestionDetailedModel.PageData.params["ID"])) {
-//                QuestionDetailedModel.GetQuestionViewInfoByID();
-//                QuestionDetailedModel.PageData.url = "api/Question/EditQuestionInfo";
+//            if (!MTMa.IsNullOrUndefinedOrEmpty(QuestionDetailsModel.PageData.params["ID"])) {
+//                QuestionDetailsModel.GetQuestionViewInfoByID();
+//                QuestionDetailsModel.PageData.url = "api/Question/EditQuestionInfo";
 //                BtnSave.classList.add("glyphicon-floppy-disk");
 //                Common.SetTitle("修改问题");
 //            }
 //            else {
-//                QuestionDetailedModel.PageData.url = "api/Question/AddQuestionInfo";
+//                QuestionDetailsModel.PageData.url = "api/Question/AddQuestionInfo";
 //                BtnSave.classList.add("glyphicon-plus");
 //                Common.SetTitle("添加问题");
 //            }
@@ -64,7 +64,7 @@
 //        private static GetQuestionViewInfoByID() {
 //            let url: string = "api/Question/GetQuestionViewInfoByID";
 //            let data = {
-//                ID: QuestionDetailedModel.PageData.params["ID"]
+//                ID: QuestionDetailsModel.PageData.params["ID"]
 //            }
 //            let SFun = function (resM: Object) {
 //                if (resM["ResultType"] == 0) {
@@ -93,7 +93,7 @@
 //         */
 //        private BtnSaveEvent_Click(e: MouseEvent) {
 //            Common.ClearErrorMessage();
-//            let data = QuestionDetailedModel.GetInputData();
+//            let data = QuestionDetailsModel.GetInputData();
 //            if (!MTMa.IsNullOrUndefined(data)) {
 //                let BtnElement = e.target as HTMLButtonElement;
 //                BtnElement.disabled = true;
@@ -110,7 +110,7 @@
 //                let CFun = function (resM: Object) {
 //                    BtnElement.disabled = false
 //                };
-//                Common.SendAjax(QuestionDetailedModel.PageData.url, data, SFun, EFun, CFun);
+//                Common.SendAjax(QuestionDetailsModel.PageData.url, data, SFun, EFun, CFun);
 //            }
 //        }
 //        /**
@@ -120,10 +120,10 @@
 //            let data = null;
 //            if (document.forms["InputForm"].checkValidity()) {
 //                data = {
-//                    ID: QuestionDetailedModel.PageData.params["ID"],
+//                    ID: QuestionDetailsModel.PageData.params["ID"],
 //                    Contents: (MDMa.$("InputQuestion") as HTMLTextAreaElement).value,
 //                    Score: (MDMa.$("InputScore") as HTMLInputElement).value,
-//                    AnswerList: QuestionDetailedModel.PageData.AnswerList
+//                    AnswerList: QuestionDetailsModel.PageData.AnswerList
 //                }
 //                if (data["AnswerList"]["length"] == 0) {
 //                    data = null;
@@ -166,6 +166,6 @@
 //    }
 //    /*页面加载完毕事件*/
 //    MDMa.AddEvent(window, "load", function (e: Event) {
-//        let pageM: QuestionDetailedModel = new QuestionDetailedModel();
+//        let pageM: QuestionDetailsModel = new QuestionDetailsModel();
 //    });
 //}

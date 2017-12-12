@@ -205,6 +205,7 @@
     <Compile Include="Controllers\ClassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaperController.cs" />
+    <Compile Include="Controllers\ProblemController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -218,18 +219,18 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="CSS\Base.css" />
-    <Content Include="CSS\Class\ClassDetailed.css" />
+    <Content Include="CSS\Class\ClassDetails.css" />
     <Content Include="CSS\Class\ClassList.css" />
     <Content Include="CSS\Exam\ExamDetailed.css" />
     <Content Include="CSS\Exam\ExamList.css" />
     <Content Include="CSS\Exam\ExamLogin.css" />
     <Content Include="CSS\Home\Index.css" />
     <Content Include="CSS\Home\Login.css" />
-    <Content Include="CSS\Paper\PaperDetailed.css" />
+    <Content Include="CSS\Paper\PaperDetails.css" />
     <Content Include="CSS\Paper\PaperList.css" />
     <Content Include="CSS\Question\QuestionList.css" />
     <Content Include="CSS\User\ChangePassword.css" />
-    <Content Include="CSS\User\UserDetailed.css" />
+    <Content Include="CSS\User\UserDetails.css" />
     <Content Include="CSS\User\UserList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -294,16 +295,17 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\User\UserList.cshtml" />
-    <Content Include="Views\User\UserDetailed.cshtml" />
+    <Content Include="Views\User\UserDetails.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Class\ClassList.cshtml" />
-    <Content Include="Views\Class\ClassDetailed.cshtml" />
+    <Content Include="Views\Class\ClassDetails.cshtml" />
     <Content Include="Views\Paper\PaperList.cshtml" />
-    <Content Include="Views\Paper\PaperDetailed.cshtml" />
+    <Content Include="Views\Paper\PaperDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Problem\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -328,17 +330,17 @@
     <TypeScriptCompile Include="Lib\m-Reset\m-Reset.ts" />
     <TypeScriptCompile Include="Lib\m-Tools\m-Tools.ts" />
     <TypeScriptCompile Include="Scripts\Base.ts" />
-    <TypeScriptCompile Include="Scripts\Class\ClassDetailed.ts" />
+    <TypeScriptCompile Include="Scripts\Class\ClassDetails.ts" />
     <TypeScriptCompile Include="Scripts\Class\ClassList.ts" />
     <TypeScriptCompile Include="Scripts\Home\Index.ts" />
     <TypeScriptCompile Include="Scripts\Home\Login.ts" />
     <TypeScriptCompile Include="Scripts\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\Paper\PaperDetailed.ts" />
+    <TypeScriptCompile Include="Scripts\Paper\PaperDetails.ts" />
     <TypeScriptCompile Include="Scripts\Paper\PaperList.ts" />
-    <TypeScriptCompile Include="Scripts\Question\QuestionDetailed.ts" />
-    <TypeScriptCompile Include="Scripts\Question\QuestionList.ts" />
+    <TypeScriptCompile Include="Scripts\Problem\ProblemDetails.ts" />
+    <TypeScriptCompile Include="Scripts\Problem\ProblemList.ts" />
     <TypeScriptCompile Include="Scripts\User\ChangePassword.ts" />
-    <TypeScriptCompile Include="Scripts\User\UserDetailed.ts" />
+    <TypeScriptCompile Include="Scripts\User\UserDetails.ts" />
     <TypeScriptCompile Include="Scripts\User\UserList.ts" />
   </ItemGroup>
   <ItemGroup>

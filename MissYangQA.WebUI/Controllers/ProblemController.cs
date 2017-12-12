@@ -6,21 +6,21 @@ using System.Web.Mvc;
 
 namespace MissYangQA.WebUI.Controllers
 {
-    public class ClassController : Controller
+    public class ProblemController : Controller
     {
         /// <summary>
-        /// 班级列表
+        /// 问题列表
         /// </summary>
         /// <returns></returns>
-        public ActionResult ClassList()
+        public ActionResult ProblemList()
         {
             return View();
         }
         /// <summary>
-        /// 班级明细
+        /// 问题明细
         /// </summary>
         /// <returns></returns>
-        public ActionResult ClassDetails()
+        public ActionResult ProblemDetails()
         {
             return View();
         }

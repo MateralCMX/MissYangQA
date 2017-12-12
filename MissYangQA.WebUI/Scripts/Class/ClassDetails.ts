@@ -2,7 +2,7 @@
 /// <reference path="../base.ts" />
 'use strict';
 namespace MissYangQA {
-    class UserDetailedPage {
+    class ClassDetailsPage {
         /*页面数据*/
         private static PageData = {
             params: MTMa.GetURLParams(),
@@ -25,53 +25,49 @@ namespace MissYangQA {
          * 绑定事件
          */
         private BindEvent() {
-            MDMa.AddEvent("InputUserName", "invalid", function (e: Event) {
+            MDMa.AddEvent("InputName", "invalid", function (e: Event) {
                 let setting: InvalidOptionsModel = new InvalidOptionsModel();
-                setting.Required = "用户名不能为空";
+                setting.Required = "班级名不能为空";
                 common.InputInvalidEvent_Invalid(e, setting);
             });
             MDMa.AddEvent("BtnSave", "click", this.BtnSaveEvent_Click);
-            MDMa.AddEvent("BtnDelete", "click", this.BtnDeleteEvent_Click)
+            MDMa.AddEvent("BtnDelete", "click", this.BtnDeleteEvent_Click);
         }
         /**
          * 绑定模式
          */
         private BindMode() {
             let BtnSave = MDMa.$("BtnSave") as HTMLButtonElement;
-            if (!MTMa.IsNullOrUndefinedOrEmpty(UserDetailedPage.PageData.params["ID"])) {
-                this.GetUserViewInfoByID();
-                UserDetailedPage.PageData.url = "api/User/EditUserInfo";
+            if (!MTMa.IsNullOrUndefinedOrEmpty(ClassDetailsPage.PageData.params["ID"])) {
+                this.GetClassViewInfoByID();
+                ClassDetailsPage.PageData.url = "api/Class/EditClassInfo";
                 BtnSave.classList.add("glyphicon-floppy-disk");
                 let TopTools = BtnSave.parentElement;
-                let changePasswordA = document.createElement("a");
-                MDMa.AddClass(changePasswordA, "btn btn-warning glyphicon glyphicon-pencil");
-                changePasswordA.href = "/User/ChangePassword?ID=" + UserDetailedPage.PageData.params["ID"];
-                TopTools.appendChild(changePasswordA);
-                let deleteUserBtn = document.createElement("button");
-                MDMa.AddClass(deleteUserBtn, "btn btn-danger glyphicon glyphicon-remove");
-                deleteUserBtn.type = "button";
-                deleteUserBtn.dataset.toggle = "modal";
-                deleteUserBtn.dataset.target = "#DeleteModal";
-                TopTools.appendChild(deleteUserBtn);
-                common.SetTitle("修改用户");
+                let deleteClassBtn = document.createElement("button");
+                MDMa.AddClass(deleteClassBtn, "btn btn-danger glyphicon glyphicon-remove");
+                deleteClassBtn.type = "button";
+                deleteClassBtn.dataset.toggle = "modal";
+                deleteClassBtn.dataset.target = "#DeleteModal";
+                TopTools.appendChild(deleteClassBtn);
+                common.SetTitle("修改班级");
             }
             else {
-                UserDetailedPage.PageData.url = "api/User/AddUserInfo";
+                ClassDetailsPage.PageData.url = "api/Class/AddClassInfo";
                 BtnSave.classList.add("glyphicon-plus");
-                common.SetTitle("添加用户");
+                common.SetTitle("添加班级");
             }
         }
         /**
          * 获得对象信息
          */
-        private GetUserViewInfoByID() {
-            let url: string = "api/User/GetUserViewInfoByID";
+        private GetClassViewInfoByID() {
+            let url: string = "api/Class/GetClassInfoByID";
             let data = {
-                ID: UserDetailedPage.PageData.params["ID"]
+                ID: ClassDetailsPage.PageData.params["ID"]
             }
             let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
-                let InputUserName = MDMa.$("InputUserName") as HTMLInputElement;
-                InputUserName.value = resM["Data"]["UserName"];
+                let InputName = MDMa.$("InputName") as HTMLInputElement;
+                InputName.value = resM["Data"]["Name"];
             };
             let FFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 common.ShowMessageBox(resM["Message"])
@@ -86,20 +82,24 @@ namespace MissYangQA {
          */
         private BtnSaveEvent_Click(e: MouseEvent) {
             common.ClearErrorMessage();
-            let data = UserDetailedPage.GetInputData();
+            let data = ClassDetailsPage.GetInputData();
             if (!MTMa.IsNullOrUndefined(data)) {
                 let BtnElement = e.target as HTMLButtonElement;
                 BtnElement.disabled = true;
                 let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
-                    window.history.back();
+                    if (resM["ResultType"] == 0) {
+                        window.history.back();
+                    }
+                    else {
+                        common.ShowMessageBox(resM["Message"])
+                    }
                 };
                 let FFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
-                    common.ShowMessageBox(resM["Message"])
                 };
                 let CFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                     BtnElement.disabled = false
                 };
-                common.SendPostAjax(UserDetailedPage.PageData.url, data, SFun, FFun, CFun);
+                common.SendPostAjax(ClassDetailsPage.PageData.url, data, SFun, FFun, CFun);
             }
         }
         /**
@@ -109,8 +109,8 @@ namespace MissYangQA {
             let data = null;
             if (document.forms["InputForm"].checkValidity()) {
                 data = {
-                    ID: UserDetailedPage.PageData.params["ID"],
-                    UserName: (MDMa.$("InputUserName") as HTMLInputElement).value,
+                    ID: ClassDetailsPage.PageData.params["ID"],
+                    Name: (MDMa.$("InputName") as HTMLInputElement).value,
                 }
             }
             return data;
@@ -120,9 +120,9 @@ namespace MissYangQA {
          * @param e
          */
         private BtnDeleteEvent_Click(e: MouseEvent) {
-            let url = "api/User/DeleteUserInfo";
+            let url = "api/Class/DeleteClassInfo";
             let data = {
-                ID: UserDetailedPage.PageData.params["ID"]
+                ID: ClassDetailsPage.PageData.params["ID"]
             }
             let BtnElement = e.target as HTMLButtonElement;
             BtnElement.disabled = true;
@@ -140,6 +140,6 @@ namespace MissYangQA {
     }
     /*页面加载完毕事件*/
     MDMa.AddEvent(window, "load", function (e: Event) {
-        let pageM: UserDetailedPage = new UserDetailedPage();
+        let pageM: ClassDetailsPage = new ClassDetailsPage();
     });
 }
