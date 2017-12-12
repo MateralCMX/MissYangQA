@@ -44,7 +44,7 @@ namespace MissYangQA {
                 BtnSave.classList.add("glyphicon-floppy-disk");
                 let TopTools = BtnSave.parentElement;
                 let deleteClassBtn = document.createElement("button");
-                MDMa.AddClass(deleteClassBtn, "btn btn-danger glyphicon glyphicon-remove");
+                MDMa.AddClass(deleteClassBtn, "btn btn-danger glyphicon glyphicon-trash");
                 deleteClassBtn.type = "button";
                 deleteClassBtn.dataset.toggle = "modal";
                 deleteClassBtn.dataset.target = "#DeleteModal";

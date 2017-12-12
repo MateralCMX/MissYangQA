@@ -18,7 +18,7 @@ namespace MissYangQA.Model
         public string Title { get; set; }
         public System.DateTime CreateTime { get; set; }
         public bool IsEnable { get; set; }
-        public Nullable<int> ProblemCount { get; set; }
+        public int ProblemCount { get; set; }
         public int SumScore { get; set; }
     }
 }

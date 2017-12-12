@@ -50,6 +50,8 @@
     <Compile Include="ApplicationLogDAL.cs" />
     <Compile Include="BaseDAL.cs" />
     <Compile Include="PaperDAL.cs" />
+    <Compile Include="AnswerDAL.cs" />
+    <Compile Include="ProblemDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClassDAL.cs" />
     <Compile Include="UserDAL.cs" />

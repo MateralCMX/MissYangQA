@@ -12,23 +12,12 @@ namespace MissYangQA.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class T_Problem
+    public partial class V_Problem
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public T_Problem()
-        {
-            this.T_Answer = new HashSet<T_Answer>();
-        }
-    
         public System.Guid ID { get; set; }
         public System.Guid FK_Paper { get; set; }
         public string Contents { get; set; }
         public int Score { get; set; }
-        public bool IsDelete { get; set; }
         public System.DateTime CreateTime { get; set; }
-    
-        public virtual T_Paper T_Paper { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<T_Answer> T_Answer { get; set; }
     }
 }

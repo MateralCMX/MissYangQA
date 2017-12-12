@@ -9,26 +9,39 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title id="PageTitle"></title>
+    <title id="PageTitle">问题明细</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Lib/m-Reset/m-Reset.css" rel="stylesheet" />
     <link href="~/Css/Base.css" rel="stylesheet" />
-    <link href="~/Css/Class/ClassDetails.css" rel="stylesheet" />
+    <link href="~/Css/Problem/ProblemDetails.css" rel="stylesheet" />
 </head>
 <body>
     <header>
-        <h2 id="HeaderTitle"></h2>
+        <h2 id="HeaderTitle">问题明细</h2>
     </header>
     <div class="TopTools btn-group">
         <button class="btn btn-default btn-back glyphicon glyphicon-chevron-left"></button>
         <button id="BtnSave" class="btn btn-primary glyphicon"></button>
     </div>
     <main>
-        <form id="InputForm" autocomplete="off">
+        <form id="InputForm">
             <div class="form-group">
-                <label for="InputName">班级名</label>
-                <input id="InputName" type="text" class="form-control" placeholder="请输入班级名" autocomplete="off" required>
+                <label for="InputContents">问题</label>
+                <textarea id="InputContents" rows="3" class="form-control" required></textarea>
                 <span class="help-block"></span>
+            </div>
+            <div class="form-group">
+                <label for="InputScore">分值</label>
+                <input id="InputScore" type="number" min="0" required class="form-control" value="0" />
+                <span class="help-block"></span>
+            </div>
+            <div class="form-group">
+                <label for="InputScore">答案</label>
+                <div class="btn-group">
+                    <button id="BtnAddAnswer" class="btn btn-success glyphicon glyphicon-plus" type="button"></button>
+                </div>
+            </div>
+            <div id="AnswersList">
             </div>
         </form>
     </main>
@@ -41,7 +54,7 @@
                     <h4 class="modal-title" id="DeleteModalTitle">提示</h4>
                 </div>
                 <div id="DeleteModalBody" class="modal-body">
-                    确定要删除该班级吗？
+                    确定要删除该问题吗？
                 </div>
                 <div class="modal-footer">
                     <button id="BtnDelete" type="button" class="btn btn-danger">确定</button>
@@ -54,6 +67,6 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Lib/m-Tools/m-Tools.js"></script>
     <script src="~/Scripts/Base.js"></script>
-    <script src="~/Scripts/Class/ClassDetails.js"></script>
+    <script src="~/Scripts/Problem/ProblemDetails.js"></script>
 </body>
 </html>

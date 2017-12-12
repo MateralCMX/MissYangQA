@@ -48,7 +48,7 @@ namespace MissYangQA {
                 changePasswordA.href = "/User/ChangePassword?ID=" + UserDetailsPage.PageData.params["ID"];
                 TopTools.appendChild(changePasswordA);
                 let deleteUserBtn = document.createElement("button");
-                MDMa.AddClass(deleteUserBtn, "btn btn-danger glyphicon glyphicon-remove");
+                MDMa.AddClass(deleteUserBtn, "btn btn-danger glyphicon glyphicon-trash");
                 deleteUserBtn.type = "button";
                 deleteUserBtn.dataset.toggle = "modal";
                 deleteUserBtn.dataset.target = "#DeleteModal";

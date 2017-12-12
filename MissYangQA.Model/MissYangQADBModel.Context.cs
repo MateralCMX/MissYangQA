@@ -25,7 +25,7 @@ namespace MissYangQA.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<T_Answer> T_Answer { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<T_AnswerSheet> T_AnswerSheet { get; set; }
         public virtual DbSet<T_AnswerSheetDetails> T_AnswerSheetDetails { get; set; }
         public virtual DbSet<T_ApplicationLog> T_ApplicationLog { get; set; }
@@ -34,7 +34,11 @@ namespace MissYangQA.Model
         public virtual DbSet<T_Problem> T_Problem { get; set; }
         public virtual DbSet<T_User> T_User { get; set; }
         public virtual DbSet<V_Class> V_Class { get; set; }
-        public virtual DbSet<V_User> V_User { get; set; }
         public virtual DbSet<V_Paper> V_Paper { get; set; }
+        public virtual DbSet<V_PaperGroup> V_PaperGroup { get; set; }
+        public virtual DbSet<V_Problem> V_Problem { get; set; }
+        public virtual DbSet<V_User> V_User { get; set; }
+        public virtual DbSet<T_Answer> T_Answer { get; set; }
+        public virtual DbSet<V_Answer> V_Answer { get; set; }
     }
 }

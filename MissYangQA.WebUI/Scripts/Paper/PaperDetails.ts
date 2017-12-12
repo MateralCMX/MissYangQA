@@ -51,13 +51,13 @@ namespace MissYangQA {
                 BtnSave.classList.add("glyphicon-floppy-disk");
                 let TopTools = BtnSave.parentElement;
                 let deleteClassListBtn = document.createElement("button");
-                MDMa.AddClass(deleteClassListBtn, "btn btn-danger glyphicon glyphicon-remove");
+                MDMa.AddClass(deleteClassListBtn, "btn btn-danger glyphicon glyphicon-trash");
                 deleteClassListBtn.type = "button";
                 deleteClassListBtn.dataset.toggle = "modal";
                 deleteClassListBtn.dataset.target = "#DeleteModal";
                 TopTools.appendChild(deleteClassListBtn);
                 common.SetTitle("修改试题");
-                LinkProblem.href = "/Problem/ProblemList?ID=" + PaperDetailsPage.PageData.params["ID"];
+                LinkProblem.href = "/Problem/ProblemList?PaperID=" + PaperDetailsPage.PageData.params["ID"];
             }
             else {
                 PaperDetailsPage.PageData.url = "api/Paper/AddPaperInfo";

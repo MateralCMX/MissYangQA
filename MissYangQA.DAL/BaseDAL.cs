@@ -45,7 +45,18 @@ namespace MissYangQA.DAL
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="model"></param>
+        /// <returns></returns>
         protected T BeforeInsert<T>(T model)
+        {
+            return GetBeforeInsertModel(model);
+        }
+        /// <summary>
+        /// 添加之前
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public static T GetBeforeInsertModel<T>(T model)
         {
             T addModel = default(T);
             Type tType = typeof(T);

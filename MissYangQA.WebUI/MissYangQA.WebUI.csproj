@@ -199,6 +199,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\API\ApiBaseController.cs" />
+    <Compile Include="Controllers\API\ProblemController.cs" />
     <Compile Include="Controllers\API\PaperController.cs" />
     <Compile Include="Controllers\API\ClassController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
@@ -228,7 +229,8 @@
     <Content Include="CSS\Home\Login.css" />
     <Content Include="CSS\Paper\PaperDetails.css" />
     <Content Include="CSS\Paper\PaperList.css" />
-    <Content Include="CSS\Question\QuestionList.css" />
+    <Content Include="CSS\Problem\ProblemDetails.css" />
+    <Content Include="CSS\Problem\ProblemList.css" />
     <Content Include="CSS\User\ChangePassword.css" />
     <Content Include="CSS\User\UserDetails.css" />
     <Content Include="CSS\User\UserList.css" />
@@ -301,11 +303,12 @@
     <Content Include="Views\Class\ClassDetails.cshtml" />
     <Content Include="Views\Paper\PaperList.cshtml" />
     <Content Include="Views\Paper\PaperDetails.cshtml" />
+    <Content Include="Views\Problem\ProblemList.cshtml" />
+    <Content Include="Views\Problem\ProblemDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Problem\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

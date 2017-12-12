@@ -20,27 +20,9 @@ namespace MissYangQA.BLL
     {
         #region 成员
         /// <summary>
-        /// Token有效时间[分钟]
-        /// </summary>
-        private static double TokenOverdue = 1440;
-        /// <summary>
         /// 试题数据访问对象
         /// </summary>
         private readonly PaperDAL _paperDAL = new PaperDAL();
-        /// <summary>
-        /// 默认密码
-        /// </summary>
-        private const string DEFULTPASSWORD = "123456";
-        #endregion
-        #region 构造方法
-        public PaperBLL()
-        {
-            string tokenOverdue = ConfigurationManager.AppSettings["TokenOverdue"];
-            if (!string.IsNullOrEmpty(tokenOverdue) && VerifyManager.IsInteger(tokenOverdue))
-            {
-                TokenOverdue = Convert.ToDouble(tokenOverdue);
-            }
-        }
         #endregion
         #region 公共方法
         /// <summary>

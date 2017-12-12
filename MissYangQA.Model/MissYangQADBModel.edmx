@@ -5,15 +5,26 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MissYangQADBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="T_Answer">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Contents" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Rank" Type="int" Nullable="false" />
-          <Property Name="IsRight" Type="bit" Nullable="false" />
+          <Property Name="IsCorrect" Type="bit" Nullable="false" />
           <Property Name="FK_Problem" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="T_AnswerSheet">
           <Key>
@@ -71,8 +82,8 @@
           <Property Name="FK_Paper" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Contents" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Score" Type="int" Nullable="false" />
-          <Property Name="Rank" Type="int" Nullable="false" />
-          <Property Name="Types" Type="tinyint" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="T_User">
           <Key>
@@ -83,6 +94,22 @@
           <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="Token" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="TokenCreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“MissYangQADB.dbo.V_Answer”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_Answer">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Contents" />
+            <PropertyRef Name="IsCorrect" />
+            <PropertyRef Name="FK_Problem" />
+            <PropertyRef Name="CreateTime" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Contents" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsCorrect" Type="bit" Nullable="false" />
+          <Property Name="FK_Problem" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“MissYangQADB.dbo.V_Class”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -104,14 +131,42 @@
             <PropertyRef Name="Title" />
             <PropertyRef Name="CreateTime" />
             <PropertyRef Name="IsEnable" />
+            <PropertyRef Name="ProblemCount" />
             <PropertyRef Name="SumScore" />
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="IsEnable" Type="bit" Nullable="false" />
+          <Property Name="ProblemCount" Type="int" Nullable="false" />
+          <Property Name="SumScore" Type="int" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“MissYangQADB.dbo.V_PaperGroup”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_PaperGroup">
+          <Key>
+            <PropertyRef Name="FK_Paper" />
+            <PropertyRef Name="SumScore" />
+          </Key>
+          <Property Name="FK_Paper" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ProblemCount" Type="int" />
           <Property Name="SumScore" Type="int" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“MissYangQADB.dbo.V_Problem”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_Problem">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="FK_Paper" />
+            <PropertyRef Name="Contents" />
+            <PropertyRef Name="Score" />
+            <PropertyRef Name="CreateTime" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FK_Paper" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Contents" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“MissYangQADB.dbo.V_User”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -198,6 +253,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MissYangQADBModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Answer" EntityType="Self.T_Answer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_AnswerSheet" EntityType="Self.T_AnswerSheet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_AnswerSheetDetails" EntityType="Self.T_AnswerSheetDetails" Schema="dbo" store:Type="Tables" />
@@ -206,6 +262,15 @@
           <EntitySet Name="T_Paper" EntityType="Self.T_Paper" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Problem" EntityType="Self.T_Problem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_User" EntityType="Self.T_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="V_Answer" EntityType="Self.V_Answer" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_Answer].[ID] AS [ID], 
+    [V_Answer].[Contents] AS [Contents], 
+    [V_Answer].[IsCorrect] AS [IsCorrect], 
+    [V_Answer].[FK_Problem] AS [FK_Problem], 
+    [V_Answer].[CreateTime] AS [CreateTime]
+    FROM [dbo].[V_Answer] AS [V_Answer]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="V_Class" EntityType="Self.V_Class" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [V_Class].[ID] AS [ID], 
@@ -222,6 +287,22 @@
     [V_Paper].[ProblemCount] AS [ProblemCount], 
     [V_Paper].[SumScore] AS [SumScore]
     FROM [dbo].[V_Paper] AS [V_Paper]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_PaperGroup" EntityType="Self.V_PaperGroup" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_PaperGroup].[FK_Paper] AS [FK_Paper], 
+    [V_PaperGroup].[ProblemCount] AS [ProblemCount], 
+    [V_PaperGroup].[SumScore] AS [SumScore]
+    FROM [dbo].[V_PaperGroup] AS [V_PaperGroup]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_Problem" EntityType="Self.V_Problem" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_Problem].[ID] AS [ID], 
+    [V_Problem].[FK_Paper] AS [FK_Paper], 
+    [V_Problem].[Contents] AS [Contents], 
+    [V_Problem].[Score] AS [Score], 
+    [V_Problem].[CreateTime] AS [CreateTime]
+    FROM [dbo].[V_Problem] AS [V_Problem]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_User" EntityType="Self.V_User" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -261,7 +342,7 @@
     <edmx:ConceptualModels>
       <Schema Namespace="MissYangQADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="MissYangQADBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="T_Answer" EntityType="MissYangQADBModel.T_Answer" />
+          <EntitySet Name="sysdiagrams" EntityType="MissYangQADBModel.sysdiagrams" />
           <EntitySet Name="T_AnswerSheet" EntityType="MissYangQADBModel.T_AnswerSheet" />
           <EntitySet Name="T_AnswerSheetDetails" EntityType="MissYangQADBModel.T_AnswerSheetDetails" />
           <EntitySet Name="T_ApplicationLog" EntityType="MissYangQADBModel.T_ApplicationLog" />
@@ -270,15 +351,10 @@
           <EntitySet Name="T_Problem" EntityType="MissYangQADBModel.T_Problem" />
           <EntitySet Name="T_User" EntityType="MissYangQADBModel.T_User" />
           <EntitySet Name="V_Class" EntityType="MissYangQADBModel.V_Class" />
+          <EntitySet Name="V_Paper" EntityType="MissYangQADBModel.V_Paper" />
+          <EntitySet Name="V_PaperGroup" EntityType="MissYangQADBModel.V_PaperGroup" />
+          <EntitySet Name="V_Problem" EntityType="MissYangQADBModel.V_Problem" />
           <EntitySet Name="V_User" EntityType="MissYangQADBModel.V_User" />
-          <AssociationSet Name="FK_T_Answer_T_Problem" Association="MissYangQADBModel.FK_T_Answer_T_Problem">
-            <End Role="T_Problem" EntitySet="T_Problem" />
-            <End Role="T_Answer" EntitySet="T_Answer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_T_AnswerSheetDetails_T_Answer" Association="MissYangQADBModel.FK_T_AnswerSheetDetails_T_Answer">
-            <End Role="T_Answer" EntitySet="T_Answer" />
-            <End Role="T_AnswerSheetDetails" EntitySet="T_AnswerSheetDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_T_AnswerSheet_T_Class" Association="MissYangQADBModel.FK_T_AnswerSheet_T_Class">
             <End Role="T_Class" EntitySet="T_Class" />
             <End Role="T_AnswerSheet" EntitySet="T_AnswerSheet" />
@@ -295,19 +371,26 @@
             <End Role="T_Paper" EntitySet="T_Paper" />
             <End Role="T_Problem" EntitySet="T_Problem" />
           </AssociationSet>
-          <EntitySet Name="V_Paper" EntityType="MissYangQADBModel.V_Paper" />
+          <EntitySet Name="T_Answer" EntityType="MissYangQADBModel.T_Answer" />
+          <EntitySet Name="V_Answer" EntityType="MissYangQADBModel.V_Answer" />
+          <AssociationSet Name="FK_T_Answer_T_Problem" Association="MissYangQADBModel.FK_T_Answer_T_Problem">
+            <End Role="T_Problem" EntitySet="T_Problem" />
+            <End Role="T_Answer" EntitySet="T_Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_AnswerSheetDetails_T_Answer" Association="MissYangQADBModel.FK_T_AnswerSheetDetails_T_Answer">
+            <End Role="T_Answer" EntitySet="T_Answer" />
+            <End Role="T_AnswerSheetDetails" EntitySet="T_AnswerSheetDetails" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="T_Answer">
+        <EntityType Name="sysdiagrams">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Contents" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Rank" Type="Int32" Nullable="false" />
-          <Property Name="IsRight" Type="Boolean" Nullable="false" />
-          <Property Name="FK_Problem" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="T_Problem" Relationship="MissYangQADBModel.FK_T_Answer_T_Problem" FromRole="T_Answer" ToRole="T_Problem" />
-          <NavigationProperty Name="T_AnswerSheetDetails" Relationship="MissYangQADBModel.FK_T_AnswerSheetDetails_T_Answer" FromRole="T_Answer" ToRole="T_AnswerSheetDetails" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="T_AnswerSheet">
           <Key>
@@ -330,8 +413,8 @@
           <Property Name="FK_AnswerShet" Type="Guid" Nullable="false" />
           <Property Name="FK_Answer" Type="Guid" Nullable="false" />
           <Property Name="AnswerContent" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="T_Answer" Relationship="MissYangQADBModel.FK_T_AnswerSheetDetails_T_Answer" FromRole="T_AnswerSheetDetails" ToRole="T_Answer" />
           <NavigationProperty Name="T_AnswerSheet" Relationship="MissYangQADBModel.FK_T_AnswerSheetDetails_T_AnswerSheet" FromRole="T_AnswerSheetDetails" ToRole="T_AnswerSheet" />
+          <NavigationProperty Name="T_Answer" Relationship="MissYangQADBModel.FK_T_AnswerSheetDetails_T_Answer" FromRole="T_AnswerSheetDetails" ToRole="T_Answer" />
         </EntityType>
         <EntityType Name="T_ApplicationLog">
           <Key>
@@ -373,10 +456,10 @@
           <Property Name="FK_Paper" Type="Guid" Nullable="false" />
           <Property Name="Contents" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Score" Type="Int32" Nullable="false" />
-          <Property Name="Rank" Type="Int32" Nullable="false" />
-          <Property Name="Types" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="T_Answer" Relationship="MissYangQADBModel.FK_T_Answer_T_Problem" FromRole="T_Problem" ToRole="T_Answer" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="T_Paper" Relationship="MissYangQADBModel.FK_T_Problem_T_Paper" FromRole="T_Problem" ToRole="T_Paper" />
+          <NavigationProperty Name="T_Answer" Relationship="MissYangQADBModel.FK_T_Answer_T_Problem" FromRole="T_Problem" ToRole="T_Answer" />
         </EntityType>
         <EntityType Name="T_User">
           <Key>
@@ -398,6 +481,45 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="Rank" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="V_Paper">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="CreateTime" />
+            <PropertyRef Name="IsEnable" />
+            <PropertyRef Name="ProblemCount" />
+            <PropertyRef Name="SumScore" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsEnable" Type="Boolean" Nullable="false" />
+          <Property Name="ProblemCount" Type="Int32" Nullable="false" />
+          <Property Name="SumScore" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="V_PaperGroup">
+          <Key>
+            <PropertyRef Name="FK_Paper" />
+            <PropertyRef Name="SumScore" />
+          </Key>
+          <Property Name="FK_Paper" Type="Guid" Nullable="false" />
+          <Property Name="ProblemCount" Type="Int32" />
+          <Property Name="SumScore" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="V_Problem">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="FK_Paper" />
+            <PropertyRef Name="Contents" />
+            <PropertyRef Name="Score" />
+            <PropertyRef Name="CreateTime" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="FK_Paper" Type="Guid" Nullable="false" />
+          <Property Name="Contents" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="V_User">
           <Key>
             <PropertyRef Name="ID" />
@@ -408,30 +530,6 @@
           <Property Name="Token" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="TokenCreateTime" Type="DateTime" Precision="3" />
         </EntityType>
-        <Association Name="FK_T_Answer_T_Problem">
-          <End Type="MissYangQADBModel.T_Problem" Role="T_Problem" Multiplicity="1" />
-          <End Type="MissYangQADBModel.T_Answer" Role="T_Answer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="T_Problem">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="T_Answer">
-              <PropertyRef Name="FK_Problem" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_T_AnswerSheetDetails_T_Answer">
-          <End Type="MissYangQADBModel.T_Answer" Role="T_Answer" Multiplicity="1" />
-          <End Type="MissYangQADBModel.T_AnswerSheetDetails" Role="T_AnswerSheetDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="T_Answer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="T_AnswerSheetDetails">
-              <PropertyRef Name="FK_Answer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_T_AnswerSheet_T_Class">
           <End Type="MissYangQADBModel.T_Class" Role="T_Class" Multiplicity="1" />
           <End Type="MissYangQADBModel.T_AnswerSheet" Role="T_AnswerSheet" Multiplicity="*" />
@@ -480,35 +578,71 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="V_Paper">
+        <EntityType Name="T_Answer">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="Title" />
-            <PropertyRef Name="CreateTime" />
-            <PropertyRef Name="IsEnable" />
-            <PropertyRef Name="SumScore" />
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contents" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
+          <Property Name="FK_Problem" Type="Guid" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsEnable" Type="Boolean" Nullable="false" />
-          <Property Name="ProblemCount" Type="Int32" />
-          <Property Name="SumScore" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="T_Problem" Relationship="MissYangQADBModel.FK_T_Answer_T_Problem" FromRole="T_Answer" ToRole="T_Problem" />
+          <NavigationProperty Name="T_AnswerSheetDetails" Relationship="MissYangQADBModel.FK_T_AnswerSheetDetails_T_Answer" FromRole="T_Answer" ToRole="T_AnswerSheetDetails" />
         </EntityType>
+        <EntityType Name="V_Answer">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Contents" />
+            <PropertyRef Name="IsCorrect" />
+            <PropertyRef Name="FK_Problem" />
+            <PropertyRef Name="CreateTime" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Contents" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
+          <Property Name="FK_Problem" Type="Guid" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_T_Answer_T_Problem">
+          <End Type="MissYangQADBModel.T_Problem" Role="T_Problem" Multiplicity="1" />
+          <End Type="MissYangQADBModel.T_Answer" Role="T_Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Problem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Answer">
+              <PropertyRef Name="FK_Problem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_AnswerSheetDetails_T_Answer">
+          <End Type="MissYangQADBModel.T_Answer" Role="T_Answer" Multiplicity="1" />
+          <End Type="MissYangQADBModel.T_AnswerSheetDetails" Role="T_AnswerSheetDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Answer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_AnswerSheetDetails">
+              <PropertyRef Name="FK_Answer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MissYangQADBModelStoreContainer" CdmEntityContainer="MissYangQADBEntities">
-          <EntitySetMapping Name="T_Answer">
-            <EntityTypeMapping TypeName="MissYangQADBModel.T_Answer">
-              <MappingFragment StoreEntitySet="T_Answer">
-                <ScalarProperty Name="FK_Problem" ColumnName="FK_Problem" />
-                <ScalarProperty Name="IsRight" ColumnName="IsRight" />
-                <ScalarProperty Name="Rank" ColumnName="Rank" />
-                <ScalarProperty Name="Contents" ColumnName="Contents" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MissYangQADBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -568,8 +702,8 @@
           <EntitySetMapping Name="T_Problem">
             <EntityTypeMapping TypeName="MissYangQADBModel.T_Problem">
               <MappingFragment StoreEntitySet="T_Problem">
-                <ScalarProperty Name="Types" ColumnName="Types" />
-                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
                 <ScalarProperty Name="Contents" ColumnName="Contents" />
                 <ScalarProperty Name="FK_Paper" ColumnName="FK_Paper" />
@@ -597,6 +731,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="V_Paper">
+            <EntityTypeMapping TypeName="MissYangQADBModel.V_Paper">
+              <MappingFragment StoreEntitySet="V_Paper">
+                <ScalarProperty Name="SumScore" ColumnName="SumScore" />
+                <ScalarProperty Name="ProblemCount" ColumnName="ProblemCount" />
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_PaperGroup">
+            <EntityTypeMapping TypeName="MissYangQADBModel.V_PaperGroup">
+              <MappingFragment StoreEntitySet="V_PaperGroup">
+                <ScalarProperty Name="SumScore" ColumnName="SumScore" />
+                <ScalarProperty Name="ProblemCount" ColumnName="ProblemCount" />
+                <ScalarProperty Name="FK_Paper" ColumnName="FK_Paper" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_Problem">
+            <EntityTypeMapping TypeName="MissYangQADBModel.V_Problem">
+              <MappingFragment StoreEntitySet="V_Problem">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="FK_Paper" ColumnName="FK_Paper" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="V_User">
             <EntityTypeMapping TypeName="MissYangQADBModel.V_User">
               <MappingFragment StoreEntitySet="V_User">
@@ -607,14 +773,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="V_Paper">
-            <EntityTypeMapping TypeName="MissYangQADBModel.V_Paper">
-              <MappingFragment StoreEntitySet="V_Paper">
-                <ScalarProperty Name="SumScore" ColumnName="SumScore" />
-                <ScalarProperty Name="ProblemCount" ColumnName="ProblemCount" />
-                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+          <EntitySetMapping Name="T_Answer">
+            <EntityTypeMapping TypeName="MissYangQADBModel.T_Answer">
+              <MappingFragment StoreEntitySet="T_Answer">
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="FK_Problem" ColumnName="FK_Problem" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_Answer">
+            <EntityTypeMapping TypeName="MissYangQADBModel.V_Answer">
+              <MappingFragment StoreEntitySet="V_Answer">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="FK_Problem" ColumnName="FK_Problem" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

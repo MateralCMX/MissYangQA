@@ -1,3 +1,6 @@
-﻿.upDownBtnGroup {
+﻿.list-group-item {
+    cursor: pointer;
+}
+.upDownBtnGroup {
     margin-left: 10px;
 }

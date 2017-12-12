@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerModel.cs" />
     <Compile Include="ApplicationLogModel.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="ClassModel.cs" />
@@ -68,7 +69,11 @@
       <DependentUpon>MissYangQADBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="PaperModel.cs" />
+    <Compile Include="ProblemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="T_Answer.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
@@ -94,10 +99,19 @@
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserModel.cs" />
+    <Compile Include="V_Answer.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="V_Class.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="V_Paper.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="V_PaperGroup.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="V_Problem.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="V_User.cs">

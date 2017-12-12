@@ -1,0 +1,11 @@
+﻿.list-group-item p {
+    font-weight:bold;
+}
+.list-group-item span {
+    display: block;
+    margin-top: 10px;
+}
+
+.Correct {
+    color: #0e9b21;
+}
