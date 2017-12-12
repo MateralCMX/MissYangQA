@@ -16,10 +16,9 @@ namespace MissYangQA.Model
     {
         public System.Guid ID { get; set; }
         public string Title { get; set; }
-        public System.DateTime StartTime { get; set; }
-        public System.DateTime EndTime { get; set; }
         public System.DateTime CreateTime { get; set; }
-        public Nullable<int> QuestionCount { get; set; }
+        public bool IsEnable { get; set; }
+        public Nullable<int> ProblemCount { get; set; }
         public int SumScore { get; set; }
     }
 }

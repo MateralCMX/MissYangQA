@@ -10,7 +10,7 @@ namespace MissYangQA {
          */
         constructor() {
             if (performance.navigation.type != 2) {
-                ApplicationSettingModel.IsDebug = false;
+                ApplicationSettingModel.IsDebug = true;
                 this.AddMessageBoxArticle();
                 this.BindFooterInfo();
                 this.BindBackBtn();
@@ -21,6 +21,51 @@ namespace MissYangQA {
         }
         /*应用程序配置对象*/
         public ApplicationSettingM: ApplicationSettingModel = new ApplicationSettingModel();
+        /**
+         * 保存查询条件信息
+         * @param data
+         */
+        public SaveSearchInfo(key: string, data: any): void {
+            MLDMa.SetSessionData(key, data, true);
+        }
+        /**
+         * 获得查询条件信息
+         */
+        private GetSearchInfo(key: string): any {
+            return MLDMa.SetSessionData(key, true);
+        }
+        /**
+         * 绑定查询条件信息
+         */
+        public BindSearchInfo(key: string) {
+            let data = this.GetSearchInfo(key);
+            if (!MTMa.IsNullOrUndefined(data)) {
+                for (var name in data) {
+                    let SearchElement = MDMa.$("Search" + name) as HTMLElement;
+                    if (!MTMa.IsNullOrUndefined(SearchElement)) {
+                        switch (SearchElement.tagName) {
+                            case "INPUT":
+                                let InputElement = SearchElement as HTMLInputElement;
+                                switch (InputElement.type) {
+                                    case "checkbox":
+                                        InputElement.checked = data[name];
+                                        break;
+                                    default:
+                                        InputElement.value = data[name];
+                                        break;
+                                }
+                                break;
+                            case "SELECT":
+                                let SelectElement = SearchElement as HTMLInputElement;
+                                SelectElement.value = data[name];
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
         /**
          * 保存登录用户信息
          * @param data

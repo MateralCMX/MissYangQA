@@ -27,7 +27,7 @@ namespace MissYangQA {
          * 获得列表信息
          */
         private static GetList() {
-            let url: string = "api/ClassList/GetAllClassListInfo";
+            let url: string = "api/Class/GetAllClassInfo";
             let data = {}
             let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 ClassListPage.PageData.Data = resM["Data"];
@@ -48,12 +48,12 @@ namespace MissYangQA {
                         MDMa.AddClass(upBtn, "btn btn-info glyphicon glyphicon-arrow-up");
                         btnGroup.appendChild(upBtn);
                         upBtn.dataset.target = "-1";
-                        MDMa.AddEvent(upBtn, "click", ClassListPage.BtnChangeClassListRankEvent_Click);
+                        MDMa.AddEvent(upBtn, "click", ClassListPage.BtnChangeClassRankEvent_Click);
                         let downBtn = document.createElement("button");
                         MDMa.AddClass(downBtn, "btn btn-info glyphicon glyphicon-arrow-down");
                         btnGroup.appendChild(downBtn);
                         downBtn.dataset.target = "1";
-                        MDMa.AddEvent(downBtn, "click", ClassListPage.BtnChangeClassListRankEvent_Click);
+                        MDMa.AddEvent(downBtn, "click", ClassListPage.BtnChangeClassRankEvent_Click);
                         let RightIco = document.createElement("i");
                         MDMa.AddClass(RightIco, "list-right glyphicon glyphicon-chevron-right");
                         listItem.appendChild(textContent);
@@ -79,13 +79,13 @@ namespace MissYangQA {
             while (classItem.tagName != "LI") {
                 classItem = classItem.parentElement;
             }
-            window.location.href = "/ClassList/ClassListDetailed?ID=" + classItem.dataset.id;
+            window.location.href = "/Class/ClassDetailed?ID=" + classItem.dataset.id;
         }
         /**
          * 调换班级位序单击事件
          * @param e
          */
-        private static BtnChangeClassListRankEvent_Click(e: MouseEvent) {
+        private static BtnChangeClassRankEvent_Click(e: MouseEvent) {
             let btnElement = e.target as HTMLButtonElement;
             let btnGroup = btnElement.parentElement as HTMLDivElement;
             let index = parseInt(btnGroup.dataset.index);
@@ -94,10 +94,10 @@ namespace MissYangQA {
                 if (!ClassListPage.PageSetting.ChangeRanking) {
                     ClassListPage.PageSetting.ChangeRanking = true;
                     let data = {
-                        ClassListID: ClassListPage.PageData.Data[index].ID,
-                        TargetClassListID: ClassListPage.PageData.Data[targetIndex].ID,
+                        ClassID: ClassListPage.PageData.Data[index].ID,
+                        TargetClassID: ClassListPage.PageData.Data[targetIndex].ID,
                     }
-                    let url: string = "api/ClassList/ChangeClassListRank";
+                    let url: string = "api/Class/ChangeClassRank";
                     let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                         ClassListPage.GetList();
                     };

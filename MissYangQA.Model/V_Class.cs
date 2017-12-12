@@ -12,16 +12,10 @@ namespace MissYangQA.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class T_ScantronDetailed
+    public partial class V_Class
     {
         public System.Guid ID { get; set; }
-        public System.Guid FK_Score { get; set; }
-        public System.Guid FK_Question { get; set; }
-        public System.Guid FK_Answer { get; set; }
-        public string AnswerContent { get; set; }
-    
-        public virtual T_Answer T_Answer { get; set; }
-        public virtual T_Question T_Question { get; set; }
-        public virtual T_Scantron T_Scantron { get; set; }
+        public string Name { get; set; }
+        public int Rank { get; set; }
     }
 }

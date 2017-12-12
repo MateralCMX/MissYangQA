@@ -200,9 +200,9 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\API\ApiBaseController.cs" />
     <Compile Include="Controllers\API\PaperController.cs" />
-    <Compile Include="Controllers\API\ClassListController.cs" />
+    <Compile Include="Controllers\API\ClassController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
-    <Compile Include="Controllers\ClassListController.cs" />
+    <Compile Include="Controllers\ClassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaperController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -218,8 +218,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="CSS\Base.css" />
-    <Content Include="CSS\ClassList\ClassListDetailed.css" />
-    <Content Include="CSS\ClassList\ClassList.css" />
+    <Content Include="CSS\Class\ClassDetailed.css" />
+    <Content Include="CSS\Class\ClassList.css" />
     <Content Include="CSS\Exam\ExamDetailed.css" />
     <Content Include="CSS\Exam\ExamList.css" />
     <Content Include="CSS\Exam\ExamLogin.css" />
@@ -296,8 +296,8 @@
     <Content Include="Views\User\UserList.cshtml" />
     <Content Include="Views\User\UserDetailed.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
-    <Content Include="Views\ClassList\ClassList.cshtml" />
-    <Content Include="Views\ClassList\ClassListDetailed.cshtml" />
+    <Content Include="Views\Class\ClassList.cshtml" />
+    <Content Include="Views\Class\ClassDetailed.cshtml" />
     <Content Include="Views\Paper\PaperList.cshtml" />
     <Content Include="Views\Paper\PaperDetailed.cshtml" />
   </ItemGroup>
@@ -328,8 +328,8 @@
     <TypeScriptCompile Include="Lib\m-Reset\m-Reset.ts" />
     <TypeScriptCompile Include="Lib\m-Tools\m-Tools.ts" />
     <TypeScriptCompile Include="Scripts\Base.ts" />
-    <TypeScriptCompile Include="Scripts\ClassList\ClassListDetailed.ts" />
-    <TypeScriptCompile Include="Scripts\ClassList\ClassList.ts" />
+    <TypeScriptCompile Include="Scripts\Class\ClassDetailed.ts" />
+    <TypeScriptCompile Include="Scripts\Class\ClassList.ts" />
     <TypeScriptCompile Include="Scripts\Home\Index.ts" />
     <TypeScriptCompile Include="Scripts\Home\Login.ts" />
     <TypeScriptCompile Include="Scripts\jquery.d.ts" />

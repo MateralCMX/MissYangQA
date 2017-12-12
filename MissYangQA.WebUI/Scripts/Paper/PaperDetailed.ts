@@ -64,8 +64,8 @@ namespace MissYangQA {
                 BtnSave.classList.add("glyphicon-plus");
                 common.SetTitle("添加试题");
                 LinkQuestion.setAttribute("style", "display:none;");
-                let QuestionCountGroup = MDMa.$("QuestionCountGroup") as HTMLDivElement;
-                QuestionCountGroup.setAttribute("style", "display:none;");
+                let ProblemCountGroup = MDMa.$("ProblemCountGroup") as HTMLDivElement;
+                ProblemCountGroup.setAttribute("style", "display:none;");
                 let SumScoreGroup = MDMa.$("SumScoreGroup") as HTMLDivElement;
                 SumScoreGroup.setAttribute("style", "display:none;");
             }
@@ -81,14 +81,10 @@ namespace MissYangQA {
             let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 let InputTitle = MDMa.$("InputTitle") as HTMLInputElement;
                 InputTitle.value = resM["Data"]["Title"];
-                let InputStartDate = MDMa.$("InputStartDate") as HTMLInputElement;
-                let StartTime = new Date(resM["Data"]["StartTime"]);
-                InputStartDate.value = MTMa.DateTimeFormat(StartTime, "yyyy-MM-dd");
-                let InputEndDate = MDMa.$("InputEndDate") as HTMLInputElement;
-                let EndTime = new Date(resM["Data"]["EndTime"]);
-                InputEndDate.value = MTMa.DateTimeFormat(EndTime, "yyyy-MM-dd");
-                let InputQuestionCount = MDMa.$("InputQuestionCount") as HTMLInputElement;
-                InputQuestionCount.value = resM["Data"]["QuestionCount"];
+                let InputIsEnable = MDMa.$("InputIsEnable") as HTMLInputElement;
+                InputIsEnable.checked = resM["Data"]["IsEnable"];
+                let InputProblemCount = MDMa.$("InputProblemCount") as HTMLInputElement;
+                InputProblemCount.value = resM["Data"]["ProblemCount"];
                 let InputSumScore = MDMa.$("InputSumScore") as HTMLInputElement;
                 InputSumScore.value = resM["Data"]["SumScore"];
             };
@@ -130,8 +126,7 @@ namespace MissYangQA {
                 data = {
                     ID: PaperDetailedPage.PageData.params["ID"],
                     Title: (MDMa.$("InputTitle") as HTMLInputElement).value,
-                    StartTime: (MDMa.$("InputStartDate") as HTMLInputElement).value,
-                    EndTime: (MDMa.$("InputEndDate") as HTMLInputElement).value
+                    IsEnable: (MDMa.$("InputIsEnable") as HTMLInputElement).checked,
                 }
             }
             return data;

@@ -9,16 +9,16 @@ namespace MissYangQA.Model
     /// <summary>
     /// 更改班级排序输入模型
     /// </summary>
-    public class ChangeClassListRankModel : IVerificationLoginModel
+    public class ChangeClassRankModel : IVerificationLoginModel
     {
         /// <summary>
         /// 班级列表ID
         /// </summary>
-        public Guid ClassListID { get; set; }
+        public Guid ClassID { get; set; }
         /// <summary>
         /// 目标班级列表ID
         /// </summary>
-        public Guid TargetClassListID { get; set; }
+        public Guid TargetClassID { get; set; }
         /// <summary>
         /// 登录用户唯一标识
         /// </summary>
@@ -31,7 +31,7 @@ namespace MissYangQA.Model
     /// <summary>
     /// 修改班级模型
     /// </summary>
-    public class EditClassListModel : T_ClassList, IVerificationLoginModel
+    public class EditClassModel : T_Class, IVerificationLoginModel
     {
         /// <summary>
         /// 登录用户唯一标识

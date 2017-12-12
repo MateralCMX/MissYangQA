@@ -2,7 +2,7 @@
 /// <reference path="../base.ts" />
 'use strict';
 namespace MissYangQA {
-    class ClassListDetailedPage {
+    class ClassDetailedPage {
         /*页面数据*/
         private static PageData = {
             params: MTMa.GetURLParams(),
@@ -38,21 +38,21 @@ namespace MissYangQA {
          */
         private BindMode() {
             let BtnSave = MDMa.$("BtnSave") as HTMLButtonElement;
-            if (!MTMa.IsNullOrUndefinedOrEmpty(ClassListDetailedPage.PageData.params["ID"])) {
-                this.GetClassListViewInfoByID();
-                ClassListDetailedPage.PageData.url = "api/ClassList/EditClassListInfo";
+            if (!MTMa.IsNullOrUndefinedOrEmpty(ClassDetailedPage.PageData.params["ID"])) {
+                this.GetClassViewInfoByID();
+                ClassDetailedPage.PageData.url = "api/Class/EditClassInfo";
                 BtnSave.classList.add("glyphicon-floppy-disk");
                 let TopTools = BtnSave.parentElement;
-                let deleteClassListBtn = document.createElement("button");
-                MDMa.AddClass(deleteClassListBtn, "btn btn-danger glyphicon glyphicon-remove");
-                deleteClassListBtn.type = "button";
-                deleteClassListBtn.dataset.toggle = "modal";
-                deleteClassListBtn.dataset.target = "#DeleteModal";
-                TopTools.appendChild(deleteClassListBtn);
+                let deleteClassBtn = document.createElement("button");
+                MDMa.AddClass(deleteClassBtn, "btn btn-danger glyphicon glyphicon-remove");
+                deleteClassBtn.type = "button";
+                deleteClassBtn.dataset.toggle = "modal";
+                deleteClassBtn.dataset.target = "#DeleteModal";
+                TopTools.appendChild(deleteClassBtn);
                 common.SetTitle("修改班级");
             }
             else {
-                ClassListDetailedPage.PageData.url = "api/ClassList/AddClassListInfo";
+                ClassDetailedPage.PageData.url = "api/Class/AddClassInfo";
                 BtnSave.classList.add("glyphicon-plus");
                 common.SetTitle("添加班级");
             }
@@ -60,10 +60,10 @@ namespace MissYangQA {
         /**
          * 获得对象信息
          */
-        private GetClassListViewInfoByID() {
-            let url: string = "api/ClassList/GetClassListInfoByID";
+        private GetClassViewInfoByID() {
+            let url: string = "api/Class/GetClassInfoByID";
             let data = {
-                ID: ClassListDetailedPage.PageData.params["ID"]
+                ID: ClassDetailedPage.PageData.params["ID"]
             }
             let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                 let InputName = MDMa.$("InputName") as HTMLInputElement;
@@ -82,7 +82,7 @@ namespace MissYangQA {
          */
         private BtnSaveEvent_Click(e: MouseEvent) {
             common.ClearErrorMessage();
-            let data = ClassListDetailedPage.GetInputData();
+            let data = ClassDetailedPage.GetInputData();
             if (!MTMa.IsNullOrUndefined(data)) {
                 let BtnElement = e.target as HTMLButtonElement;
                 BtnElement.disabled = true;
@@ -99,7 +99,7 @@ namespace MissYangQA {
                 let CFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
                     BtnElement.disabled = false
                 };
-                common.SendPostAjax(ClassListDetailedPage.PageData.url, data, SFun, FFun, CFun);
+                common.SendPostAjax(ClassDetailedPage.PageData.url, data, SFun, FFun, CFun);
             }
         }
         /**
@@ -109,7 +109,7 @@ namespace MissYangQA {
             let data = null;
             if (document.forms["InputForm"].checkValidity()) {
                 data = {
-                    ID: ClassListDetailedPage.PageData.params["ID"],
+                    ID: ClassDetailedPage.PageData.params["ID"],
                     Name: (MDMa.$("InputName") as HTMLInputElement).value,
                 }
             }
@@ -120,9 +120,9 @@ namespace MissYangQA {
          * @param e
          */
         private BtnDeleteEvent_Click(e: MouseEvent) {
-            let url = "api/ClassList/DeleteClassListInfo";
+            let url = "api/Class/DeleteClassInfo";
             let data = {
-                ID: ClassListDetailedPage.PageData.params["ID"]
+                ID: ClassDetailedPage.PageData.params["ID"]
             }
             let BtnElement = e.target as HTMLButtonElement;
             BtnElement.disabled = true;
@@ -140,6 +140,6 @@ namespace MissYangQA {
     }
     /*页面加载完毕事件*/
     MDMa.AddEvent(window, "load", function (e: Event) {
-        let pageM: ClassListDetailedPage = new ClassListDetailedPage();
+        let pageM: ClassDetailedPage = new ClassDetailedPage();
     });
 }

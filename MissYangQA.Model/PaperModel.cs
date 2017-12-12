@@ -9,18 +9,6 @@ using System.Threading.Tasks;
 namespace MissYangQA.Model
 {
     /// <summary>
-    /// 试卷状态枚举
-    /// </summary>
-    public enum PaperStateEnum : byte
-    {
-        [EnumShowName("尚未开始")]
-        Ready,
-        [EnumShowName("正在进行")]
-        Beging,
-        [EnumShowName("已经结束")]
-        End
-    }
-    /// <summary>
     /// 试题修改模型
     /// </summary>
     public class EditPaperModel : T_Paper, IVerificationLoginModel

@@ -12,23 +12,23 @@ namespace MissYangQA.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class T_Scantron
+    public partial class T_Problem
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public T_Scantron()
+        public T_Problem()
         {
-            this.T_ScantronDetailed = new HashSet<T_ScantronDetailed>();
+            this.T_Answer = new HashSet<T_Answer>();
         }
     
         public System.Guid ID { get; set; }
         public System.Guid FK_Paper { get; set; }
-        public System.Guid FK_ClassList { get; set; }
+        public string Contents { get; set; }
         public int Score { get; set; }
-        public string StudentName { get; set; }
+        public int Rank { get; set; }
+        public byte Types { get; set; }
     
-        public virtual T_ClassList T_ClassList { get; set; }
-        public virtual T_Paper T_Paper { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<T_ScantronDetailed> T_ScantronDetailed { get; set; }
+        public virtual ICollection<T_Answer> T_Answer { get; set; }
+        public virtual T_Paper T_Paper { get; set; }
     }
 }

@@ -9,7 +9,8 @@ namespace MissYangQA {
             OldScrollTop: 0,
             PageIndex: 1,
             PageSize: 10,
-            PageCount: 99
+            PageCount: 99,
+            SearchKey:"PaperListSearchKey"
         }
         /**
          * 构造方法
@@ -17,7 +18,8 @@ namespace MissYangQA {
         constructor() {
             if (common.IsLogin(true)) {
                 this.BindEvent();
-                this.GetAllPaperStateInfo();
+                common.BindSearchInfo(PaperListModel.PageSetting.SearchKey);
+                PaperListModel.GetList();
             }
         }
         /**
@@ -49,32 +51,6 @@ namespace MissYangQA {
             $('#SearchModal').modal('toggle');
         }
         /**
-         * 获得所有试题状态信息
-         */
-        private GetAllPaperStateInfo() {
-            let url: string = "api/Paper/GetAllPaperStateInfo";
-            let data = {}
-            let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
-                let SearchState = MDMa.$("SearchState") as HTMLSelectElement;
-                if (!MTMa.IsNullOrUndefined(SearchState)) {
-                    SearchState.innerHTML = "";
-                    let listM = resM["Data"] as Array<any>;
-                    listM.push({ EnumName: "所有", EnumValue: null });
-                    for (let i = 0; i < listM.length; i++) {
-                        let option = new Option(listM[i]["EnumName"], listM[i]["EnumValue"]);
-                        SearchState.options.add(option);
-                    }
-                }
-                PaperListModel.GetList();
-            };
-            let FFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
-                common.ShowMessageBox(resM["Message"])
-            };
-            let CFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
-            };
-            common.SendGetAjax(url, data, SFun, FFun, CFun);
-        }
-        /**
          * 获得列表信息
          */
         private static GetList() {
@@ -83,11 +59,12 @@ namespace MissYangQA {
                 let url: string = "api/Paper/GetPaperInfoByWhere";
                 let data = {
                     Title: (MDMa.$("SearchTitle") as HTMLInputElement).value,
-                    State: (MDMa.$("SearchState") as HTMLInputElement).value,
+                    IsEnable: (MDMa.$("SearchIsEnable") as HTMLInputElement).value,
                     PageIndex: PaperListModel.PageSetting.PageIndex,
                     PageSize: PaperListModel.PageSetting.PageSize,
                 };
                 let SFun = function (resM: Object, xhr: XMLHttpRequest, state: number) {
+                    common.SaveSearchInfo(PaperListModel.PageSetting.SearchKey, data);
                     let MainList = MDMa.$("MainList");
                     if (!MTMa.IsNullOrUndefined(MainList)) {
                         let listM = resM["Data"];
@@ -102,19 +79,14 @@ namespace MissYangQA {
                             let classSpan = document.createElement("span");
                             classSpan.textContent = listM[i]["ClassListName"];
                             ListItem.appendChild(classSpan);
-                            let StartTime = new Date(listM[i]["StartTime"]);
-                            let startDateSpan = document.createElement("span");
-                            startDateSpan.textContent = "开始日期：" + MTMa.DateTimeFormat(StartTime, "yyyy/MM/dd");
-                            ListItem.appendChild(startDateSpan);
-                            let EndTime = new Date(listM[i]["EndTime"]);
-                            let endDateSpan = document.createElement("span");
-                            endDateSpan.textContent = "结束日期：" + MTMa.DateTimeFormat(EndTime, "yyyy/MM/dd");
-                            ListItem.appendChild(endDateSpan);
+                            let enableSpan = document.createElement("span");
+                            enableSpan.textContent = "启用状态：" + (listM[i]["IsEnable"] ? "启用" : "禁用");
+                            ListItem.appendChild(enableSpan);
                             let questionCountSpan = document.createElement("span");
-                            questionCountSpan.textContent = "问题总数：" + listM[i]["QuestionCount"];
+                            questionCountSpan.textContent = "问题总数：" + listM[i]["ProblemCount"];
                             ListItem.appendChild(questionCountSpan);
                             let scoreCountSpan = document.createElement("span");
-                            scoreCountSpan.textContent = "总分：" + listM[i]["QuestionCount"];
+                            scoreCountSpan.textContent = "总分：" + listM[i]["ProblemCount"];
                             ListItem.appendChild(scoreCountSpan);
                             let RightIco = document.createElement("i");
                             MDMa.AddClass(RightIco, "list-right glyphicon glyphicon-chevron-right");

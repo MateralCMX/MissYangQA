@@ -13,14 +13,14 @@ namespace MissYangQA.WebUI.Controllers.API
     /// <summary>
     /// 班级API控制器
     /// </summary>
-    [RoutePrefix("api/ClassList")]
-    public sealed class ClassListController : ApiBaseController
+    [RoutePrefix("api/Class")]
+    public sealed class ClassController : ApiBaseController
     {
         #region 成员
         /// <summary>
         /// 班级业务控制层
         /// </summary>
-        private readonly ClassListBLL _classListBLL = new ClassListBLL();
+        private readonly ClassBLL _classListBLL = new ClassBLL();
         #endregion
         #region API
         /// <summary>
@@ -28,13 +28,13 @@ namespace MissYangQA.WebUI.Controllers.API
         /// </summary>
         /// <returns>所有班级信息</returns>
         [HttpGet]
-        [Route("GetAllClassListInfo")]
+        [Route("GetAllClassInfo")]
         [NotVerificationLogin]
-        public MResultModel GetAllClassListInfo()
+        public MResultModel GetAllClassInfo()
         {
             MResultModel resM;
-            List<V_ClassList> listM = _classListBLL.GetAllClassListViewInfo();
-            resM = MResultModel<List<V_ClassList>>.GetSuccessResultM(listM, "查询成功");
+            List<V_Class> listM = _classListBLL.GetAllClassViewInfo();
+            resM = MResultModel<List<V_Class>>.GetSuccessResultM(listM, "查询成功");
             return resM;
         }
         /// <summary>
@@ -42,13 +42,13 @@ namespace MissYangQA.WebUI.Controllers.API
         /// </summary>
         /// <param name="inputM">要修改的对象</param>
         [HttpPost]
-        [Route("ChangeClassListRank")]
-        public MResultModel ChangeClassListRank(ChangeClassListRankModel inputM)
+        [Route("ChangeClassRank")]
+        public MResultModel ChangeClassRank(ChangeClassRankModel inputM)
         {
             MResultModel resM;
             try
             {
-                _classListBLL.ChangeClassListRank(inputM.ClassListID, inputM.TargetClassListID);
+                _classListBLL.ChangeClassRank(inputM.ClassID, inputM.TargetClassID);
                 resM = MResultModel.GetSuccessResultM("调换成功");
             }
             catch (ArgumentNullException ex)
@@ -66,13 +66,13 @@ namespace MissYangQA.WebUI.Controllers.API
         /// </summary>
         /// <param name="inputM">要修改的对象</param>
         [HttpPost]
-        [Route("EditClassListInfo")]
-        public MResultModel EditClassListInfo(EditClassListModel inputM)
+        [Route("EditClassInfo")]
+        public MResultModel EditClassInfo(EditClassModel inputM)
         {
             MResultModel resM;
             try
             {
-                _classListBLL.EditClassListInfo(inputM);
+                _classListBLL.EditClassInfo(inputM);
                 resM = MResultModel.GetSuccessResultM("修改成功");
             }
             catch (ArgumentNullException ex)
@@ -90,13 +90,13 @@ namespace MissYangQA.WebUI.Controllers.API
         /// </summary>
         /// <param name="inputM">要添加的对象</param>
         [HttpPost]
-        [Route("AddClassListInfo")]
-        public MResultModel AddClassListInfo(EditClassListModel inputM)
+        [Route("AddClassInfo")]
+        public MResultModel AddClassInfo(EditClassModel inputM)
         {
             MResultModel resM;
             try
             {
-                _classListBLL.AddClassListInfo(inputM);
+                _classListBLL.AddClassInfo(inputM);
                 resM = MResultModel.GetSuccessResultM("添加成功");
             }
             catch (ArgumentNullException ex)
@@ -114,13 +114,13 @@ namespace MissYangQA.WebUI.Controllers.API
         /// </summary>
         /// <param name="inputM">删除对象</param>
         [HttpPost]
-        [Route("DeleteClassListInfo")]
-        public MResultModel DeleteClassListInfo(DeleteModel inputM)
+        [Route("DeleteClassInfo")]
+        public MResultModel DeleteClassInfo(DeleteModel inputM)
         {
             MResultModel resM;
             try
             {
-                _classListBLL.DeleteClassListInfo(inputM.ID);
+                _classListBLL.DeleteClassInfo(inputM.ID);
                 resM = MResultModel.GetSuccessResultM("删除成功");
             }
             catch (ArgumentNullException ex)
@@ -135,13 +135,13 @@ namespace MissYangQA.WebUI.Controllers.API
         /// <param name="ID">班级唯一标识</param>
         /// <returns>查询结果</returns>
         [HttpGet]
-        [Route("GetClassListInfoByID")]
+        [Route("GetClassInfoByID")]
         [NotVerificationLogin]
-        public MResultModel GetClassListInfoByID(Guid ID)
+        public MResultModel GetClassInfoByID(Guid ID)
         {
             MResultModel resM;
-            V_ClassList listM = _classListBLL.GetClassListViewInfoByID(ID);
-            resM = MResultModel<V_ClassList>.GetSuccessResultM(listM, "查询成功");
+            V_Class listM = _classListBLL.GetClassViewInfoByID(ID);
+            resM = MResultModel<V_Class>.GetSuccessResultM(listM, "查询成功");
             return resM;
         }
         #endregion

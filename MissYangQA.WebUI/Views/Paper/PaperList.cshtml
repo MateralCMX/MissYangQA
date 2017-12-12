@@ -37,11 +37,15 @@
                     <form id="SearchForm">
                         <div class="form-group">
                             <label for="SearchTitle">标题</label>
-                            <input id="SearchTitle" type="text" class="form-control" placeholder="请输入标题" autocomplete="off">
+                            <input id="SearchTitle" type="search" class="form-control" placeholder="请输入标题" autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <label for="SearchState">状态</label>
-                            <select id="SearchState" class="form-control"></select>
+                            <label for="SearchIsEnable">启用状态</label>
+                            <select id="SearchIsEnable" class="form-control">
+                                <option value="null">所有</option>
+                                <option value="true">启用</option>
+                                <option value="false">禁用</option>
+                            </select>
                         </div>
                     </form>
                 </div>

@@ -12,12 +12,12 @@ namespace MissYangQA.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class T_ClassList
+    public partial class T_Class
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public T_ClassList()
+        public T_Class()
         {
-            this.T_Scantron = new HashSet<T_Scantron>();
+            this.T_AnswerSheet = new HashSet<T_AnswerSheet>();
         }
     
         public System.Guid ID { get; set; }
@@ -26,6 +26,6 @@ namespace MissYangQA.Model
         public bool IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<T_Scantron> T_Scantron { get; set; }
+        public virtual ICollection<T_AnswerSheet> T_AnswerSheet { get; set; }
     }
 }

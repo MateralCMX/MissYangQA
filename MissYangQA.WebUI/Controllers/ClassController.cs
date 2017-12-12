@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace MissYangQA.WebUI.Controllers
 {
-    public class ClassListController : Controller
+    public class ClassController : Controller
     {
         /// <summary>
         /// 班级列表
@@ -20,7 +20,7 @@ namespace MissYangQA.WebUI.Controllers
         /// 班级明细
         /// </summary>
         /// <returns></returns>
-        public ActionResult ClassListDetailed()
+        public ActionResult ClassDetailed()
         {
             return View();
         }

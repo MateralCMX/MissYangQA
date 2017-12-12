@@ -28,18 +28,18 @@ namespace MissYangQA.WebUI.Controllers.API
         /// 根据条件获得试题信息
         /// </summary>
         /// <param name="Title">标题</param>
-        /// <param name="State">状态</param>
+        /// <param name="IsEnable">启用状态</param>
         /// <param name="PageIndex">页数</param>
         /// <param name="PageSize">每页显示数量</param>
         /// <returns>所有试题信息</returns>
         [HttpGet]
         [Route("GetPaperInfoByWhere")]
         [NotVerificationLogin]
-        public MResultModel GetPaperInfoByWhere(string Title, PaperStateEnum? State, int PageIndex, int PageSize)
+        public MResultModel GetPaperInfoByWhere(string Title, bool? IsEnable, int PageIndex, int PageSize)
         {
             MResultModel resM;
             MPagingModel pageM = new MPagingModel(PageIndex, PageSize);
-            List<V_Paper> listM = _paperBLL.GetPaperInfoByWhere(Title, State, pageM);
+            List<V_Paper> listM = _paperBLL.GetPaperInfoByWhere(Title, IsEnable, pageM);
             resM = MResultPagingModel<List<V_Paper>>.GetSuccessResultM(listM, pageM, "查询成功");
             return resM;
         }
@@ -124,20 +124,6 @@ namespace MissYangQA.WebUI.Controllers.API
             MResultModel resM;
             V_Paper listM = _paperBLL.GetPaperViewInfoByID(ID);
             resM = MResultModel<V_Paper>.GetSuccessResultM(listM, "查询成功");
-            return resM;
-        }
-        /// <summary>
-        /// 获得所有的试题状态信息
-        /// </summary>
-        /// <returns>所有试题状态信息</returns>
-        [HttpGet]
-        [Route("GetAllPaperStateInfo")]
-        [NotVerificationLogin]
-        public MResultModel GetAllPaperStateInfo()
-        {
-            MResultModel resM;
-            List<EnumModel> listM = _paperBLL.GetAllPaperStateInfo();
-            resM = MResultModel<List<EnumModel>>.GetSuccessResultM(listM, "查询成功");
             return resM;
         }
         #endregion

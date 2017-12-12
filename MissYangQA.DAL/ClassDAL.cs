@@ -11,16 +11,16 @@ namespace MissYangQA.DAL
     /// <summary>
     /// 班级数据访问类
     /// </summary>
-    public sealed class ClassListDAL : BaseDAL
+    public sealed class ClassDAL : BaseDAL
     {
         /// <summary>
         /// 添加
         /// </summary>
         /// <param name="model">要添加的对象</param>
-        public void Insert(T_ClassList model)
+        public void Insert(T_Class model)
         {
             model = BeforeInsert(model);
-            _DB.T_ClassList.Add(model);
+            _DB.T_Class.Add(model);
             _DB.SaveChanges();
         }
         /// <summary>
@@ -28,10 +28,10 @@ namespace MissYangQA.DAL
         /// </summary>
         /// <param name="id">班级唯一标识</param>
         /// <returns>查询结果</returns>
-        public T_ClassList GetClassListInfoByID(Guid id)
+        public T_Class GetClassInfoByID(Guid id)
         {
-            T_ClassList model = (from m in _DB.T_ClassList
-                                 where m.ID == id
+            T_Class model = (from m in _DB.T_Class
+                             where m.ID == id
                                  select m).FirstOrDefault();
             return model;
         }
@@ -40,9 +40,9 @@ namespace MissYangQA.DAL
         /// </summary>
         /// <param name="id">班级唯一标识</param>
         /// <returns>查询结果</returns>
-        public V_ClassList GetClassListViewInfoByID(Guid id)
+        public V_Class GetClassViewInfoByID(Guid id)
         {
-            V_ClassList model = (from m in _DB.V_ClassList
+            V_Class model = (from m in _DB.V_Class
                                  where m.ID == id
                                  select m).FirstOrDefault();
             return model;
@@ -51,9 +51,9 @@ namespace MissYangQA.DAL
         /// 获得所有班级视图信息
         /// </summary>
         /// <returns>查询结果</returns>
-        public List<V_ClassList> GetAllClassListViewInfo()
+        public List<V_Class> GetAllClassViewInfo()
         {
-            List<V_ClassList> listM = _DB.V_ClassList.OrderBy(m => m.Rank).ToList();
+            List<V_Class> listM = _DB.V_Class.OrderBy(m => m.Rank).ToList();
             return listM;
         }
         /// <summary>
@@ -61,9 +61,9 @@ namespace MissYangQA.DAL
         /// </summary>
         /// <param name="name">班级名</param>
         /// <returns>查询结果</returns>
-        public T_ClassList GetClassListInfoByClassListName(string name)
+        public T_Class GetClassInfoByClassName(string name)
         {
-            T_ClassList model = (from m in _DB.T_ClassList
+            T_Class model = (from m in _DB.T_Class
                                  where m.Name == name
                                  select m).FirstOrDefault();
             return model;
@@ -72,12 +72,12 @@ namespace MissYangQA.DAL
         /// 获得班级最大位序
         /// </summary>
         /// <returns>最大位序</returns>
-        public int GetClassListMaxRank()
+        public int GetClassMaxRank()
         {
             int maxRank = 0;
-            if (_DB.T_ClassList.FirstOrDefault() != null)
+            if (_DB.T_Class.FirstOrDefault() != null)
             {
-                maxRank = _DB.T_ClassList.Max(m => m.Rank);
+                maxRank = _DB.T_Class.Max(m => m.Rank);
             }
             return maxRank;
         }

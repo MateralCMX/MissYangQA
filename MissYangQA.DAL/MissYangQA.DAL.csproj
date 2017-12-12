@@ -51,7 +51,7 @@
     <Compile Include="BaseDAL.cs" />
     <Compile Include="PaperDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ClassListDAL.cs" />
+    <Compile Include="ClassDAL.cs" />
     <Compile Include="UserDAL.cs" />
   </ItemGroup>
   <ItemGroup>

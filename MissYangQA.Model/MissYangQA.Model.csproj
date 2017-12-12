@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="ApplicationLogModel.cs" />
     <Compile Include="BaseModel.cs" />
-    <Compile Include="ClassListModel.cs" />
+    <Compile Include="ClassModel.cs" />
     <Compile Include="MissYangQADBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,29 +72,29 @@
     <Compile Include="T_Answer.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="T_AnswerSheet.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T_AnswerSheetDetails.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="T_ApplicationLog.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="T_ClassList.cs">
+    <Compile Include="T_Class.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="T_Paper.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="T_Question.cs">
-      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T_Scantron.cs">
-      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T_ScantronDetailed.cs">
+    <Compile Include="T_Problem.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="T_User.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserModel.cs" />
-    <Compile Include="V_ClassList.cs">
+    <Compile Include="V_Class.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="V_Paper.cs">

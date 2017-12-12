@@ -17,17 +17,17 @@ namespace MissYangQA.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public T_Answer()
         {
-            this.T_ScantronDetailed = new HashSet<T_ScantronDetailed>();
+            this.T_AnswerSheetDetails = new HashSet<T_AnswerSheetDetails>();
         }
     
         public System.Guid ID { get; set; }
         public string Contents { get; set; }
         public int Rank { get; set; }
         public bool IsRight { get; set; }
-        public System.Guid FK_Question { get; set; }
+        public System.Guid FK_Problem { get; set; }
     
-        public virtual T_Question T_Question { get; set; }
+        public virtual T_Problem T_Problem { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<T_ScantronDetailed> T_ScantronDetailed { get; set; }
+        public virtual ICollection<T_AnswerSheetDetails> T_AnswerSheetDetails { get; set; }
     }
 }

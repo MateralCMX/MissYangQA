@@ -53,31 +53,19 @@ namespace MissYangQA.DAL
         /// 根据条件获得试题信息
         /// </summary>
         /// <param name="title">试题标题</param>
-        /// <param name="state">试题状态</param>
+        /// <param name="IsEnable">启用状态</param>
         /// <param name="pageM">分页对象</param>
         /// <returns>试题信息</returns>
-        public List<V_Paper> GetPaperViewInfoByWhere(string title,PaperStateEnum? state, MPagingModel pageM)
+        public List<V_Paper> GetPaperViewInfoByWhere(string title,bool? IsEnable, MPagingModel pageM)
         {
             Expression<Func<V_Paper, bool>> searchPredicate = LinqManager.True<V_Paper>();
             if (!string.IsNullOrEmpty(title))
             {
                 searchPredicate = LinqManager.And(searchPredicate, m => m.Title.Contains(title));
             }
-            if (state != null)
+            if (IsEnable != null)
             {
-                DateTime dt = DateTime.Now.Date;
-                switch (state.Value)
-                {
-                    case PaperStateEnum.Ready:
-                        searchPredicate = LinqManager.And(searchPredicate, m => m.StartTime > dt);
-                        break;
-                    case PaperStateEnum.Beging:
-                        searchPredicate = LinqManager.And(searchPredicate, m => m.StartTime <= dt && m.EndTime >= dt);
-                        break;
-                    case PaperStateEnum.End:
-                        searchPredicate = LinqManager.And(searchPredicate, m => m.EndTime < dt);
-                        break;
-                }
+                searchPredicate = LinqManager.And(searchPredicate, m => m.IsEnable == IsEnable.Value);
             }
             pageM.DataCount = _DB.V_Paper.Where(searchPredicate.Compile()).Count();
             List<V_Paper> resM = new List<V_Paper>();

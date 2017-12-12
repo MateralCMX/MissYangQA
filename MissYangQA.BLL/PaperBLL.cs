@@ -114,8 +114,7 @@ namespace MissYangQA.BLL
                 {
                     T_Paper dbModel = _paperDAL.GetPaperInfoByID(model.ID);
                     dbModel.Title = model.Title;
-                    dbModel.StartTime = model.StartTime;
-                    dbModel.EndTime = model.EndTime;
+                    dbModel.IsEnable = model.IsEnable;
                     _paperDAL.SaveChange();
                 }
                 else
@@ -129,24 +128,15 @@ namespace MissYangQA.BLL
             }
         }
         /// <summary>
-        /// 获得所有的试题状态信息
-        /// </summary>
-        /// <returns>所有试题状态信息</returns>
-        public List<EnumModel> GetAllPaperStateInfo()
-        {
-            List<EnumModel> listM = EnumManager.GetAllEnum(typeof(PaperStateEnum));
-            return listM;
-        }
-        /// <summary>
         /// 根据条件获得试题信息
         /// </summary>
         /// <param name="title">试题标题</param>
-        /// <param name="state">试题状态</param>
+        /// <param name="IsEnable">启用状态</param>
         /// <param name="pageM">分页对象</param>
         /// <returns>试题信息</returns>
-        public List<V_Paper> GetPaperInfoByWhere(string title,PaperStateEnum? state, MPagingModel pageM)
+        public List<V_Paper> GetPaperInfoByWhere(string title, bool? IsEnable, MPagingModel pageM)
         {
-            List<V_Paper> listM = _paperDAL.GetPaperViewInfoByWhere(title, state, pageM);
+            List<V_Paper> listM = _paperDAL.GetPaperViewInfoByWhere(title, IsEnable, pageM);
             return listM;
         }
         #endregion
@@ -162,10 +152,6 @@ namespace MissYangQA.BLL
             if (string.IsNullOrEmpty(model.Title))
             {
                 msg += "试题标题不可为空，";
-            }
-            if (model.StartTime > model.EndTime)
-            {
-                msg += "开始时间必须小于结束时间，";
             }
             return base.Verification(model, ref msg);
         }

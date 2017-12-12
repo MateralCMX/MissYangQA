@@ -5,24 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a06e60e1e42b4e5c90e74c48450bc908" Name="Diagram1">
-        <EntityTypeShape EntityType="MissYangQADBModel.T_Answer" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="false" />
-        <EntityTypeShape EntityType="MissYangQADBModel.T_ApplicationLog" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="MissYangQADBModel.T_ClassList" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="false" />
-        <EntityTypeShape EntityType="MissYangQADBModel.T_Paper" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="false" />
-        <EntityTypeShape EntityType="MissYangQADBModel.T_Question" Width="1.5" PointX="3" PointY="2.625" IsExpanded="false" />
-        <EntityTypeShape EntityType="MissYangQADBModel.T_Scantron" Width="1.5" PointX="3" PointY="1.5" IsExpanded="false" />
-        <EntityTypeShape EntityType="MissYangQADBModel.T_ScantronDetailed" Width="1.5" PointX="7.5" PointY="2" IsExpanded="false" />
-        <EntityTypeShape EntityType="MissYangQADBModel.T_User" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="MissYangQADBModel.V_User" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="false" />
-        <AssociationConnector Association="MissYangQADBModel.FK_T_Answer_T_Question" />
-        <AssociationConnector Association="MissYangQADBModel.FK_T_ScoreDetailed_T_Answer" />
-        <AssociationConnector Association="MissYangQADBModel.FK_T_Score_T_ClassList" />
-        <AssociationConnector Association="MissYangQADBModel.FK_T_Question_T_Paper" />
-        <AssociationConnector Association="MissYangQADBModel.FK_T_Score_T_Paper" />
-        <AssociationConnector Association="MissYangQADBModel.FK_T_ScoreDetailed_T_Question" />
-        <AssociationConnector Association="MissYangQADBModel.FK_T_ScoreDetailed_T_Score" />
-        <EntityTypeShape EntityType="MissYangQADBModel.V_ClassList" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="MissYangQADBModel.V_Paper" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MissYangQADBModel.T_Answer" Width="1.5" PointX="5.25" PointY="6.75" />
+        <EntityTypeShape EntityType="MissYangQADBModel.T_AnswerSheet" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="MissYangQADBModel.T_AnswerSheetDetails" Width="1.5" PointX="7.5" PointY="5.25" />
+        <EntityTypeShape EntityType="MissYangQADBModel.T_ApplicationLog" Width="1.5" PointX="5.75" PointY="1.5" />
+        <EntityTypeShape EntityType="MissYangQADBModel.T_Class" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MissYangQADBModel.T_Paper" Width="1.5" PointX="0.75" PointY="3.625" />
+        <EntityTypeShape EntityType="MissYangQADBModel.T_Problem" Width="1.5" PointX="3" PointY="6.75" />
+        <EntityTypeShape EntityType="MissYangQADBModel.T_User" Width="1.5" PointX="7.75" PointY="1.5" />
+        <EntityTypeShape EntityType="MissYangQADBModel.V_Class" Width="1.5" PointX="7.75" PointY="8.5" />
+        <EntityTypeShape EntityType="MissYangQADBModel.V_User" Width="1.5" PointX="0.75" PointY="10.5" />
+        <AssociationConnector Association="MissYangQADBModel.FK_T_Answer_T_Problem" />
+        <AssociationConnector Association="MissYangQADBModel.FK_T_AnswerSheetDetails_T_Answer" />
+        <AssociationConnector Association="MissYangQADBModel.FK_T_AnswerSheet_T_Class" />
+        <AssociationConnector Association="MissYangQADBModel.FK_T_AnswerSheet_T_Paper" />
+        <AssociationConnector Association="MissYangQADBModel.FK_T_AnswerSheetDetails_T_AnswerSheet" />
+        <AssociationConnector Association="MissYangQADBModel.FK_T_Problem_T_Paper" />
+        <EntityTypeShape EntityType="MissYangQADBModel.V_Paper" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
