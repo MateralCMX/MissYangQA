@@ -121,6 +121,15 @@ namespace MissYangQA.BLL
             List<V_Paper> listM = _paperDAL.GetPaperViewInfoByWhere(title, IsEnable, pageM);
             return listM;
         }
+        /// <summary>
+        /// 获得所有启用的试题信息
+        /// </summary>
+        /// <returns>试题信息</returns>
+        public List<V_Paper> GetAllEnablePaperInfo()
+        {
+            List<V_Paper> listM = _paperDAL.GetAllEnablePaperInfo();
+            return listM;
+        }
         #endregion
         #region 私有方法
         /// <summary>

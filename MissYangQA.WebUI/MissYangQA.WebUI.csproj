@@ -203,10 +203,12 @@
     <Compile Include="Controllers\API\PaperController.cs" />
     <Compile Include="Controllers\API\ClassController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
+    <Compile Include="Controllers\API\ValidateCodeController.cs" />
     <Compile Include="Controllers\ClassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaperController.cs" />
     <Compile Include="Controllers\ProblemController.cs" />
+    <Compile Include="Controllers\QRCodeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -231,6 +233,7 @@
     <Content Include="CSS\Paper\PaperList.css" />
     <Content Include="CSS\Problem\ProblemDetails.css" />
     <Content Include="CSS\Problem\ProblemList.css" />
+    <Content Include="CSS\QRCode\CreateQRCode.css" />
     <Content Include="CSS\User\ChangePassword.css" />
     <Content Include="CSS\User\UserDetails.css" />
     <Content Include="CSS\User\UserList.css" />
@@ -305,6 +308,7 @@
     <Content Include="Views\Paper\PaperDetails.cshtml" />
     <Content Include="Views\Problem\ProblemList.cshtml" />
     <Content Include="Views\Problem\ProblemDetails.cshtml" />
+    <Content Include="Views\QRCode\CreateQRCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -342,6 +346,7 @@
     <TypeScriptCompile Include="Scripts\Paper\PaperList.ts" />
     <TypeScriptCompile Include="Scripts\Problem\ProblemDetails.ts" />
     <TypeScriptCompile Include="Scripts\Problem\ProblemList.ts" />
+    <TypeScriptCompile Include="Scripts\QRCode\CreateQRCode.ts" />
     <TypeScriptCompile Include="Scripts\User\ChangePassword.ts" />
     <TypeScriptCompile Include="Scripts\User\UserDetails.ts" />
     <TypeScriptCompile Include="Scripts\User\UserList.ts" />

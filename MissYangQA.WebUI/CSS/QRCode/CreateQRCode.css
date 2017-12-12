@@ -1,0 +1,6 @@
+﻿#QRCode {
+    width: 100%;
+}
+#QRCode img{
+    max-width: 100%;
+}

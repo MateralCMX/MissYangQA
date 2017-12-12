@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title id="PageTitle">创建二维码</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Lib/m-Reset/m-Reset.css" rel="stylesheet" />
+    <link href="~/Css/Base.css" rel="stylesheet" />
+    <link href="~/Css/QRCode/CreateQRCode.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <h2 id="HeaderTitle">创建二维码</h2>
+    </header>
+    <div class="TopTools btn-group">
+        <button class="btn btn-default btn-back glyphicon glyphicon-chevron-left"></button>
+        <button id="BtnCreateQRCode" class="btn btn-success glyphicon glyphicon-qrcode"></button>
+    </div>
+    <main>
+        <form id="InputForm">
+            <div class="form-group">
+                <label for="SelectClass">选择班级</label>
+                <select id="SelectClass" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label for="SelectPaper">选择试题</label>
+                <select id="SelectPaper" class="form-control"></select>
+            </div>
+        </form>
+    </main>
+    <div id="QRCode">
+
+    </div>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Lib/m-Tools/m-Tools.js"></script>
+    <script src="~/Scripts/Base.js"></script>
+    <script src="~/Scripts/QRCode/CreateQRCode.js"></script>
+</body>
+</html>

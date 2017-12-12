@@ -71,9 +71,21 @@ namespace MissYangQA.DAL
             List<V_Paper> resM = new List<V_Paper>();
             if (pageM.DataCount > 0)
             {
-                resM = _DB.V_Paper.Where(searchPredicate.Compile()).OrderByDescending(m => m.ID).Skip((pageM.PagingIndex - 1) * pageM.PagingSize).Take(pageM.PagingSize).ToList();
+                resM = _DB.V_Paper.Where(searchPredicate.Compile()).OrderByDescending(m => m.CreateTime).Skip((pageM.PagingIndex - 1) * pageM.PagingSize).Take(pageM.PagingSize).ToList();
             }
             return resM;
+        }
+        /// <summary>
+        /// 获得所有启用的试题信息
+        /// </summary>
+        /// <returns>试题信息</returns>
+        public List<V_Paper> GetAllEnablePaperInfo()
+        {
+            List<V_Paper> listM = (from m in _DB.V_Paper
+                                   where m.IsEnable == true
+                                   orderby m.CreateTime descending
+                                   select m).ToList();
+            return listM;
         }
     }
 }
