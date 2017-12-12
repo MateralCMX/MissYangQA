@@ -7,11 +7,41 @@
 
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>ExamDetails</title>
+    <title id="PageTitle">开始</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Lib/m-Reset/m-Reset.css" rel="stylesheet" />
+    <link href="~/Css/Base.css" rel="stylesheet" />
+    <link href="~/Css/Paper/ExamDetails.css" rel="stylesheet" />
 </head>
 <body>
-    <div> 
-    </div>
+    <header>
+        <h2 id="HeaderTitle">开始</h2>
+    </header>
+    <main>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="number">1.</span>
+                多选题
+                <span class="Score">5分</span>
+            </div>
+            <div class="panel-body">
+                子宫的正常姿势为
+            </div>
+            <div class="list-group">
+                <button class="list-group-item">后仰</button>
+                <button class="list-group-item active">前倾</button>
+                <button class="list-group-item">右旋</button>
+                <button class="list-group-item active">前屈</button>
+                <button class="list-group-item">左旋</button>
+            </div>
+        </div>
+    </main>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Lib/m-Tools/m-Tools.js"></script>
+    <script src="~/Scripts/Base.js"></script>
+    <script src="~/Scripts/Paper/ExamDetails.js"></script>
 </body>
 </html>
