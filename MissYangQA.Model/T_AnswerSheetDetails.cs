@@ -17,9 +17,8 @@ namespace MissYangQA.Model
         public System.Guid ID { get; set; }
         public System.Guid FK_AnswerShet { get; set; }
         public System.Guid FK_Answer { get; set; }
-        public string AnswerContent { get; set; }
     
-        public virtual T_AnswerSheet T_AnswerSheet { get; set; }
         public virtual T_Answer T_Answer { get; set; }
+        public virtual T_AnswerSheet T_AnswerSheet { get; set; }
     }
 }

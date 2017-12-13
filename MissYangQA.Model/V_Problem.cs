@@ -19,5 +19,6 @@ namespace MissYangQA.Model
         public string Contents { get; set; }
         public int Score { get; set; }
         public System.DateTime CreateTime { get; set; }
+        public byte ProblemType { get; set; }
     }
 }

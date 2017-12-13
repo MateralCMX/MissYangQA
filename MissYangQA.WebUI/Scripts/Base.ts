@@ -180,6 +180,9 @@ namespace MissYangQA {
                 case "ExamDetails":
                     url += "Paper/ExamDetails";
                     break;
+                case "AnswerSheetDetails":
+                    url += "AnswerSheet/AnswerSheetDetails"
+                    break;
                 default:
                     url += "Home/Login";
                     break;

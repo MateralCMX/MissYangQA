@@ -72,6 +72,23 @@ namespace MissYangQA.BLL
                                 tempAnswerM.IsDelete = false;
                                 model.T_Answer.Add(tempAnswerM);
                             }
+                            int Count = model.T_Answer.Count;
+                            if (Count > 1)
+                            {
+                                Count = model.T_Answer.Where(m => m.IsCorrect).Count();
+                                if (Count == 1)
+                                {
+                                    model.ProblemType = (byte)ProblemTypeEnum.Radio;
+                                }
+                                else if (Count > 1)
+                                {
+                                    model.ProblemType = (byte)ProblemTypeEnum.Multiple;
+                                }
+                            }
+                            else
+                            {
+                                model.ProblemType = (byte)ProblemTypeEnum.QA;
+                            }
                             _problemDAL.Insert(model);
                         }
                         else
@@ -168,6 +185,23 @@ namespace MissYangQA.BLL
                                     dbModel.T_Answer.Add(tempAnswerM);
                                 }
                                 #endregion
+                                int Count = dbModel.T_Answer.Count;
+                                if (Count > 1)
+                                {
+                                    Count = dbModel.T_Answer.Where(m => m.IsCorrect).Count();
+                                    if (Count == 1)
+                                    {
+                                        dbModel.ProblemType = (byte)ProblemTypeEnum.Radio;
+                                    }
+                                    else if (Count > 1)
+                                    {
+                                        dbModel.ProblemType = (byte)ProblemTypeEnum.Multiple;
+                                    }
+                                }
+                                else
+                                {
+                                    dbModel.ProblemType = (byte)ProblemTypeEnum.QA;
+                                }
                                 _problemDAL.SaveChange();
                             }
                             else

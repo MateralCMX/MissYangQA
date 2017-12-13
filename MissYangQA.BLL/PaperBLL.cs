@@ -1,4 +1,5 @@
-﻿using MateralTools.MEncryption;
+﻿using MateralTools.Base;
+using MateralTools.MEncryption;
 using MateralTools.MEnum;
 using MateralTools.MResult;
 using MateralTools.MVerify;
@@ -23,6 +24,7 @@ namespace MissYangQA.BLL
         /// 试题数据访问对象
         /// </summary>
         private readonly PaperDAL _paperDAL = new PaperDAL();
+        private readonly ProblemBLL _problemBLL = new ProblemBLL();
         #endregion
         #region 公共方法
         /// <summary>
@@ -130,8 +132,83 @@ namespace MissYangQA.BLL
             List<V_Paper> listM = _paperDAL.GetAllEnablePaperInfo();
             return listM;
         }
+        /// <summary>
+        /// 根据试题ID获得试卷信息
+        /// </summary>
+        /// <param name="id">试题ID</param>
+        /// <returns>试卷信息</returns>
+        public PaperModel GetExamInfoByPaperID(Guid id)
+        {
+            V_Paper DBPaperM = _paperDAL.GetPaperViewInfoByID(id);
+            if (DBPaperM != null)
+            {
+                PaperModel paperM = new PaperModel(DBPaperM);
+                List<ProblemModel> listM = _problemBLL.GetProblemInfoByPaperID(id);
+                paperM.Problems = listM;
+                UpsetProblem(paperM);
+                return paperM;
+            }
+            else
+            {
+                throw new ArgumentException($"参数{nameof(id)}错误");
+            }
+        }
         #endregion
         #region 私有方法
+        /// <summary>
+        /// 打乱问题顺序
+        /// </summary>
+        /// <param name="paperM"></param>
+        private void UpsetProblem(PaperModel paperM)
+        {
+            Random rd = new Random();
+            List<int> upsetIndex = new List<int>();
+            for (int i = 0; i < paperM.Problems.Count; i++)
+            {
+                upsetIndex.Add(i);
+            }
+            int Index;
+            int TrueIndex;
+            List<ProblemModel> problems = new List<ProblemModel>();
+            ProblemModel tempM;
+            while (upsetIndex.Count > 0)
+            {
+                Index = rd.Next(0, upsetIndex.Count);
+                TrueIndex = upsetIndex[Index];
+                tempM = paperM.Problems[TrueIndex];
+                UpsetAnswer(tempM);
+                problems.Add(tempM);
+                upsetIndex.RemoveAt(Index);
+            }
+            paperM.Problems = problems;
+        }
+        /// <summary>
+        /// 打乱答案顺序
+        /// </summary>
+        /// <param name="paperM"></param>
+        private void UpsetAnswer(ProblemModel problemM)
+        {
+            Random rd = new Random();
+            List<int> upsetIndex = new List<int>();
+            for (int i = 0; i < problemM.Answers.Count; i++)
+            {
+                upsetIndex.Add(i);
+            }
+            int Index;
+            int TrueIndex;
+            List<V_Answer> answers = new List<V_Answer>();
+            V_Answer tempM;
+            while (upsetIndex.Count > 0)
+            {
+                Index = rd.Next(0, upsetIndex.Count);
+                TrueIndex = upsetIndex[Index];
+                tempM = problemM.Answers[TrueIndex];
+                tempM.IsCorrect = false;
+                answers.Add(tempM);
+                upsetIndex.RemoveAt(Index);
+            }
+            problemM.Answers = answers;
+        }
         /// <summary>
         /// 验证模型
         /// </summary>

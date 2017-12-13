@@ -211,7 +211,7 @@ namespace MateralTools.MEncryption
         /// </summary>
         /// <param name="InputStr">需要加密的字符串</param>
         /// <returns>二维码图片181px*181px</returns>
-        public static Bitmap QRCodeEncode(string InputStr)
+        public static Bitmap QRCodeEncode(string InputStr, int Version = 0)
         {
             QRCodeEncoder qRCodeEncoder = new QRCodeEncoder();
             //设置二维码编码格式  
@@ -219,7 +219,7 @@ namespace MateralTools.MEncryption
             //设置编码测量度  
             qRCodeEncoder.QRCodeScale = InputStr.Length;
             //设置编码版本  
-            qRCodeEncoder.QRCodeVersion = 0;
+            qRCodeEncoder.QRCodeVersion = Version;
             //设置错误校验  
             qRCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
             return qRCodeEncoder.Encode(InputStr, Encoding.UTF8);

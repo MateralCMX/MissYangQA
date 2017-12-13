@@ -1,4 +1,5 @@
 ﻿using MateralTools.MConvert;
+using MateralTools.MEnum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,40 @@ namespace MissYangQA.Model
         /// 答案
         /// </summary>
         public List<V_Answer> Answers { get; set; }
+        /// <summary>
+        /// 问题类型
+        /// </summary>
+        public ProblemTypeEnum ProblemTypeE
+        {
+            get
+            {
+                return (ProblemTypeEnum)ProblemType;
+            }
+        }
+        /// <summary>
+        /// 问题类型字符
+        /// </summary>
+        public string ProblemTypeStr
+        {
+            get
+            {
+                return EnumManager.GetShowName(ProblemTypeE);
+            }
+        }
+    }
+    /// <summary>
+    /// 问题类型枚举
+    /// </summary>
+    public enum ProblemTypeEnum : byte
+    {
+        [EnumShowName("单选题")]
+        Radio = 1,
+        [EnumShowName("多选题")]
+        Multiple = 2,
+        [EnumShowName("问答题")]
+        QA = 3,
+        [EnumShowName("其他")]
+        Other = 0
     }
     /// <summary>
     /// 问题修改模型

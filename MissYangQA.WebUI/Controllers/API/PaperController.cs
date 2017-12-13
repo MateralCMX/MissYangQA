@@ -25,6 +25,21 @@ namespace MissYangQA.WebUI.Controllers.API
         #endregion
         #region API
         /// <summary>
+        /// 根据试题ID获得试卷信息
+        /// </summary>
+        /// <param name="id">试题ID</param>
+        /// <returns>试卷信息</returns>
+        [HttpGet]
+        [Route("GetExamInfoByPaperID")]
+        [NotVerificationLogin]
+        public MResultModel GetExamInfoByPaperID(Guid PaperID)
+        {
+            MResultModel resM;
+            PaperModel listM = _paperBLL.GetExamInfoByPaperID(PaperID);
+            resM = MResultModel<PaperModel>.GetSuccessResultM(listM, "查询成功");
+            return resM;
+        }
+        /// <summary>
         /// 获得所有启用的试题信息
         /// </summary>
         /// <returns>所有试题信息</returns>

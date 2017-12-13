@@ -199,6 +199,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\API\ApiBaseController.cs" />
+    <Compile Include="Controllers\API\AnswerSheetController.cs" />
     <Compile Include="Controllers\API\ProblemController.cs" />
     <Compile Include="Controllers\API\PaperController.cs" />
     <Compile Include="Controllers\API\ClassController.cs" />
@@ -224,9 +225,6 @@
     <Content Include="CSS\Base.css" />
     <Content Include="CSS\Class\ClassDetails.css" />
     <Content Include="CSS\Class\ClassList.css" />
-    <Content Include="CSS\Exam\ExamDetailed.css" />
-    <Content Include="CSS\Exam\ExamList.css" />
-    <Content Include="CSS\Exam\ExamLogin.css" />
     <Content Include="CSS\Home\Index.css" />
     <Content Include="CSS\Home\Login.css" />
     <Content Include="CSS\Paper\ExamDetails.css" />

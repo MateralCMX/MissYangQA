@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnswerModel.cs" />
+    <Compile Include="AnswerSheetModel.cs" />
     <Compile Include="ApplicationLogModel.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="ClassModel.cs" />

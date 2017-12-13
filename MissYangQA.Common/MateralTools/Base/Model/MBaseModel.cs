@@ -34,5 +34,28 @@ namespace MateralTools.Base
             }
             return resM;
         }
+        /// <summary>
+        /// 克隆对象
+        /// 需要特性:[Serializable]
+        /// </summary>
+        /// <returns>克隆的对象</returns>
+        public static object Clone(object obj)
+        {
+            object resM = null;
+            Type thisType = obj.GetType();
+            if ((thisType.Attributes & TypeAttributes.Serializable) == TypeAttributes.Serializable)
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                MemoryStream ms = new MemoryStream();
+                bf.Serialize(ms, obj);
+                ms.Position = 0;
+                resM = bf.Deserialize(ms);
+            }
+            else
+            {
+                throw new ApplicationException("该类型不支持序列化，请添加[Serializable]特性");
+            }
+            return resM;
+        }
     }
 }
