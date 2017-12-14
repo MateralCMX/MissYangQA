@@ -24,5 +24,16 @@ namespace MissYangQA.DAL
             _DB.T_AnswerSheet.Add(model);
             _DB.SaveChanges();
         }
+        /// <summary>
+        /// 根据唯一标识获得答题卡信息
+        /// </summary>
+        /// <param name="id">答题卡ID</param>
+        /// <returns>答题卡信息</returns>
+        public V_AnswerSheet GetAnswerSheetInfoByID(Guid id)
+        {
+            return (from m in _DB.V_AnswerSheet
+                    where m.ID == id
+                    select m).FirstOrDefault();
+        }
     }
 }

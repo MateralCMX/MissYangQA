@@ -103,7 +103,13 @@
     <Compile Include="V_Answer.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="V_AnswerSheet.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="V_Class.cs">
+      <DependentUpon>MissYangQADBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="V_CorrectProblem.cs">
       <DependentUpon>MissYangQADBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="V_Paper.cs">

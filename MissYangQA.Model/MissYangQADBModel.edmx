@@ -34,13 +34,14 @@
           <Property Name="FK_Paper" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FK_Class" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StudentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="T_AnswerSheetDetails">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="FK_AnswerShet" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FK_AnswerSheet" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FK_Answer" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="T_ApplicationLog">
@@ -111,6 +112,22 @@
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
+警告 6002: 表/视图“MissYangQADB.dbo.V_AnswerSheet”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_AnswerSheet">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="StudentName" />
+            <PropertyRef Name="CreateTime" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="StudentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
 警告 6002: 表/视图“MissYangQADB.dbo.V_Class”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_Class">
           <Key>
@@ -121,6 +138,16 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="Rank" Type="int" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“MissYangQADB.dbo.V_CorrectProblem”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_CorrectProblem">
+          <Key>
+            <PropertyRef Name="AnswerSheetID" />
+            <PropertyRef Name="ProblemID" />
+          </Key>
+          <Property Name="AnswerSheetID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProblemID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“MissYangQADB.dbo.V_Paper”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -237,7 +264,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="T_AnswerSheetDetails">
-              <PropertyRef Name="FK_AnswerShet" />
+              <PropertyRef Name="FK_AnswerSheet" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -272,12 +299,27 @@
     [V_Answer].[CreateTime] AS [CreateTime]
     FROM [dbo].[V_Answer] AS [V_Answer]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="V_AnswerSheet" EntityType="Self.V_AnswerSheet" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_AnswerSheet].[ID] AS [ID], 
+    [V_AnswerSheet].[Title] AS [Title], 
+    [V_AnswerSheet].[Name] AS [Name], 
+    [V_AnswerSheet].[StudentName] AS [StudentName], 
+    [V_AnswerSheet].[CreateTime] AS [CreateTime]
+    FROM [dbo].[V_AnswerSheet] AS [V_AnswerSheet]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="V_Class" EntityType="Self.V_Class" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [V_Class].[ID] AS [ID], 
     [V_Class].[Name] AS [Name], 
     [V_Class].[Rank] AS [Rank]
     FROM [dbo].[V_Class] AS [V_Class]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_CorrectProblem" EntityType="Self.V_CorrectProblem" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_CorrectProblem].[AnswerSheetID] AS [AnswerSheetID], 
+    [V_CorrectProblem].[ProblemID] AS [ProblemID]
+    FROM [dbo].[V_CorrectProblem] AS [V_CorrectProblem]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_Paper" EntityType="Self.V_Paper" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -354,7 +396,9 @@
           <EntitySet Name="T_Problem" EntityType="MissYangQADBModel.T_Problem" />
           <EntitySet Name="T_User" EntityType="MissYangQADBModel.T_User" />
           <EntitySet Name="V_Answer" EntityType="MissYangQADBModel.V_Answer" />
+          <EntitySet Name="V_AnswerSheet" EntityType="MissYangQADBModel.V_AnswerSheet" />
           <EntitySet Name="V_Class" EntityType="MissYangQADBModel.V_Class" />
+          <EntitySet Name="V_CorrectProblem" EntityType="MissYangQADBModel.V_CorrectProblem" />
           <EntitySet Name="V_Paper" EntityType="MissYangQADBModel.V_Paper" />
           <EntitySet Name="V_PaperGroup" EntityType="MissYangQADBModel.V_PaperGroup" />
           <EntitySet Name="V_Problem" EntityType="MissYangQADBModel.V_Problem" />
@@ -415,6 +459,7 @@
           <Property Name="FK_Paper" Type="Guid" Nullable="false" />
           <Property Name="FK_Class" Type="Guid" Nullable="false" />
           <Property Name="StudentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="T_Class" Relationship="MissYangQADBModel.FK_T_AnswerSheet_T_Class" FromRole="T_AnswerSheet" ToRole="T_Class" />
           <NavigationProperty Name="T_Paper" Relationship="MissYangQADBModel.FK_T_AnswerSheet_T_Paper" FromRole="T_AnswerSheet" ToRole="T_Paper" />
           <NavigationProperty Name="T_AnswerSheetDetails" Relationship="MissYangQADBModel.FK_T_AnswerSheetDetails_T_AnswerSheet" FromRole="T_AnswerSheet" ToRole="T_AnswerSheetDetails" />
@@ -424,7 +469,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="FK_AnswerShet" Type="Guid" Nullable="false" />
+          <Property Name="FK_AnswerSheet" Type="Guid" Nullable="false" />
           <Property Name="FK_Answer" Type="Guid" Nullable="false" />
           <NavigationProperty Name="T_Answer" Relationship="MissYangQADBModel.FK_T_AnswerSheetDetails_T_Answer" FromRole="T_AnswerSheetDetails" ToRole="T_Answer" />
           <NavigationProperty Name="T_AnswerSheet" Relationship="MissYangQADBModel.FK_T_AnswerSheetDetails_T_AnswerSheet" FromRole="T_AnswerSheetDetails" ToRole="T_AnswerSheet" />
@@ -499,6 +544,20 @@
           <Property Name="FK_Problem" Type="Guid" Nullable="false" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="V_AnswerSheet">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="StudentName" />
+            <PropertyRef Name="CreateTime" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="StudentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="V_Class">
           <Key>
             <PropertyRef Name="ID" />
@@ -508,6 +567,14 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="Rank" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="V_CorrectProblem">
+          <Key>
+            <PropertyRef Name="AnswerSheetID" />
+            <PropertyRef Name="ProblemID" />
+          </Key>
+          <Property Name="AnswerSheetID" Type="Guid" Nullable="false" />
+          <Property Name="ProblemID" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="V_Paper">
           <Key>
@@ -616,7 +683,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="T_AnswerSheetDetails">
-              <PropertyRef Name="FK_AnswerShet" />
+              <PropertyRef Name="FK_AnswerSheet" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -664,6 +731,7 @@
           <EntitySetMapping Name="T_AnswerSheet">
             <EntityTypeMapping TypeName="MissYangQADBModel.T_AnswerSheet">
               <MappingFragment StoreEntitySet="T_AnswerSheet">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="StudentName" ColumnName="StudentName" />
                 <ScalarProperty Name="FK_Class" ColumnName="FK_Class" />
                 <ScalarProperty Name="FK_Paper" ColumnName="FK_Paper" />
@@ -675,7 +743,7 @@
             <EntityTypeMapping TypeName="MissYangQADBModel.T_AnswerSheetDetails">
               <MappingFragment StoreEntitySet="T_AnswerSheetDetails">
                 <ScalarProperty Name="FK_Answer" ColumnName="FK_Answer" />
-                <ScalarProperty Name="FK_AnswerShet" ColumnName="FK_AnswerShet" />
+                <ScalarProperty Name="FK_AnswerSheet" ColumnName="FK_AnswerSheet" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -747,12 +815,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="V_AnswerSheet">
+            <EntityTypeMapping TypeName="MissYangQADBModel.V_AnswerSheet">
+              <MappingFragment StoreEntitySet="V_AnswerSheet">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="V_Class">
             <EntityTypeMapping TypeName="MissYangQADBModel.V_Class">
               <MappingFragment StoreEntitySet="V_Class">
                 <ScalarProperty Name="Rank" ColumnName="Rank" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_CorrectProblem">
+            <EntityTypeMapping TypeName="MissYangQADBModel.V_CorrectProblem">
+              <MappingFragment StoreEntitySet="V_CorrectProblem">
+                <ScalarProperty Name="ProblemID" ColumnName="ProblemID" />
+                <ScalarProperty Name="AnswerSheetID" ColumnName="AnswerSheetID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

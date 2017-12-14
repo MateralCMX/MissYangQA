@@ -50,6 +50,27 @@ namespace MissYangQA.WebUI.Controllers.API
             }
             return resM;
         }
+        /// <summary>
+        /// 根据唯一标识获得答题卡结果
+        /// </summary>
+        /// <param name="ID">唯一标识</param>
+        /// <returns>答题卡结果</returns>
+        [HttpGet]
+        [Route("GetAnswerSheetResultInfoByID")]
+        public MResultModel GetAnswerSheetResultInfoByID(Guid ID)
+        {
+            MResultModel resM;
+            try
+            {
+                AnswerSheetResultModel asrM = _answerSheetBLL.GetAnswerSheetResultInfoByID(ID);
+                resM = MResultModel<AnswerSheetResultModel>.GetSuccessResultM(asrM, "查询成功");
+            }
+            catch (ArgumentException ex)
+            {
+                resM = MResultModel.GetFailResultM(ex.Message);
+            }
+            return resM;
+        }
         #endregion
     }
 }

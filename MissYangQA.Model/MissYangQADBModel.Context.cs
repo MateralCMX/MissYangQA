@@ -35,7 +35,9 @@ namespace MissYangQA.Model
         public virtual DbSet<T_Problem> T_Problem { get; set; }
         public virtual DbSet<T_User> T_User { get; set; }
         public virtual DbSet<V_Answer> V_Answer { get; set; }
+        public virtual DbSet<V_AnswerSheet> V_AnswerSheet { get; set; }
         public virtual DbSet<V_Class> V_Class { get; set; }
+        public virtual DbSet<V_CorrectProblem> V_CorrectProblem { get; set; }
         public virtual DbSet<V_Paper> V_Paper { get; set; }
         public virtual DbSet<V_PaperGroup> V_PaperGroup { get; set; }
         public virtual DbSet<V_Problem> V_Problem { get; set; }

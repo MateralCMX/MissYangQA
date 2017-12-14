@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerSheetDetailsDAL.cs" />
     <Compile Include="ApplicationLogDAL.cs" />
     <Compile Include="BaseDAL.cs" />
     <Compile Include="AnswerSheetDAL.cs" />

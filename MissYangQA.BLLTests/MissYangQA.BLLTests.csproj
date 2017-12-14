@@ -63,6 +63,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="AnswerSheetBLLTests.cs" />
     <Compile Include="PaperBLLTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -74,6 +75,10 @@
     <ProjectReference Include="..\MissYangQA.BLL\MissYangQA.BLL.csproj">
       <Project>{1EB6D2A0-BC9F-44C0-8DDB-9A3A8862B316}</Project>
       <Name>MissYangQA.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MissYangQA.Common\MissYangQA.Common.csproj">
+      <Project>{39a07079-3f75-48c0-8ebd-3d5f0cdca4bf}</Project>
+      <Name>MissYangQA.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\MissYangQA.Model\MissYangQA.Model.csproj">
       <Project>{FCFE7BB4-88A4-4626-8B0D-0E38162E902D}</Project>

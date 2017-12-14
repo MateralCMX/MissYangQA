@@ -24,6 +24,7 @@ namespace MissYangQA.Model
         public System.Guid FK_Paper { get; set; }
         public System.Guid FK_Class { get; set; }
         public string StudentName { get; set; }
+        public System.DateTime CreateTime { get; set; }
     
         public virtual T_Class T_Class { get; set; }
         public virtual T_Paper T_Paper { get; set; }

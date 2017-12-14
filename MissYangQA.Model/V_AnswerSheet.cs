@@ -12,13 +12,12 @@ namespace MissYangQA.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class T_AnswerSheetDetails
+    public partial class V_AnswerSheet
     {
         public System.Guid ID { get; set; }
-        public System.Guid FK_AnswerSheet { get; set; }
-        public System.Guid FK_Answer { get; set; }
-    
-        public virtual T_Answer T_Answer { get; set; }
-        public virtual T_AnswerSheet T_AnswerSheet { get; set; }
+        public string Title { get; set; }
+        public string Name { get; set; }
+        public string StudentName { get; set; }
+        public System.DateTime CreateTime { get; set; }
     }
 }
