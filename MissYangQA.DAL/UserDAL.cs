@@ -11,51 +11,8 @@ namespace MissYangQA.DAL
     /// <summary>
     /// 用户数据访问类
     /// </summary>
-    public sealed class UserDAL : BaseDAL
+    public sealed class UserDAL : BaseDAL<T_User, V_User>
     {
-        /// <summary>
-        /// 添加
-        /// </summary>
-        /// <param name="model">要添加的对象</param>
-        public void Insert(T_User model)
-        {
-            model = BeforeInsert(model);
-            _DB.T_User.Add(model);
-            _DB.SaveChanges();
-        }
-        /// <summary>
-        /// 移除
-        /// </summary>
-        /// <param name="model">要移除的对象</param>
-        public void Remove(T_User model)
-        {
-            _DB.T_User.Remove(model);
-            _DB.SaveChanges();
-        }
-        /// <summary>
-        /// 根据用户唯一标识获得用户信息
-        /// </summary>
-        /// <param name="id">用户唯一标识</param>
-        /// <returns>查询结果</returns>
-        public T_User GetUserInfoByID(Guid id)
-        {
-            T_User model = (from m in _DB.T_User
-                            where m.ID == id
-                            select m).FirstOrDefault();
-            return model;
-        }
-        /// <summary>
-        /// 根据用户唯一标识获得用户视图信息
-        /// </summary>
-        /// <param name="id">用户唯一标识</param>
-        /// <returns>查询结果</returns>
-        public V_User GetUserViewInfoByID(Guid id)
-        {
-            V_User model = (from m in _DB.V_User
-                            where m.ID == id
-                            select m).FirstOrDefault();
-            return model;
-        }
         /// <summary>
         /// 获得所有用户的视图信息
         /// </summary>

@@ -10,42 +10,8 @@ using System.Threading.Tasks;
 
 namespace MissYangQA.DAL
 {
-    public sealed class ProblemDAL : BaseDAL
+    public sealed class ProblemDAL : BaseDAL<T_Problem, V_Problem>
     {
-        /// <summary>
-        /// 添加
-        /// </summary>
-        /// <param name="model">要添加的对象</param>
-        public void Insert(T_Problem model)
-        {
-            model = BeforeInsert(model);
-            _DB.T_Problem.Add(model);
-            _DB.SaveChanges();
-        }
-        /// <summary>
-        /// 根据问题唯一标识获得问题信息
-        /// </summary>
-        /// <param name="id">问题唯一标识</param>
-        /// <returns>查询结果</returns>
-        public T_Problem GetProblemInfoByID(Guid id)
-        {
-            T_Problem model = (from m in _DB.T_Problem
-                             where m.ID == id
-                             select m).FirstOrDefault();
-            return model;
-        }
-        /// <summary>
-        /// 根据问题唯一标识获得问题视图信息
-        /// </summary>
-        /// <param name="id">问题唯一标识</param>
-        /// <returns>查询结果</returns>
-        public V_Problem GetProblemViewInfoByID(Guid id)
-        {
-            V_Problem model = (from m in _DB.V_Problem
-                             where m.ID == id
-                             select m).FirstOrDefault();
-            return model;
-        }
         /// <summary>
         /// 根据试题ID获得问题列表
         /// </summary>

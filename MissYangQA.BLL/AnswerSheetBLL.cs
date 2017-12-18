@@ -17,13 +17,9 @@ namespace MissYangQA.BLL
     /// <summary>
     /// 答题卡业务类
     /// </summary>
-    public sealed class AnswerSheetBLL : BaseBLL<T_AnswerSheet>
+    public sealed class AnswerSheetBLL : BaseBLL<AnswerSheetDAL, T_AnswerSheet>
     {
         #region 成员
-        /// <summary>
-        /// 答题卡数据访问对象
-        /// </summary>
-        private readonly AnswerSheetDAL _answerSheetDAL = new AnswerSheetDAL();
         /// <summary>
         /// 答题卡明细数据访问对象
         /// </summary>
@@ -66,7 +62,7 @@ namespace MissYangQA.BLL
                 };
                 asM.T_AnswerSheetDetails.Add(tempM);
             }
-            _answerSheetDAL.Insert(asM);
+            _dal.Insert(asM);
             return asM.ID;
         }
         /// <summary>
@@ -77,14 +73,14 @@ namespace MissYangQA.BLL
         /// <exception cref="ArgumentException">参数错误</exception>
         public AnswerSheetResultModel GetAnswerSheetResultInfoByID(Guid id)
         {
-            V_AnswerSheet dbAnSM = _answerSheetDAL.GetAnswerSheetInfoByID(id);
+            V_AnswerSheet dbAnSM = _dal.GetDBModelViewInfoByID(id);
             if (dbAnSM != null)
             {
                 List<T_AnswerSheetDetails> dbAnSDMs = _answerSheetDetailsDAL.GetAnswerSheetDetailsInfoByAnswerSheetID(id);
                 if (dbAnSDMs.Count > 0)
                 {
                     AnswerSheetResultModel resM = new AnswerSheetResultModel(dbAnSM);
-                    V_Paper paperM = _paperDAL.GetPaperViewInfoByID(dbAnSDMs[0].T_Answer.T_Problem.T_Paper.ID);
+                    V_Paper paperM = _paperDAL.GetDBModelViewInfoByID(dbAnSDMs[0].T_Answer.T_Problem.T_Paper.ID);
                     List<V_Problem> problemMs = _problemDAL.GetProblemViewInfoByPaperID(paperM.ID);
                     List<V_Answer> answerMs;
                     AnswerSheetResultAnswerModel asraM;

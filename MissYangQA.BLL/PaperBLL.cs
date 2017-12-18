@@ -17,13 +17,9 @@ namespace MissYangQA.BLL
     /// <summary>
     /// 试题业务类
     /// </summary>
-    public sealed class PaperBLL : BaseBLL<T_Paper>
+    public sealed class PaperBLL : BaseBLL<PaperDAL, T_Paper>
     {
         #region 成员
-        /// <summary>
-        /// 试题数据访问对象
-        /// </summary>
-        private readonly PaperDAL _paperDAL = new PaperDAL();
         private readonly ProblemBLL _problemBLL = new ProblemBLL();
         #endregion
         #region 公共方法
@@ -35,7 +31,7 @@ namespace MissYangQA.BLL
         public V_Paper GetPaperViewInfoByID(Guid id)
         {
             V_Paper resM;
-            resM = _paperDAL.GetPaperViewInfoByID(id);
+            resM = _dal.GetDBModelViewInfoByID(id);
             return resM;
         }
         /// <summary>
@@ -53,7 +49,7 @@ namespace MissYangQA.BLL
                 {
                     model.IsDelete = false;
                     model.CreateTime = DateTime.Now;
-                    _paperDAL.Insert(model);
+                    _dal.Insert(model);
                 }
                 else
                 {
@@ -72,11 +68,11 @@ namespace MissYangQA.BLL
         /// <exception cref="ArgumentNullException">参数错误异常</exception>
         public void DeletePaperInfo(Guid id)
         {
-            T_Paper model = _paperDAL.GetPaperInfoByID(id);
+            T_Paper model = _dal.GetDBModelInfoByID(id);
             if (model != null)
             {
                 model.IsDelete = true;
-                _paperDAL.SaveChange();
+                _dal.SaveChange();
             }
             else
             {
@@ -96,10 +92,10 @@ namespace MissYangQA.BLL
                 string msg = string.Empty;
                 if (Verification(model, ref msg))
                 {
-                    T_Paper dbModel = _paperDAL.GetPaperInfoByID(model.ID);
+                    T_Paper dbModel = _dal.GetDBModelInfoByID(model.ID);
                     dbModel.Title = model.Title;
                     dbModel.IsEnable = model.IsEnable;
-                    _paperDAL.SaveChange();
+                    _dal.SaveChange();
                 }
                 else
                 {
@@ -120,7 +116,7 @@ namespace MissYangQA.BLL
         /// <returns>试题信息</returns>
         public List<V_Paper> GetPaperInfoByWhere(string title, bool? IsEnable, MPagingModel pageM)
         {
-            List<V_Paper> listM = _paperDAL.GetPaperViewInfoByWhere(title, IsEnable, pageM);
+            List<V_Paper> listM = _dal.GetPaperViewInfoByWhere(title, IsEnable, pageM);
             return listM;
         }
         /// <summary>
@@ -129,7 +125,7 @@ namespace MissYangQA.BLL
         /// <returns>试题信息</returns>
         public List<V_Paper> GetAllEnablePaperInfo()
         {
-            List<V_Paper> listM = _paperDAL.GetAllEnablePaperInfo();
+            List<V_Paper> listM = _dal.GetAllEnablePaperInfo();
             return listM;
         }
         /// <summary>
@@ -139,7 +135,7 @@ namespace MissYangQA.BLL
         /// <returns>试卷信息</returns>
         public PaperModel GetExamInfoByPaperID(Guid id)
         {
-            V_Paper DBPaperM = _paperDAL.GetPaperViewInfoByID(id);
+            V_Paper DBPaperM = _dal.GetDBModelViewInfoByID(id);
             if (DBPaperM != null)
             {
                 PaperModel paperM = new PaperModel(DBPaperM);

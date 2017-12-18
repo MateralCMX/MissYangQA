@@ -16,13 +16,9 @@ namespace MissYangQA.BLL
     /// <summary>
     /// 问题业务类
     /// </summary>
-    public sealed class ProblemBLL : BaseBLL<T_Problem>
+    public sealed class ProblemBLL : BaseBLL<ProblemDAL, T_Problem>
     {
         #region 成员
-        /// <summary>
-        /// 问题数据访问对象
-        /// </summary>
-        private readonly ProblemDAL _problemDAL = new ProblemDAL();
         /// <summary>
         /// 答案数据访问对象
         /// </summary>
@@ -37,7 +33,7 @@ namespace MissYangQA.BLL
         public ProblemModel GetProblemViewInfoByID(Guid id)
         {
             ProblemModel resM;
-            V_Problem model = _problemDAL.GetProblemViewInfoByID(id);
+            V_Problem model = _dal.GetDBModelViewInfoByID(id);
             resM = new ProblemModel(model);
             resM.Answers = _answerDAL.GetAnswerViewInfoByProblemID(resM.ID);
             return resM;
@@ -89,7 +85,7 @@ namespace MissYangQA.BLL
                             {
                                 model.ProblemType = (byte)ProblemTypeEnum.QA;
                             }
-                            _problemDAL.Insert(model);
+                            _dal.Insert(model);
                         }
                         else
                         {
@@ -118,11 +114,11 @@ namespace MissYangQA.BLL
         /// <exception cref="ArgumentNullException">参数错误异常</exception>
         public void DeleteProblemInfo(Guid id)
         {
-            T_Problem model = _problemDAL.GetProblemInfoByID(id);
+            T_Problem model = _dal.GetDBModelInfoByID(id);
             if (model != null)
             {
                 model.IsDelete = true;
-                _problemDAL.SaveChange();
+                _dal.SaveChange();
             }
             else
             {
@@ -146,7 +142,7 @@ namespace MissYangQA.BLL
                     {
                         if (answers.Where(m => m.IsCorrect).Count() > 0)
                         {
-                            T_Problem dbModel = _problemDAL.GetProblemInfoByID(model.ID);
+                            T_Problem dbModel = _dal.GetDBModelInfoByID(model.ID);
                             if (dbModel != null)
                             {
                                 dbModel.Contents = model.Contents;
@@ -202,7 +198,7 @@ namespace MissYangQA.BLL
                                 {
                                     dbModel.ProblemType = (byte)ProblemTypeEnum.QA;
                                 }
-                                _problemDAL.SaveChange();
+                                _dal.SaveChange();
                             }
                             else
                             {
@@ -236,7 +232,7 @@ namespace MissYangQA.BLL
         /// <returns></returns>
         public List<ProblemModel> GetProblemInfoByPaperID(Guid paperID)
         {
-            List<V_Problem> listM = _problemDAL.GetProblemViewInfoByPaperID(paperID);
+            List<V_Problem> listM = _dal.GetProblemViewInfoByPaperID(paperID);
             List<ProblemModel> resM = ProblemModel.GetList(listM);
             foreach (ProblemModel item in resM)
             {

@@ -15,14 +15,8 @@ namespace MissYangQA.BLL
     /// <summary>
     /// 班级业务类
     /// </summary>
-    public sealed class ClassBLL : BaseBLL<T_Class>
+    public sealed class ClassBLL : BaseBLL<ClassDAL, T_Class>
     {
-        #region 成员
-        /// <summary>
-        /// 班级数据访问对象
-        /// </summary>
-        private readonly ClassDAL _classDAL = new ClassDAL();
-        #endregion
         #region 公共方法
         /// <summary>
         /// 获得所有的班级信息
@@ -31,7 +25,7 @@ namespace MissYangQA.BLL
         public List<V_Class> GetAllClassViewInfo()
         {
             List<V_Class> resM;
-            resM = _classDAL.GetAllClassViewInfo();
+            resM = _dal.GetAllClassViewInfo();
             return resM;
         }
         /// <summary>
@@ -41,7 +35,7 @@ namespace MissYangQA.BLL
         public V_Class GetClassViewInfoByID(Guid id)
         {
             V_Class resM;
-            resM = _classDAL.GetClassViewInfoByID(id);
+            resM = _dal.GetDBModelViewInfoByID(id);
             return resM;
         }
         /// <summary>
@@ -55,8 +49,8 @@ namespace MissYangQA.BLL
                 string msg = string.Empty;
                 if (Verification(model, ref msg))
                 {
-                    model.Rank = _classDAL.GetClassMaxRank() + 1;
-                    _classDAL.Insert(model);
+                    model.Rank = _dal.GetClassMaxRank() + 1;
+                    _dal.Insert(model);
                 }
                 else
                 {
@@ -75,11 +69,11 @@ namespace MissYangQA.BLL
         /// <exception cref="ArgumentNullException">参数错误异常</exception>
         public void DeleteClassInfo(Guid id)
         {
-            T_Class model = _classDAL.GetClassInfoByID(id);
+            T_Class model = _dal.GetDBModelInfoByID(id);
             if (model != null)
             {
                 model.IsDelete = true;
-                _classDAL.SaveChange();
+                _dal.SaveChange();
             }
             else
             {
@@ -99,9 +93,9 @@ namespace MissYangQA.BLL
                 string msg = string.Empty;
                 if (Verification(model, ref msg))
                 {
-                    T_Class dbModel = _classDAL.GetClassInfoByID(model.ID);
+                    T_Class dbModel = _dal.GetDBModelInfoByID(model.ID);
                     dbModel.Name = model.Name;
-                    _classDAL.SaveChange();
+                    _dal.SaveChange();
                 }
                 else
                 {
@@ -120,16 +114,16 @@ namespace MissYangQA.BLL
         /// <param name="targetClassID">目标班级唯一标识</param>
         public void ChangeClassRank(Guid classID,Guid targetClassID)
         {
-            T_Class classM = _classDAL.GetClassInfoByID(classID);
+            T_Class classM = _dal.GetDBModelInfoByID(classID);
             if (classM != null)
             {
-                T_Class targetClassM = _classDAL.GetClassInfoByID(targetClassID);
+                T_Class targetClassM = _dal.GetDBModelInfoByID(targetClassID);
                 if (targetClassM != null)
                 {
                     int tempRank = classM.Rank;
                     classM.Rank = targetClassM.Rank;
                     targetClassM.Rank = tempRank;
-                    _classDAL.SaveChange();
+                    _dal.SaveChange();
                 }
                 else
                 {

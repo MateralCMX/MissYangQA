@@ -13,7 +13,7 @@ namespace MissYangQA.DAL
     /// <summary>
     /// 答题卡数据访问类
     /// </summary>
-    public sealed class AnswerSheetDetailsDAL : BaseDAL
+    public sealed class AnswerSheetDetailsDAL : BaseDAL<T_AnswerSheetDetails>
     {
         /// <summary>
         /// 根据答题卡唯一标识获得答题卡明细信息

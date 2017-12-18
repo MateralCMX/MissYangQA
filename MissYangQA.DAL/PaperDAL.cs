@@ -13,42 +13,8 @@ namespace MissYangQA.DAL
     /// <summary>
     /// 试题数据访问类
     /// </summary>
-    public sealed class PaperDAL : BaseDAL
+    public sealed class PaperDAL : BaseDAL<T_Paper, V_Paper>
     {
-        /// <summary>
-        /// 添加
-        /// </summary>
-        /// <param name="model">要添加的对象</param>
-        public void Insert(T_Paper model)
-        {
-            model = BeforeInsert(model);
-            _DB.T_Paper.Add(model);
-            _DB.SaveChanges();
-        }
-        /// <summary>
-        /// 根据试题唯一标识获得试题信息
-        /// </summary>
-        /// <param name="id">试题唯一标识</param>
-        /// <returns>查询结果</returns>
-        public T_Paper GetPaperInfoByID(Guid id)
-        {
-            T_Paper model = (from m in _DB.T_Paper
-                                 where m.ID == id
-                                 select m).FirstOrDefault();
-            return model;
-        }
-        /// <summary>
-        /// 根据试题唯一标识获得试题视图信息
-        /// </summary>
-        /// <param name="id">试题唯一标识</param>
-        /// <returns>查询结果</returns>
-        public V_Paper GetPaperViewInfoByID(Guid id)
-        {
-            V_Paper model = (from m in _DB.V_Paper
-                                 where m.ID == id
-                                 select m).FirstOrDefault();
-            return model;
-        }
         /// <summary>
         /// 根据条件获得试题信息
         /// </summary>

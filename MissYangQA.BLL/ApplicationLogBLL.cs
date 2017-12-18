@@ -11,7 +11,7 @@ namespace MissYangQA.BLL
     /// <summary>
     /// 应用程序业务类
     /// </summary>
-    public sealed class ApplicationLogBLL : BaseBLL<T_ApplicationLog>
+    public sealed class ApplicationLogBLL
     {
         /// <summary>
         /// 应用程序日志数据操作对象

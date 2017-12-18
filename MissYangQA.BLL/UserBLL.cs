@@ -15,17 +15,13 @@ namespace MissYangQA.BLL
     /// <summary>
     /// 用户业务类
     /// </summary>
-    public sealed class UserBLL : BaseBLL<T_User>
+    public sealed class UserBLL : BaseBLL<UserDAL, T_User>
     {
         #region 成员
         /// <summary>
         /// Token有效时间[分钟]
         /// </summary>
         private static double TokenOverdue = 1440;
-        /// <summary>
-        /// 用户数据访问对象
-        /// </summary>
-        private readonly UserDAL _userDAL = new UserDAL();
         /// <summary>
         /// 默认密码
         /// </summary>
@@ -52,7 +48,7 @@ namespace MissYangQA.BLL
             if (pageM != null)
             {
                 List<V_User> resM;
-                resM = _userDAL.GetAllUserViewInfo(pageM);
+                resM = _dal.GetAllUserViewInfo(pageM);
                 return resM;
             }
             else
@@ -68,7 +64,7 @@ namespace MissYangQA.BLL
         public V_User GetUserViewInfoByID(Guid id)
         {
             V_User resM;
-            resM = _userDAL.GetUserViewInfoByID(id);
+            resM = _dal.GetDBModelViewInfoByID(id);
             return resM;
         }
         /// <summary>
@@ -111,7 +107,7 @@ namespace MissYangQA.BLL
                 {
                     model.Token = GetNewToken();
                     model.TokenCreateTime = DateTime.Now;
-                    _userDAL.Insert(model);
+                    _dal.Insert(model);
                 }
                 else
                 {
@@ -130,10 +126,10 @@ namespace MissYangQA.BLL
         /// <exception cref="ArgumentNullException">参数错误异常</exception>
         public void DeleteUserInfo(Guid id)
         {
-            T_User model = _userDAL.GetUserInfoByID(id);
+            T_User model = _dal.GetDBModelInfoByID(id);
             if (model != null)
             {
-                _userDAL.Remove(model);
+                _dal.Delete(model);
             }
             else
             {
@@ -153,9 +149,9 @@ namespace MissYangQA.BLL
                 string msg = string.Empty;
                 if (VerificationEdit(model, ref msg))
                 {
-                    T_User dbModel = _userDAL.GetUserInfoByID(model.ID);
+                    T_User dbModel = _dal.GetDBModelInfoByID(model.ID);
                     dbModel.UserName = model.UserName;
-                    _userDAL.SaveChange();
+                    _dal.SaveChange();
                 }
                 else
                 {
@@ -180,7 +176,7 @@ namespace MissYangQA.BLL
         {
             if (id != Guid.Empty && !string.IsNullOrEmpty(oldPassword) && !string.IsNullOrEmpty(newPassword))
             {
-                T_User dbModel = _userDAL.GetUserInfoByID(id);
+                T_User dbModel = _dal.GetDBModelInfoByID(id);
                 if (dbModel != null)
                 {
                     if (dbModel.Password == EncryptionManager.MD5Encode_32(oldPassword))
@@ -188,7 +184,7 @@ namespace MissYangQA.BLL
                         if (oldPassword != newPassword)
                         {
                             dbModel.Password = EncryptionManager.MD5Encode_32(newPassword);
-                            _userDAL.SaveChange();
+                            _dal.SaveChange();
                         }
                         else
                         {
@@ -229,7 +225,7 @@ namespace MissYangQA.BLL
         /// <returns>是否有效</returns>
         public bool TokenValid(Guid id, string token)
         {
-            T_User model = _userDAL.GetUserInfoByIDAndToken(id, token);
+            T_User model = _dal.GetUserInfoByIDAndToken(id, token);
             return model != null && model.TokenCreateTime.AddMinutes(TokenOverdue) >= DateTime.Now;
         }
         #endregion
@@ -243,15 +239,15 @@ namespace MissYangQA.BLL
         private V_User Login(string userName, string password)
         {
             V_User resM = null;
-            T_User model = _userDAL.GetUserInfoByUserName(userName);
+            T_User model = _dal.GetUserInfoByUserName(userName);
             if (model != null)
             {
                 if (model.Password.ToUpper() == password.ToUpper())
                 {
                     model.Token = GetNewToken();
                     model.TokenCreateTime = DateTime.Now;
-                    _userDAL.SaveChange();
-                    resM = _userDAL.GetUserViewInfoByID(model.ID);
+                    _dal.SaveChange();
+                    resM = _dal.GetDBModelViewInfoByID(model.ID);
                 }
             }
             return resM;
@@ -279,7 +275,7 @@ namespace MissYangQA.BLL
         private bool VerificationAdd(T_User model, ref string msg)
         {
             msg = string.Empty;
-            T_User dbModel = _userDAL.GetUserInfoByUserName(model.UserName);
+            T_User dbModel = _dal.GetUserInfoByUserName(model.UserName);
             if (dbModel != null)
             {
                 msg += "该用户名已被使用，";
@@ -299,7 +295,7 @@ namespace MissYangQA.BLL
         private bool VerificationEdit(T_User model, ref string msg)
         {
             msg = string.Empty;
-            T_User dbModel = _userDAL.GetUserInfoByUserName(model.UserName);
+            T_User dbModel = _dal.GetUserInfoByUserName(model.UserName);
             if (dbModel != null && dbModel.ID != model.ID)
             {
                 msg += "该用户名已被使用，";
@@ -326,7 +322,7 @@ namespace MissYangQA.BLL
                     token += lib[rd.Next(0, lib.Length)];
                 }
                 token = EncryptionManager.MD5Encode_32(token);
-                model = _userDAL.GetUserInfoByToken(token);
+                model = _dal.GetUserInfoByToken(token);
             } while (model != null);
             return token;
         }

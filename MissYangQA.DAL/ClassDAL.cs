@@ -11,42 +11,8 @@ namespace MissYangQA.DAL
     /// <summary>
     /// 班级数据访问类
     /// </summary>
-    public sealed class ClassDAL : BaseDAL
+    public sealed class ClassDAL : BaseDAL<T_Class, V_Class>
     {
-        /// <summary>
-        /// 添加
-        /// </summary>
-        /// <param name="model">要添加的对象</param>
-        public void Insert(T_Class model)
-        {
-            model = BeforeInsert(model);
-            _DB.T_Class.Add(model);
-            _DB.SaveChanges();
-        }
-        /// <summary>
-        /// 根据班级唯一标识获得班级信息
-        /// </summary>
-        /// <param name="id">班级唯一标识</param>
-        /// <returns>查询结果</returns>
-        public T_Class GetClassInfoByID(Guid id)
-        {
-            T_Class model = (from m in _DB.T_Class
-                             where m.ID == id
-                                 select m).FirstOrDefault();
-            return model;
-        }
-        /// <summary>
-        /// 根据班级唯一标识获得班级视图信息
-        /// </summary>
-        /// <param name="id">班级唯一标识</param>
-        /// <returns>查询结果</returns>
-        public V_Class GetClassViewInfoByID(Guid id)
-        {
-            V_Class model = (from m in _DB.V_Class
-                                 where m.ID == id
-                                 select m).FirstOrDefault();
-            return model;
-        }
         /// <summary>
         /// 获得所有班级视图信息
         /// </summary>
@@ -64,8 +30,8 @@ namespace MissYangQA.DAL
         public T_Class GetClassInfoByClassName(string name)
         {
             T_Class model = (from m in _DB.T_Class
-                                 where m.Name == name
-                                 select m).FirstOrDefault();
+                             where m.Name == name
+                             select m).FirstOrDefault();
             return model;
         }
         /// <summary>
