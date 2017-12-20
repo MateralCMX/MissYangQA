@@ -421,6 +421,17 @@ namespace MateralTools {
                 }
             }
         }
+        /**
+         * 获得输入的值
+         * @param element 元素对象
+         */
+        public static GetInputValue(element: string | HTMLElement): any {
+            element = DOMManager.$(element);
+            if (!ToolManager.IsNullOrUndefined(element["value"])) {
+                return element["value"];
+            }
+            return null;
+        }
     }
     /**
      * 数组帮助类
@@ -788,27 +799,27 @@ namespace MateralTools {
          */
         private static Readystatechange(xhr: XMLHttpRequest, config: HttpConfigModel): void {
             if (xhr.readyState == 4) {
-                let res: Object;
+                let resM: Object;
                 try {
-                    res = JsonManager.JSONParse(xhr.responseText);
+                    resM = JsonManager.JSONParse(xhr.responseText);
                 }
                 catch (ex) {
-                    res = xhr.responseText;
+                    resM = xhr.responseText;
                 }
                 if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
                     if (config.complete) {
-                        config.complete(xhr, res);
+                        config.complete(resM, xhr, xhr.status);
                     }
                     if (config.success) {
-                        config.success(res);
+                        config.success(resM, xhr, xhr.status);
                     }
                 }
                 else {
                     if (config.complete) {
-                        config.complete(xhr, res);
+                        config.complete(resM, xhr, xhr.status);
                     }
                     if (config.error) {
-                        config.error(xhr, xhr.status, res);
+                        config.error(resM, xhr, xhr.status);
                     }
                 }
             }
